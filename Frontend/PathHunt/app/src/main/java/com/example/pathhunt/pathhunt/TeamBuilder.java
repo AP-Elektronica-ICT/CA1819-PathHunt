@@ -1,28 +1,32 @@
 package com.example.pathhunt.pathhunt;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 
 public class TeamBuilder extends AppCompatActivity {
 
-    private Button BtnContinue;
+    EditText inputTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_builder);
 
-        BtnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BtnContinueClicked();
-            }
-        });
+        inputTeam = findViewById(R.id.ETxtTeamname);
+
+        findViewById(R.id.BtnContinue).setOnClickListener(Click);
     }
 
-    private void BtnContinueClicked(){
-        =
-    }
+    View.OnClickListener Click = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.BtnContinue:
+
+                    break;
+            }
+        }
+    };
 }
