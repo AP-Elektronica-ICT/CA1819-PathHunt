@@ -9,3 +9,8 @@ D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\ne
 D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.AssemblyInfo.cs
 D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.dll
 D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.csproj.CopyComplete

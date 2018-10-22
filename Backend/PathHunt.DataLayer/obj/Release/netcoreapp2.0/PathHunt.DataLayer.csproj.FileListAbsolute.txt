@@ -1,0 +1,9 @@
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\PathHunt.DataLayer.deps.json
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.csprojAssemblyReference.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.csproj.CoreCompileInputs.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.AssemblyInfoInputs.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.AssemblyInfo.cs
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.pdb
