@@ -42,6 +42,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pathhunt.pathhunt.MainActivity" />
         </activity>
+
+        <activity android:name=".IntroductionActivity">
+
+        </activity>
     </application>
 
 </manifest>
