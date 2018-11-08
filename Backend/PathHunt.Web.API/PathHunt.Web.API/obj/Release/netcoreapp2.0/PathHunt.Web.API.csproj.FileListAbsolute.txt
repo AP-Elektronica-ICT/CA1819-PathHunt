@@ -1,0 +1,16 @@
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.Web.API.deps.json
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.Web.API.runtimeconfig.json
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.Web.API.runtimeconfig.dev.json
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.Web.API.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.Web.API.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.BusinessLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Release\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.csprojAssemblyReference.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.csproj.CoreCompileInputs.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.AssemblyInfoInputs.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.AssemblyInfo.cs
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.csproj.CopyComplete
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Release\netcoreapp2.0\PathHunt.Web.API.pdb

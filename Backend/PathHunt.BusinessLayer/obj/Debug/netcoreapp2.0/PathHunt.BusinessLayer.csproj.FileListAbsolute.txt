@@ -1,0 +1,9 @@
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.deps.json
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csprojAssemblyReference.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csproj.CoreCompileInputs.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.AssemblyInfoInputs.cache
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.AssemblyInfo.cs
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
