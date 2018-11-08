@@ -4746,6 +4746,26 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
+      },
+      "PathHunt.BusinessLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/PathHunt.BusinessLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PathHunt.BusinessLayer.dll": {}
+        }
+      },
+      "PathHunt.DataLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/PathHunt.DataLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PathHunt.DataLayer.dll": {}
+        }
       }
     }
   },
@@ -12654,12 +12674,24 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
+    },
+    "PathHunt.BusinessLayer/1.0.0": {
+      "type": "project",
+      "path": "../../PathHunt.BusinessLayer/PathHunt.BusinessLayer.csproj",
+      "msbuildProject": "../../PathHunt.BusinessLayer/PathHunt.BusinessLayer.csproj"
+    },
+    "PathHunt.DataLayer/1.0.0": {
+      "type": "project",
+      "path": "../../PathHunt.DataLayer/PathHunt.DataLayer.csproj",
+      "msbuildProject": "../../PathHunt.DataLayer/PathHunt.DataLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Microsoft.AspNetCore.All >= 2.0.9",
-      "Microsoft.NETCore.App >= 2.0.0"
+      "Microsoft.NETCore.App >= 2.0.0",
+      "PathHunt.BusinessLayer >= 1.0.0",
+      "PathHunt.DataLayer >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -12691,7 +12723,14 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj": {
+              "projectPath": "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj"
+            },
+            "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
+              "projectPath": "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
