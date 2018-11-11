@@ -30,6 +30,7 @@ namespace PathHunt.Web.API
                 Configuration.GetConnectionString("DefaultConnection")
                 )
             );
+            services.AddScoped<QuestionsFacade>();
             services.AddMvc();
             services.AddCors();
         }
