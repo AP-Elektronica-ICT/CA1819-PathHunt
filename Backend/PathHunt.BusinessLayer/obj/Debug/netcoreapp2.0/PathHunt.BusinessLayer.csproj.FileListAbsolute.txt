@@ -12,3 +12,5 @@ D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0
 D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
 D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.EntityFrameworkCore.xml
 D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csproj.CopyComplete
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Newtonsoft.Json.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Newtonsoft.Json.xml

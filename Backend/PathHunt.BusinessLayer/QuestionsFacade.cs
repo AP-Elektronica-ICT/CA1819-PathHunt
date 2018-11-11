@@ -23,7 +23,9 @@ namespace PathHunt.BusinessLayer
 
         public Question GetQuestion(int id)
         {
-            return context.Questions.Find(id);
+            return context.Questions
+                .Include(d => d.Location)
+                .SingleOrDefault(d => d.Id == id);
         }
     }
 }

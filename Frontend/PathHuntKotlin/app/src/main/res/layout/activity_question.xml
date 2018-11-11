@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtQuestion"
-        android:text="Questions"
+        android:text="Question is loading"
         android:textSize="30dp"
         android:textAlignment="center"/>
 
@@ -30,5 +30,19 @@
         android:id="@+id/btnCheck"
         android:layout_gravity="center|bottom"
         android:text="Check answer"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnPrev"
+        android:layout_gravity="bottom|left"
+        android:text="Previous"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNext"
+        android:layout_gravity="bottom|right"
+        android:text="Next"/>
 
 </FrameLayout>

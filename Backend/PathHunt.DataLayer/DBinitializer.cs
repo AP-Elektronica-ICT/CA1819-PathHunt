@@ -51,8 +51,8 @@ namespace PathHunt.DataLayer
                 };
                 var Question1 = new Question()
                 {
-                    Content = "Waar is dit",
-                    Answer = "Antwerpen duh",
+                    Content = "Waar is dit?",
+                    Answer = "Antwerpen",
                     Location = location1
                 };
                 var Question2 = new Question()
