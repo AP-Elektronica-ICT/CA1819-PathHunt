@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,7 @@ namespace PathHunt.DataLayer.Model
         public int Id { get; set; }
         public string Content { get; set; }
         public string Answer { get; set; }
+        [JsonIgnore]
         public Location Location { get; set; }
 
     }

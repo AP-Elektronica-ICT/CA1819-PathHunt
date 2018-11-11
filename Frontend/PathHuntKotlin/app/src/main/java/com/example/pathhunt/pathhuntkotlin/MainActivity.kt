@@ -11,8 +11,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnCreateTeam.setOnClickListener{
+        btnCreateTeam.setOnClickListener {
             val intent = Intent(this, TeamNameEditor::class.java)
+            startActivity(intent)
+        }
+        btnContinue.setOnClickListener {
+            val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
         }
     }

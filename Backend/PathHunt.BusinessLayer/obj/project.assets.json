@@ -196,6 +196,16 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "PathHunt.DataLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/PathHunt.DataLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PathHunt.DataLayer.dll": {}
+        }
       }
     }
   },
@@ -656,11 +666,17 @@
         "netstandard.library.2.0.0.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "PathHunt.DataLayer/1.0.0": {
+      "type": "project",
+      "path": "../PathHunt.DataLayer/PathHunt.DataLayer.csproj",
+      "msbuildProject": "../PathHunt.DataLayer/PathHunt.DataLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "Microsoft.NETCore.App >= 2.0.0"
+      "Microsoft.NETCore.App >= 2.0.0",
+      "PathHunt.DataLayer >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -692,7 +708,11 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
+              "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -718,5 +738,13 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\obj\\PathHunt.BusinessLayer.csproj.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

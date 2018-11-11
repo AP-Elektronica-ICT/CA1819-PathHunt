@@ -30,7 +30,15 @@
                 android:text="Create a team"
                 android:textSize="20dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/BtnContinue"
+            android:text="Next"
+            android:textSize="20dp"/>
+
     </LinearLayout>
 
 
 </LinearLayout>
+
