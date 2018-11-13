@@ -25,5 +25,11 @@ namespace PathHunt.BusinessLayer
             return context.Teams
                 .SingleOrDefault(d => d.Id == id);
         }
+
+        public void SetTeam(Team team)
+        {
+            context.Teams
+                .Add(team);
+        }
     }
 }
