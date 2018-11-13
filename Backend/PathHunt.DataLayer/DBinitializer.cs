@@ -17,14 +17,14 @@ namespace PathHunt.DataLayer
                 {
                     Name = "The A-Team",
                     Score = 0,
-                    //Email = "a_team@gmail.com"
+                    Email = "a_team@gmail.com"
                 };
                 context.Teams.Add(Team1);
                 var Team2 = new Team()
                 {
                     Name = "Test Team",
                     Score = 800,
-                    //Email = "testteam@gmail.com"
+                    Email = "testteam@gmail.com"
                 };
                 context.Teams.Add(Team2);
                 //context.SaveChanges();

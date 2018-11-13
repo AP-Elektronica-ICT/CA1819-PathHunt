@@ -23,13 +23,13 @@ namespace PathHunt.BusinessLayer
         public Team GetTeam(int id)
         {
             return context.Teams
-                .SingleOrDefault(d => d.Id == id);
+                .Find(id);
         }
 
         public void SetTeam(Team team)
         {
-            context.Teams
-                .Add(team);
+            context.Teams.Add(team);
+            context.SaveChanges();
         }
     }
 }

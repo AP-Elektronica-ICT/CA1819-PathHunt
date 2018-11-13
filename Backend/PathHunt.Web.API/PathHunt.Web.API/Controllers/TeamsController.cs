@@ -8,6 +8,7 @@ using PathHunt.DataLayer.Model;
 
 namespace PathHunt.Web.API.Controllers
 {
+    [Route("api/[controller]")]
     public class TeamsController : Controller
     {
         private readonly TeamsFacade facade;
@@ -22,22 +23,23 @@ namespace PathHunt.Web.API.Controllers
             return View();
         }
 
-        [Route("api/teams")]
-        public List<Team> getTeams()
+        [HttpGet]
+        public List<Team> GetTeams()
         {
             return facade.GetAllTeams();
         }
 
-        [Route("api/teams/{id}")]
-        public Team getTeam(int id)
+        [HttpGet("{id}")]
+        public Team GetTeam(int id)
         {
             return facade.GetTeam(id);
         }
 
-        [Route("api/teams")]
-        public void postTeam(Team team)
+        [HttpPost]
+        public IActionResult PostTeam([FromBody]Team team)
         {
-
+            facade.SetTeam(team);
+            return Created("", team);
         }
     }
 }
