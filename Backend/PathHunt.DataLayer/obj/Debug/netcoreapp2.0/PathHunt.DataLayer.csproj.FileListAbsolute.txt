@@ -26,3 +26,17 @@ D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.
 D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.csproj.CopyComplete
 D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
 D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.deps.json
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\Microsoft.EntityFrameworkCore.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\Newtonsoft.Json.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\Microsoft.EntityFrameworkCore.xml
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Debug\netcoreapp2.0\Newtonsoft.Json.xml
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.csprojAssemblyReference.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.csproj.CoreCompileInputs.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.AssemblyInfoInputs.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.AssemblyInfo.cs
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.csproj.CopyComplete
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb

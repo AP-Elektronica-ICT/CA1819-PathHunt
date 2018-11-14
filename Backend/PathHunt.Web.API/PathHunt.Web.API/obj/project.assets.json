@@ -7780,10 +7780,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration/2.0.3": {
-      "sha512": "52tNEfLXZtB82T9Tahr6w35HNhneDCpeXvY7sFGP3hBifynZ/dKev+PQvr6VX8jMXUuWlbx/19r03SPvyZwFrA==",
+      "sha512": "5x4iBuePKwa3LFdyPXotF5si2S/aQbg0nTpLAY4OwBm4bYukyZ1MqEvJzk7QBrBQgAU5B2w5WWeWAZu97c2+sQ==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration/2.0.3",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.dll",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.xml",
         "microsoft.visualstudio.web.codegeneration.2.0.3.nupkg.sha512",
@@ -7791,10 +7792,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Contracts/2.0.3": {
-      "sha512": "RC6h5TLOhRji+Ei1rEQkew254pgl3CDkv7kS9g99WXin/baxFCJvJ60kx0mP0+BImhWy2slhb1lRzzNBOXDAng==",
+      "sha512": "Drhtw/EHyL7Uw6jdbv1PWN2dpZuW53H5B2bDW7T4DmBmIGKaNMsBALQIJRtU269ZyfaVy9RpU+kKQkm+PCAnog==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration.contracts/2.0.3",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.xml",
         "microsoft.visualstudio.web.codegeneration.contracts.2.0.3.nupkg.sha512",
@@ -7802,10 +7804,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Core/2.0.3": {
-      "sha512": "j6M7elWp16R/ck24UbxiRYrDavWFJflseIhjtpPtwXYINtwCJtjVtIHm+PZIzLxg0hwTFFBFm26wopDjGfGq0w==",
+      "sha512": "sI26eFsO1788EJuiIlzsZoVKiEOddX3+lna1IxQ9zxwDs5L2jIFzDBWQPEQFvqDDnryOO5EWfDfqUattvb9ocw==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration.core/2.0.3",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Core.xml",
         "microsoft.visualstudio.web.codegeneration.core.2.0.3.nupkg.sha512",
@@ -7813,10 +7816,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Design/2.0.3": {
-      "sha512": "YlSBXfB3L3ucHa8BqfzOFOSNTvW308pSNkKBvEswSXRv7bHzl2O33KKmXUSkDqaJvFrU9rYKQY52iTSmAJWlMA==",
+      "sha512": "XAD9F7tecb4laosO5BdZ9i4JIqtAp6UBvxpzkEjk63X6i2Vgt0hRptf7jXp/VBcV+2a4Jted/tc2Vhsegon3XA==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration.design/2.0.3",
       "files": [
+        ".signature.p7s",
         "lib/net461/dotnet-aspnet-codegenerator-design.exe",
         "lib/net461/dotnet-aspnet-codegenerator-design.xml",
         "lib/netcoreapp2.0/dotnet-aspnet-codegenerator-design.dll",
@@ -7834,10 +7838,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore/2.0.3": {
-      "sha512": "1ZNc1uqCAv1bU018kJXPOkpv8kKQmncjGwiBndHcJUHQ7xihq5Qd4pFJjWet4i4+mTPX0Bore5fbLa8qA1idyA==",
+      "sha512": "z0iVgV2O3ShCoGIY1yvrs91ISssxTPpPPh8LOWx87p1sg64lEwFHyKYV1H9moaQctTmAjZi77Ko1hBQ/mGVWSg==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration.entityframeworkcore/2.0.3",
       "files": [
+        ".signature.p7s",
         "Templates/DbContext/NewLocalDbContext.cshtml",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.xml",
@@ -7846,10 +7851,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Templating/2.0.3": {
-      "sha512": "anV+hbYvJtSe1aCwqhNo/0b0M7+njZpPG/dx5pdHL6Qds8PoBi9FH+QpF9IxvWmdfgffbPwqpGH3J9Ag8JPGrg==",
+      "sha512": "7f1ySFOvc3xXX9hnsDX11EH5kvu3HX5+42FIhZ7odvrmovsiFVWW9yrszcoG80S7pttQRH7PkLfuaSke35eTuw==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration.templating/2.0.3",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Templating.xml",
         "microsoft.visualstudio.web.codegeneration.templating.2.0.3.nupkg.sha512",
@@ -7857,10 +7863,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Utils/2.0.3": {
-      "sha512": "oaxS4I8mmHIsIN+FsP5XjbGEQHA2DQjzn4uHt8akJY9MlcnbPD71ta5Qez4vF6PuitKljnPFLsPTSJpXESOSXQ==",
+      "sha512": "dwBpCJ0WKxyVWMzVu/Q7P7dOMetCNYvB+5gMyvsT/69Dx9slYcmJFOSr6vVslfI7ZLZUov+PvJeii8EhDaF7TA==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegeneration.utils/2.0.3",
       "files": [
+        ".signature.p7s",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll",
         "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGeneration.Utils.xml",
         "microsoft.visualstudio.web.codegeneration.utils.2.0.3.nupkg.sha512",
@@ -7868,10 +7875,11 @@
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc/2.0.3": {
-      "sha512": "WhYNqXJQqJRUt3XaLAUsKJkZcaAWECbSQ+UBqfGFCYDdAtyUS5L361x8lleQFpan4mu6VN/Ispc3CNu24wVu+w==",
+      "sha512": "YJ2YGjs/xqR2uKUMHdrSA0MTkVO/k+q6azfg+syjbx3Zm7wPfcaCh/Ld5+DkgTQjpjfgVL2eKlOTnC1DZspsTA==",
       "type": "package",
       "path": "microsoft.visualstudio.web.codegenerators.mvc/2.0.3",
       "files": [
+        ".signature.p7s",
         "Generators/ParameterDefinitions/area.json",
         "Generators/ParameterDefinitions/controller.json",
         "Generators/ParameterDefinitions/razorpage.json",
@@ -13286,23 +13294,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\VanOverloopSanderstu\\.nuget\\packages\\": {},
+    "C:\\Users\\sande\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
+      "projectUniqueName": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
       "projectName": "PathHunt.Web.API",
-      "projectPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
-      "packagesPath": "C:\\Users\\VanOverloopSanderstu\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\obj\\",
+      "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
+      "packagesPath": "C:\\Users\\sande\\.nuget\\packages\\",
+      "outputPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\VanOverloopSanderstu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\sande\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13315,11 +13323,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj": {
-              "projectPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj"
+            "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj": {
+              "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj"
             },
-            "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
-              "projectPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
+            "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
+              "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
             }
           }
         }
