@@ -196,6 +196,16 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "PathHunt.DataLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "compile": {
+          "bin/placeholder/PathHunt.DataLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PathHunt.DataLayer.dll": {}
+        }
       }
     }
   },
@@ -656,31 +666,37 @@
         "netstandard.library.2.0.0.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "PathHunt.DataLayer/1.0.0": {
+      "type": "project",
+      "path": "../PathHunt.DataLayer/PathHunt.DataLayer.csproj",
+      "msbuildProject": "../PathHunt.DataLayer/PathHunt.DataLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "Microsoft.NETCore.App >= 2.0.0"
+      "Microsoft.NETCore.App >= 2.0.0",
+      "PathHunt.DataLayer >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\stefa\\.nuget\\packages\\": {},
+    "C:\\Users\\VanOverloopSanderstu\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj",
+      "projectUniqueName": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj",
       "projectName": "PathHunt.BusinessLayer",
-      "projectPath": "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj",
-      "packagesPath": "C:\\Users\\stefa\\.nuget\\packages\\",
-      "outputPath": "D:\\School\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\obj\\",
+      "projectPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj",
+      "packagesPath": "C:\\Users\\VanOverloopSanderstu\\.nuget\\packages\\",
+      "outputPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\stefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\VanOverloopSanderstu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -692,7 +708,11 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
+              "projectPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

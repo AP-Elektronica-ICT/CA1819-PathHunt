@@ -30,6 +30,18 @@ namespace PathHunt.Web.API
                 Configuration.GetConnectionString("DefaultConnection")
                 )
             );
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders", builder => {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
+                });
+            });
+
+            services.AddScoped<QuestionsFacade>();
+            services.AddScoped<TeamsFacade>();
             services.AddMvc();
             services.AddCors();
         }
@@ -43,6 +55,7 @@ namespace PathHunt.Web.API
             }
 
             app.UseMvc();
+            app.UseCors("AllowAllHeaders");
 
             DBInitializer.Initialize(ctext);
         }
