@@ -34,6 +34,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
         mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
 
     }
 }
