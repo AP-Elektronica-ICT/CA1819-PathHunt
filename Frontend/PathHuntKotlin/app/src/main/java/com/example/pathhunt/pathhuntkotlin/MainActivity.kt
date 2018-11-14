@@ -19,5 +19,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
         }
+        btnIntroduction.setOnClickListener {
+            val intent = Intent(this,IntroductionActivity::class.java)
+            startActivity(intent)
+        }
+        btnMaps.setOnClickListener {
+            val intent = Intent(this,MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
