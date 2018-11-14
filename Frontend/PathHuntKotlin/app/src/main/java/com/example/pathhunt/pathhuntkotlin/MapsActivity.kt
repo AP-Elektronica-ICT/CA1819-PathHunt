@@ -39,5 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val school = LatLng(51.2297882, 4.4149717)
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
+
+        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
     }
 }
