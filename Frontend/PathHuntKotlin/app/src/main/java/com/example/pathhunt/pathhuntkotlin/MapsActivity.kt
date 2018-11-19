@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    //var LocationId : int = 1
 
     //this companion object will ask for permission to use locationservices
     companion object {
