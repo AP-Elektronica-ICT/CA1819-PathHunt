@@ -1,9 +1,11 @@
 package com.example.pathhunt.pathhuntkotlin
 
 import android.content.pm.PackageManager
+import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import com.beust.klaxon.Klaxon
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,11 +13,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import org.jetbrains.anko.doAsync
+import java.net.URL
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    //var LocationId : int = 1
+    var locationId : int = 1
+    var location: Location? =null
 
     //this companion object will ask for permission to use locationservices
     companion object {
@@ -30,6 +35,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setUpMap()
+        getLocation(locationId)
 
     }
 
@@ -60,6 +66,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             return
+        }
+    }
+
+    private fun getLocation(id:Int){
+        doAsync {
+            val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
+            location = Klaxon ()
+                .parse<Location>(result)
         }
     }
 }
