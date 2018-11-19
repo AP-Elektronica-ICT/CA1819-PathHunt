@@ -40,7 +40,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
 
-        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+        mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isZoomGesturesEnabled = true
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
+
+        mMap.isMyLocationEnabled = true
     }
 
     //checks for permission to search for finelocation (currentlocation)
