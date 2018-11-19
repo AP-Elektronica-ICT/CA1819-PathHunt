@@ -664,23 +664,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\VanOverloopSanderstu\\.nuget\\packages\\": {},
+    "C:\\Users\\mjoose\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj",
+      "projectUniqueName": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj",
       "projectName": "PathHunt.DataLayer",
-      "projectPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj",
-      "packagesPath": "C:\\Users\\VanOverloopSanderstu\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\VanOverloopSanderstu\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\obj\\",
+      "projectPath": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj",
+      "packagesPath": "C:\\Users\\mjoose\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\VanOverloopSanderstu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mjoose\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

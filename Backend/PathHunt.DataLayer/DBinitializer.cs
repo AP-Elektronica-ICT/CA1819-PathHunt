@@ -40,14 +40,14 @@ namespace PathHunt.DataLayer
                 var location1 = new Location()
                 {
                     Name = "Locatie 1",
-                    Latitude = 1,
-                    Longitude = 1
+                    Latitude = 51.231268,
+                    Longitude = 4.406029
                 };
                 var location2 = new Location()
                 {
                     Name = "Locatie 2",
-                    Latitude = 2,
-                    Longitude = 2
+                    Latitude = 51.227148,
+                    Longitude = 4.407901
                 };
                 var Question1 = new Question()
                 {
