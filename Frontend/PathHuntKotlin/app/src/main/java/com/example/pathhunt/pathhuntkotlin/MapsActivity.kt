@@ -19,7 +19,7 @@ import java.net.URL
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    var locationId : int = 1
+    var locationId : Int = 1
     var location: Location? =null
 
     //this companion object will ask for permission to use locationservices
