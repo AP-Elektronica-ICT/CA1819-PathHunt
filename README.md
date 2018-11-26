@@ -13,6 +13,6 @@ Link: https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.C
     * Klik op 'Poort' en dan op volgende
     * Selecteer TCP en zet hier vervolgens de poort van de Remote URL in het vak 'Specifieke lokale poorten'. Dit is waarschijnlijk poort 45455, druk dan op volgende. Deze kan je ook vinden door je web applicatie te starten wanneer conveyor is geïnstalleerd. Conveyor wordt automatisch gestart voor web applicaties.
     * Druk dan op volgende en vervolgens nog eens op volgende (Je kan 'Public' uitzetten), en geef het vervolgens een naam bv. 'Conveyor: web dev server access enabled'.
-* Zoek vervolgens in het bestand 'applicationhost.config', dat standaard in de map Documenten/IISExpress/config te vinden is, naar de volgende regel:  
-<binding protocol "http" bindingInformation=":8080:localhost"> en verander het in <binding protocol="http" bindingInformation="*:8080:*" />
-* Start Visual Studio nu op met administrator rechten en nu zou je het IP met de bijbehorende poort (Waarschijnlijk 45455) van je desktop/laptop moeten kunnen ingeven om je applicatie te bereiken.
+* Zoek vervolgens in het bestand 'applicationhost.config', dat standaard in de map Documenten/IISExpress/config te vinden is, naar de volgende regel: <br> <binding protocol&equals;"http" bindingInformation&equals;":8080:localhost"/> en verander het naar <br> 
+<binding protocol&equals;"http" bindingInformation&equals;"&ast;:8080:&ast;" 
+* Start Visual Studio nu op met administrator rechten en nu zou je het IP met de bijbehorende poort (waarschijnlijk 45455) van je desktop/laptop moeten kunnen ingeven om je applicatie te bereiken.
