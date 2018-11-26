@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.android.extension.responseJson
-import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.gson.responseObject
+import com.github.kittinunf.fuel.httpPost
 import kotlinx.android.synthetic.main.activity_team_name_editor.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.net.URL
 
 
 class TeamNameEditor : AppCompatActivity() {
@@ -58,7 +56,17 @@ class TeamNameEditor : AppCompatActivity() {
 
     private fun GetTeam(){
         doAsync {
-            val (request, response, result) = "http://172.16.249.252:45455/api/teams".httpGet().response()
+            val URL: String = "http://172.16.249.252:45455/api/teams"
+
+            val bodyJson = """
+                { "name" : "foo",
+                "score" : "bar"
+                }
+                """
+
+            URL.httpPost().responseObject { request, response, result ->
+
+            }
             uiThread {
                 Toast.makeText(this@TeamNameEditor,response.toString() , Toast.LENGTH_LONG).show()
             }
