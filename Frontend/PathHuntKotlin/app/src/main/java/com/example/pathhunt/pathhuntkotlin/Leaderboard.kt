@@ -35,6 +35,8 @@ class Leaderboard : AppCompatActivity() {
         init {
             this.context = context
             this.teamList = teamList
+            this.teamList.sortWith(compareBy(Team::score, Team::name))
+            this.teamList.reverse()
         }
 
         override fun getCount(): Int {
@@ -73,6 +75,7 @@ class Leaderboard : AppCompatActivity() {
             teams?.forEach { team ->
                 teamList.add(team)
             }
+            //teamList.sortWith(compareBy(Team::score))
             listView.adapter = ListAdapter(this, teamList)
         }
     }
