@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import kotlinx.android.synthetic.main.activity_team_name_editor.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import javax.xml.transform.Result
 
 
 class TeamNameEditor : AppCompatActivity() {
@@ -26,7 +24,7 @@ class TeamNameEditor : AppCompatActivity() {
             startActivity(intent)*/
 
 
-            //val team = postTeam(teamname = etxtTeamname.text.toString())
+
 
             //val jsonString = Gson().toJson(team) as String
 
@@ -44,26 +42,27 @@ class TeamNameEditor : AppCompatActivity() {
 
     private fun CreateTeam(team: Team) {
 
-        try {
-            Log.d("TAG", "Post succesfull")
-        } catch (e: Exception) {
-            Log.d("ErrorHttpPost", e.message)
-        }
     }
 
     private fun GetTeam() {
 
-        val URL: String = "http://172.16.155.162:45455/api/teams"
+        val URL: String = "http://192.168.1.37:45455/api/teams"
 
         var names: String = ""
 
-        URL.httpGet().responseObject(Team.Desserializer()) { request, response, result ->
+        URL.httpGet().responseObject(Team.Deserializer()) { request, response, result ->
             val (teams, err) = result
             teams?.forEach { team ->
-                names += ", " + team.teamname
+                println("Team: ${team.name}")
             }
-            MakeToast(names)
+            //MakeToast(names)
         }
+        /*URL.httpGet().responseString(){request, response, result ->
+            when(result){
+                is Result.Success -> { println("Result: ${result.get()}")}
+                is Result.Failure -> {}
+            }
+        }*/
 
     }
 

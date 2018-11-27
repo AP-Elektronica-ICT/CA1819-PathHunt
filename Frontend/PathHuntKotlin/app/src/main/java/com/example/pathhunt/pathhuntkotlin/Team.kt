@@ -17,10 +17,11 @@ data class  postTeam(override val teamname: String,
                      override val score: Int = 0):Team*/
 
 data class Team (
-    val teamname: String,
-    val score: Int = 0
+    val id: Int,
+    val name: String,
+    val score: Int
 ){
-    class Desserializer: ResponseDeserializable<Array<Team>>{
+    class Deserializer: ResponseDeserializable<Array<Team>>{
         override fun deserialize(content: String): Array<Team>? {
             return  Gson().fromJson(content, Array<Team>::class.java)
         }
