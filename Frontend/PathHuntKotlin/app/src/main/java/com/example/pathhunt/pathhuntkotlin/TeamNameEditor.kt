@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.github.kittinunf.fuel.gson.responseObject
+import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import kotlinx.android.synthetic.main.activity_team_name_editor.*
 import org.jetbrains.anko.doAsync
@@ -23,7 +24,6 @@ class TeamNameEditor : AppCompatActivity() {
             /*val intent = Intent(this, TeamEditor::class.java)
             intent.putExtra("Name", teamname)
             startActivity(intent)*/
-
 
 
             //val team = postTeam(teamname = etxtTeamname.text.toString())
@@ -45,35 +45,29 @@ class TeamNameEditor : AppCompatActivity() {
     private fun CreateTeam(team: Team) {
 
         try {
-
-
             Log.d("TAG", "Post succesfull")
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Log.d("ErrorHttpPost", e.message)
         }
     }
 
-    private fun GetTeam(){
-        doAsync {
-            val URL: String = "http://172.16.249.252:45455/api/teams"
+    private fun GetTeam() {
 
-            val bodyJson = """
-                { "name" : "foo",
-                "score" : "bar"
-                }
-                """
+        val URL: String = "http://172.16.155.162:45455/api/teams"
 
-            URL.httpPost().responseObject { request, response, result ->
+        var names: String = ""
 
+        URL.httpGet().responseObject(Team.Desserializer()) { request, response, result ->
+            val (teams, err) = result
+            teams?.forEach { team ->
+                names += ", " + team.teamname
             }
-            uiThread {
-                Toast.makeText(this@TeamNameEditor,response.toString() , Toast.LENGTH_LONG).show()
-            }
+            MakeToast(names)
         }
+
     }
 
-    private fun MakeToast(msg: String){
+    private fun MakeToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 }
