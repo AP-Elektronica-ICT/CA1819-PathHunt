@@ -1,11 +1,14 @@
 package com.example.pathhunt.pathhuntkotlin
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import com.beust.klaxon.Klaxon
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.result.Result
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,14 +16,18 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import org.jetbrains.anko.doAsync
 import java.net.URL
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     var locationId : Int = 1
     var location: Location? =null
+
+    val URL : String = "http://localhost:50862/api/locations/1"
 
     //this companion object will ask for permission to use locationservices
     companion object {
@@ -37,6 +44,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setUpMap()
         getLocation(locationId)
 
+        /*URL.httpGet().responseString { request, response, result ->
+            when (result){
+                is Result.Success -> {
+                    println("Result:  ${result.get()}")}
+                is Result.Failure -> {}
+            }
+        }*/
     }
     
     override fun onMapReady(googleMap: GoogleMap) {
@@ -47,12 +61,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
 
+        val mas = LatLng(51.2289238, 4.4026316)
+        mMap.addMarker(MarkerOptions().position(mas).title("Marker on MAS"))
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(MAS))
+
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
 
         mMap.isMyLocationEnabled = true
+
+       mMap.addPolyline(PolylineOptions().add(
+           school,
+           mas
+       ).width(10)
+           .color(Color.RED)
+       )
     }
 
     //checks for permission to search for finelocation (currentlocation)
@@ -63,6 +88,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             return
         }
+    }
+
+    private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving"
+
     }
 
     private fun getLocation(id:Int){
