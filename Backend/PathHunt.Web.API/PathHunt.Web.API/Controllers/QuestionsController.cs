@@ -8,6 +8,7 @@ using PathHunt.DataLayer.Model;
 
 namespace PathHunt.Web.API.Controllers
 {
+    [Route("api/questions")]
     public class QuestionsController : Controller
     {
         private readonly QuestionsFacade facade;
@@ -20,15 +21,29 @@ namespace PathHunt.Web.API.Controllers
         {
             return View();
         }
-        [Route("api/questions")]
-        public List<Question> getQuestions()
+        //[Route("api/questions")]
+/*        public List<Question> getQuestions()
         {
             return facade.GetAllQuestions();
+        }*/
+        [HttpGet]
+        public List<Question> getLocationQuestions(string location)
+        {
+            Console.WriteLine(location);
+            return facade.GetLocationQuestions(location);
         }
-        [Route("api/questions/{id}")]
+
+        [HttpPost]
+        public IActionResult postQuestion([FromBody] Question newQ)
+        {
+            facade.AddQuestion(newQ);
+            return Created("", newQ);
+        }
+
+        [Route("{id}")]
         public Question getQuestion(int id)
         {
-            return facade.GetQuestion(id);
+            return facade.GetQuestionById(id);
         }
     }
 }

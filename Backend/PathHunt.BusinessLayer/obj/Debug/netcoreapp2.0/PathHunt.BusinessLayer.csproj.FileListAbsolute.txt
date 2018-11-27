@@ -30,3 +30,5 @@ D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.
 D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csproj.CopyComplete
 D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
 D:\Users\VanOverloopSanderstu\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.xml
