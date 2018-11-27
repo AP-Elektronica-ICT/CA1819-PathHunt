@@ -16,20 +16,3 @@ data class Team (
         }
     }
 }
-
-public fun CreateTeam(URL: String ,team: Team) {
-    URL.httpPost()
-        .jsonBody(Gson().toJson(team))
-        .response {_,_, result ->
-            println("result: " + result.toString())
-        }
-}
-
-public fun GetTeam(URL: String) {
-    URL.httpGet().responseObject(Team.Deserializer()) { request, response, result ->
-        val (teams, err) = result
-        teams?.forEach { team ->
-            println("Team: ${team.name}")
-        }
-    }
-}

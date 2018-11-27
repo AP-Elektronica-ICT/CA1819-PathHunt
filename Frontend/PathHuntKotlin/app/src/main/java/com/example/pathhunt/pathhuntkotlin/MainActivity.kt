@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
+val URL: String = "http://192.168.1.37:45455/api/teams"
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,MapsActivity::class.java)
             startActivity(intent)
         }
-
-
+        btnLeaderboard.setOnClickListener {
+            val intent = Intent(this,Leaderboard::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -2,9 +2,9 @@ package com.example.pathhunt.pathhuntkotlin
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.github.kittinunf.fuel.httpPost
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_team_name_editor.*
-
-val URL: String = "http://192.168.1.37:45455/api/teams"
 
 class TeamNameEditor : AppCompatActivity() {
 
@@ -18,5 +18,13 @@ class TeamNameEditor : AppCompatActivity() {
             CreateTeam(URL, team)
             finish()
         }
+    }
+
+    private fun CreateTeam(URL: String ,team: Team) {
+        URL.httpPost()
+            .jsonBody(Gson().toJson(team))
+            .response {_,_, result ->
+                println("result: " + result.toString())
+            }
     }
 }
