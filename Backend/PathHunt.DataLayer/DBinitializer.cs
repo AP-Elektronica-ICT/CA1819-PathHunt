@@ -32,6 +32,24 @@ namespace PathHunt.DataLayer
 
             if (!context.Locations.Any())
             {
+                var location3 = new Location()
+                {
+                    Name="MAS",
+                    Latitude = 51.2289238,
+                    Longitude = 4.4026316
+                };
+
+                var location4 = new Location()
+                {  
+                    Name="US Army Monument",
+                    Latitude = 51.2256383,
+                    Longitude = 4.3989945
+
+                };
+
+                context.Locations.Add(location3);
+                context.Locations.Add(location4);
+                //context.SaveChanges();
 
             }
 
