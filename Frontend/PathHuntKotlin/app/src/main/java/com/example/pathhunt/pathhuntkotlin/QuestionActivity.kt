@@ -57,7 +57,7 @@ class QuestionActivity : AppCompatActivity() {
 
     fun getInfo(id: Int){
         doAsync {
-            val result = URL("http://192.168.1.62:45455/api/questions/$id").readText()
+            val result = URL("http://172.16.193.233:45455/api/questions/$id").readText()
             question = Klaxon()
                 .parse<Question>(result)
             //Log.d("log1", result)

@@ -38,8 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         getLocation(locationId)
 
     }
-
-
+    
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -48,15 +47,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
 
-        /*You can choose a different maptypes with this fct*/
-        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-        //sets zoomcontrols
+        mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
 
-        //this shows current location on map, uses the checkselfpermission to check if location services are allowed, if not allowed currentlocation will not show
         mMap.isMyLocationEnabled = true
-
     }
 
     //checks for permission to search for finelocation (currentlocation)
