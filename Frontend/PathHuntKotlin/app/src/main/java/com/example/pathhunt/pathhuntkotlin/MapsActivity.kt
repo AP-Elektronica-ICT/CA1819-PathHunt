@@ -60,11 +60,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         urlDirections.httpGet().responseObject(Location.Deserializer()){ request, response, result ->
             val(locations,error) = result
-            locations[0].latLng.latitude
+           /* locations[0].latLng.latitude
             locations[0].latLng.longitude
 
             locations[1].latLng.latitude
-            locations[1].latLng.longitude
+            locations[1].latLng.longitude*/
         }
       /*  urlDirections.httpGet().response{ request, response, result ->
             when (result){
