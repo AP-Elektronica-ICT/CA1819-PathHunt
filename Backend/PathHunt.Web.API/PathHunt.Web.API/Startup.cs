@@ -42,6 +42,7 @@ namespace PathHunt.Web.API
 
             services.AddScoped<QuestionsFacade>();
             services.AddScoped<TeamsFacade>();
+            services.AddScoped<LocationsFacade>();
             services.AddMvc();
             services.AddCors();
         }

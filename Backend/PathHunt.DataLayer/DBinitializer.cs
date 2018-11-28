@@ -32,6 +32,24 @@ namespace PathHunt.DataLayer
 
             if (!context.Locations.Any())
             {
+                var location3 = new Location()
+                {
+                    Name="MAS",
+                    Latitude = 51.2289238,
+                    Longitude = 4.4026316
+                };
+
+                var location4 = new Location()
+                {  
+                    Name="US Army Monument",
+                    Latitude = 51.2256383,
+                    Longitude = 4.3989945
+
+                };
+
+                context.Locations.Add(location3);
+                context.Locations.Add(location4);
+                //context.SaveChanges();
 
             }
 
@@ -40,14 +58,14 @@ namespace PathHunt.DataLayer
                 var location1 = new Location()
                 {
                     Name = "Locatie 1",
-                    Latitude = 1,
-                    Longitude = 1
+                    Latitude = 51.231268,
+                    Longitude = 4.406029
                 };
                 var location2 = new Location()
                 {
                     Name = "Locatie 2",
-                    Latitude = 2,
-                    Longitude = 2
+                    Latitude = 51.227148,
+                    Longitude = 4.407901
                 };
                 var Question1 = new Question()
                 {
