@@ -1,8 +1,6 @@
 package com.example.pathhunt.pathhuntkotlin
 
 import com.github.kittinunf.fuel.core.ResponseDeserializable
-import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.fuel.httpPost
 import com.google.gson.Gson
 
 data class Team (
