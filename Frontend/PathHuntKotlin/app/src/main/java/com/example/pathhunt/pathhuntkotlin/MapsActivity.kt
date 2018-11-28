@@ -123,13 +123,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
+  /*  private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
-    }
+    }*/
 
     val path: MutableList<List<LatLng>> = ArrayList()
-    var urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?origin=10.3181466,123.9029382&destination=10.311795,123.915864&key=<YOUR_API_KEY>"
+    var urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination51.2289238,4.4026316&key=<YOUR_API_KEY>"
 
 
             /*= object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
