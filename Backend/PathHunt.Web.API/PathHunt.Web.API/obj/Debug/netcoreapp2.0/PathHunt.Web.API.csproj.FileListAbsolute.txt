@@ -46,3 +46,14 @@ C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.csproj.CopyComplete
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.dll
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.csprojAssemblyReference.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.csproj.CoreCompileInputs.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.AssemblyInfoInputs.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.AssemblyInfo.cs
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.csproj.CopyComplete
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\obj\Debug\netcoreapp2.0\PathHunt.Web.API.pdb
