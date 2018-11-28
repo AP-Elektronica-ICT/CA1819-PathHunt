@@ -2,7 +2,7 @@ package com.example.pathhunt.pathhuntkotlin
 
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.Location
+
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -11,6 +11,7 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.example.pathhunt.pathhuntkotlin.Location
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -55,15 +56,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        /*URL.httpGet().responseString { request, response, result ->
-            when (result){
-                is Result.Success -> {
-                    println("Result:  ${result.get()}")}
-                is Result.Failure -> {}
-            }
-        }*/
 
-        urlDirections.httpGet().response{ request, response, result ->
+
+        urlDirections.httpGet().responseObject(Location.Deserializer()){ request, response, result ->
+            val(locations,error) = result
+
+        }
+      /*  urlDirections.httpGet().response{ request, response, result ->
             when (result){
                 is Result.Success ->{
                     val jsonResponse = JSONObject(response)
@@ -81,10 +80,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 is Result.Failure -> {
 
                 }
-        }
+        }*/
 
     }
-    }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
