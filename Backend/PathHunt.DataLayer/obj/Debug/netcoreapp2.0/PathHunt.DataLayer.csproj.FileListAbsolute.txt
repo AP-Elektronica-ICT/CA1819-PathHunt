@@ -40,3 +40,5 @@ C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\n
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.csproj.CopyComplete
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
