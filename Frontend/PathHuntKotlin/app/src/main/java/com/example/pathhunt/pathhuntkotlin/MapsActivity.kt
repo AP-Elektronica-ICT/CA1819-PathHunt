@@ -9,23 +9,30 @@ import android.support.v4.app.ActivityCompat
 import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import org.jetbrains.anko.doAsync
 import java.net.URL
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     var locationId : Int = 1
     var location: Location? =null
+
+
+
 
     val URL : String = "http://localhost:50862/api/locations/1"
 
@@ -33,6 +40,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
+
+    override fun onMarkerClick(p0: Marker?) = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +53,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setUpMap()
         getLocation(locationId)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         /*URL.httpGet().responseString { request, response, result ->
             when (result){
                 is Result.Success -> {
@@ -51,8 +62,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 is Result.Failure -> {}
             }
         }*/
+
+        urlDirections.httpGet().response{ request, response, result ->
+            when (result){
+                is Result.Success ->{
+                    val jsonResponse = JSONObject(response)
+                    // Get routes
+                    val routes = jsonResponse.getJSONArray("routes")
+                    val legs = routes.getJSONObject(0).getJSONArray("legs")
+                    val steps = legs.getJSONObject(0).getJSONArray("steps")
+                    for (i in 0 until steps.length()) {
+                        val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                        path.add(PolyUtil.decode(points))
+                    }
+                    for (i in 0 until path.size) {
+                        this.mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED)}
+            }
+                is Result.Failure -> {
+
+                }
+        }
+
     }
-    
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -68,6 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isZoomGesturesEnabled = true
+        mMap.setOnMarkerClickListener(this)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
 
         mMap.isMyLocationEnabled = true
@@ -95,35 +129,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    /*val path: MutableList<List<LatLng>> = ArrayList()
-    val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?origin=10.3181466,123.9029382&destination=10.311795,123.915864&key=<YOUR_API_KEY>"
-    val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
+    val path: MutableList<List<LatLng>> = ArrayList()
+    var urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?origin=10.3181466,123.9029382&destination=10.311795,123.915864&key=<YOUR_API_KEY>"
+
+
+            /*= object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
             response ->
-        val jsonResponse = JSONObject(response)
-        // Get routes
-        val routes = jsonResponse.getJSONArray("routes")
-        val legs = routes.getJSONObject(0).getJSONArray("legs")
-        val steps = legs.getJSONObject(0).getJSONArray("steps")
-        for (i in 0 until steps.length()) {
-            val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-            path.add(PolyUtil.decode(points))
-        }
-        for (i in 0 until path.size) {
-            this.googleMap!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+
         }
     }, Response.ErrorListener {
             _ ->
     }){}
     val requestQueue = Volley.newRequestQueue(this)
-    requestQueue.add(directionsRequest)
-    */
+    requestQueue.add(directionsRequest) */
+
 
     private fun getLocation(id:Int){
         doAsync {
             val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
             location = Klaxon ()
                 .parse<Location>(result)
-            println(result)
+            println(location)
         }
     }
 }
