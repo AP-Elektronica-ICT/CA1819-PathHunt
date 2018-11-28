@@ -31,18 +31,6 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
         getInfo(QuestionId)
-//        doAsync {
-//            val result = URL("http://192.168.1.62:45455/api/questions/1").readText()
-//            question = Klaxon()
-//                .parse<Question>(result)
-//            //Log.d("log1", result)
-//            uiThread {
-//                if (question != null) {
-//                    answer = question?.answer.toString();
-//                    txtQuestion.text = question?.content.toString()
-//                }
-//            }
-//        }
 
         btnCheck.setOnClickListener {
             userAnswer = etxtAnswer.text.toString()
@@ -51,13 +39,6 @@ class QuestionActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show()
             }
-            //httpPost voor question
-//            Log.d("Question1", Gson().toJson(Question1))
-//            url.httpPost()
-//                .jsonBody(Gson().toJson(Question1))
-//                .response {_, _, result ->
-//                    Log.d("result", result.toString())
-//                }
         }
 
         btnPrev.setOnClickListener {
@@ -91,6 +72,15 @@ class QuestionActivity : AppCompatActivity() {
             txtQuestion.text = allquestions[QuestionId].content
             answer = allquestions[QuestionId].answer
         }
+        //httpPost voor question
+//            Log.d("Question1", Gson().toJson(Question1))
+//            url.httpPost()
+//                .jsonBody(Gson().toJson(Question1))
+//                .response {_, _, result ->
+//                    Log.d("result", result.toString())
+//                }
+
+
 //        "http://192.168.137.1:45455/api/questions/1".httpGet().responseString(){request, response, result ->
 //            when(result){
 //                is Result.Success ->{
