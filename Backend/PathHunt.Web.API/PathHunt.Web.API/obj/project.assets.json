@@ -13294,23 +13294,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sande\\.nuget\\packages\\": {},
+    "C:\\Users\\mjoose\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
+      "projectUniqueName": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
       "projectName": "PathHunt.Web.API",
-      "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
-      "packagesPath": "C:\\Users\\sande\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\obj\\",
+      "projectPath": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\PathHunt.Web.API.csproj",
+      "packagesPath": "C:\\Users\\mjoose\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.Web.API\\PathHunt.Web.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\sande\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mjoose\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13323,11 +13323,11 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj": {
-              "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj"
+            "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj": {
+              "projectPath": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.BusinessLayer\\PathHunt.BusinessLayer.csproj"
             },
-            "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
-              "projectPath": "D:\\Users\\sande\\Documents\\GitHub\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
+            "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj": {
+              "projectPath": "C:\\Users\\mjoose\\Documents\\CA1819-PathHunt\\Backend\\PathHunt.DataLayer\\PathHunt.DataLayer.csproj"
             }
           }
         }
