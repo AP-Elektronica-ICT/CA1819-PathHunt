@@ -27,5 +27,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,MapsActivity::class.java)
             startActivity(intent)
         }
+        btnLeaderboard.setOnClickListener {
+            val intent = Intent(this,Leaderboard::class.java)
+            startActivity(intent)
+        }
     }
 }

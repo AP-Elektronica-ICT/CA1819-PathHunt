@@ -46,6 +46,10 @@
             android:text="MAPS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/btnMaps"/>
+    <Button
+            android:text="LEADERBOARD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/btnLeaderboard"/>
 
 
 </LinearLayout>

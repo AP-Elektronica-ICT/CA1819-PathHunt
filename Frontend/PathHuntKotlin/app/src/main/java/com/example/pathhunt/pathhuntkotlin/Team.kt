@@ -10,8 +10,7 @@ data class Team (
 ){
     class Deserializer: ResponseDeserializable<Array<Team>>{
         override fun deserialize(content: String): Array<Team>? {
-            return Gson().fromJson(content, Array<Team>::class.java)
+            return  Gson().fromJson(content, Array<Team>::class.java)
         }
     }
 }
-
