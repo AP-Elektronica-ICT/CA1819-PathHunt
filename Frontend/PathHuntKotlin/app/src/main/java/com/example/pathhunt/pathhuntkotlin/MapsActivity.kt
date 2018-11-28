@@ -75,7 +75,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
        mMap.addPolyline(PolylineOptions().add(
            school,
            mas
-       ).width(10)
+       ).width(10F)
            .color(Color.RED)
        )
     }
@@ -91,15 +91,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
-        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving"
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
     }
+
+    /*val path: MutableList<List<LatLng>> = ArrayList()
+    val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?origin=10.3181466,123.9029382&destination=10.311795,123.915864&key=<YOUR_API_KEY>"
+    val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
+            response ->
+        val jsonResponse = JSONObject(response)
+        // Get routes
+        val routes = jsonResponse.getJSONArray("routes")
+        val legs = routes.getJSONObject(0).getJSONArray("legs")
+        val steps = legs.getJSONObject(0).getJSONArray("steps")
+        for (i in 0 until steps.length()) {
+            val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+            path.add(PolyUtil.decode(points))
+        }
+        for (i in 0 until path.size) {
+            this.googleMap!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+        }
+    }, Response.ErrorListener {
+            _ ->
+    }){}
+    val requestQueue = Volley.newRequestQueue(this)
+    requestQueue.add(directionsRequest)
+    */
 
     private fun getLocation(id:Int){
         doAsync {
             val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
             location = Klaxon ()
                 .parse<Location>(result)
+            println(result)
         }
     }
 }
