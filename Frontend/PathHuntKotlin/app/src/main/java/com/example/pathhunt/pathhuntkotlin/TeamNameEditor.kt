@@ -13,9 +13,7 @@ class TeamNameEditor : AppCompatActivity() {
         btnContinue.setOnClickListener {
             val teamname = etxtTeamname.text.toString()
 
-            /*val intent = Intent(this, TeamEditor::class.java)
-            intent.putExtra("Name", teamname)
-            startActivity(intent)*/
+            CreateTeam(Api().url, team)
             finish()
         }
     }
