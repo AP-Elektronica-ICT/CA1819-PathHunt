@@ -60,7 +60,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         urlDirections.httpGet().responseObject(Location.Deserializer()){ request, response, result ->
             val(locations,error) = result
+            locations[0].latLng.latitude
+            locations[0].latLng.longitude
 
+            locations[1].latLng.latitude
+            locations[1].latLng.longitude
         }
       /*  urlDirections.httpGet().response{ request, response, result ->
             when (result){
@@ -81,6 +85,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
                 }
         }*/
+        /*
+                }, Response.ErrorListener {
+           _ ->
+            }){}
+            val requestQueue = Volley.newRequestQueue(this)
+            requestQueue.add(directionsRequest) */
+
+
 
     }
 
@@ -129,18 +141,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     val path: MutableList<List<LatLng>> = ArrayList()
-    var urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?origin=10.3181466,123.9029382&destination=10.311795,123.915864&key=<YOUR_API_KEY>"
+    var urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
 
-            /*= object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
-            response ->
 
-        }
-    }, Response.ErrorListener {
-            _ ->
-    }){}
-    val requestQueue = Volley.newRequestQueue(this)
-    requestQueue.add(directionsRequest) */
 
 
     private fun getLocation(id:Int){
