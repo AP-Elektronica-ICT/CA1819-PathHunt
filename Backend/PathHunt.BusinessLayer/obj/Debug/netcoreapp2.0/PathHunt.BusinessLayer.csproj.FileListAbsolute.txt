@@ -48,3 +48,17 @@ C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Deb
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
 D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
 D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.deps.json
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.BusinessLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.EntityFrameworkCore.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Newtonsoft.Json.dll
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.EntityFrameworkCore.xml
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Newtonsoft.Json.xml
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csprojAssemblyReference.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csproj.CoreCompileInputs.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.AssemblyInfoInputs.cache
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.AssemblyInfo.cs
+D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csproj.CopyComplete
