@@ -1,10 +1,21 @@
 package com.example.pathhunt.pathhuntkotlin
 
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.google.gson.Gson
+
+
+
 data class Location(
     val geocoded_waypoints: List<GeocodedWaypoint>,
     val routes: List<Route>,
     val status: String
-)
+) {
+    class Deserializer : ResponseDeserializable<Array<Location>> {
+        override fun deserialize(content: String): Array<Location>? {
+            return Gson().fromJson(content, Array<Location>::class.java)
+        }
+    }
+}
 
 data class GeocodedWaypoint(
     val geocoder_status: String,

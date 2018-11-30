@@ -1,5 +1,6 @@
 package com.example.pathhunt.pathhuntkotlin
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -16,6 +17,7 @@ import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
+import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -27,8 +29,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    var locationId : Int = 1
-    var location: Location? =null
+   // var locationId : Int = 1
+  //  var location: Location? =null
 
 
 
@@ -50,7 +52,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setUpMap()
-        getLocation(locationId)
+       // getLocation(locationId)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -58,7 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         urlDirections.httpGet().responseObject(Location.Deserializer()){ request, response, result ->
             val(locations,error) = result
-            locations[0]//.
+            locations!![0].routes
         }
       /*  urlDirections.httpGet().response{ request, response, result ->
             when (result){
@@ -141,12 +143,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
 
-    private fun getLocation(id:Int){
+  /*  private fun getLocation(id:Int){
         doAsync {
             val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
             location = Klaxon ()
                 .parse<Location>(result)
             println(location)
         }
-    }
+    }*/
 }
