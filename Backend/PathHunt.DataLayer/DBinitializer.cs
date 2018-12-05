@@ -35,15 +35,15 @@ namespace PathHunt.DataLayer
                 var location3 = new Location()
                 {
                     Name="MAS",
-                    Latitude = 51.2289238,
-                    Longitude = 4.4026316
+                    Latitude = 51.2289238F,
+                    Longitude = 4.4026316F
                 };
 
                 var location4 = new Location()
                 {  
                     Name="US Army Monument",
-                    Latitude = 51.2256383,
-                    Longitude = 4.3989945
+                    Latitude = 51.2256383F,
+                    Longitude = 4.3989945F
 
                 };
 

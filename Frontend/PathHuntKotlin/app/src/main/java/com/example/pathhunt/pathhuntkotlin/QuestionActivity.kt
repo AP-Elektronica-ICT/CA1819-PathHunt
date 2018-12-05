@@ -25,19 +25,20 @@ class QuestionActivity : AppCompatActivity() {
     var answer: String? = null
     var userAnswer: String? = null
     var QuestionId: Int = 0
-    val url = "http://192.168.137.1:45455/api/questions"
-    val Question1 = Question(answer = "Test123", content = "Wat is het antwoord", id = null)
+    //val url = "http://192.168.137.1:45455/api/questions"
+    //val Question1 = Question(answer = "Test123", content = "Wat is het antwoord", id = null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-        try
-        {
-            getInfo(QuestionId)
-        }
-        catch(e : Exception)
-        {
-            Toast.makeText(this, "Can't connect to the server", Toast.LENGTH_LONG).show()
-        }
+        getInfo(QuestionId)
+//        try
+//        {
+//            getInfo(QuestionId)
+//        }
+//        catch(e : Exception)
+//        {
+//            Toast.makeText(this, "Can't connect to the server", Toast.LENGTH_LONG).show()
+//        }
 
         btnCheck.setOnClickListener {
             userAnswer = etxtAnswer.text.toString()
@@ -69,7 +70,7 @@ class QuestionActivity : AppCompatActivity() {
 
     fun getInfo(id: Int) {
         //var data: Question? = null
-        url.httpGet().responseObject(Question.Deserializer()) { request, response, result ->
+        Api().urlQuestions.httpGet().responseObject(Question.Deserializer()) { request, response, result ->
             val (questions, err) = result
             questions?.forEach { question ->
                 Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
