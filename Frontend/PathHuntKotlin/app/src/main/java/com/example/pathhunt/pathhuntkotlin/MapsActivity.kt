@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -52,7 +51,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setUpMap()
-        getLocation(locationId)
+        //getLocation(locationId)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -143,12 +142,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     requestQueue.add(directionsRequest) */
 
 
-    private fun getLocation(id:Int){
-        doAsync {
-            val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
-            location = Klaxon ()
-                .parse<Location>(result)
-            println(location)
-        }
-    }
+//    private fun getLocation(id:Int){
+//        doAsync {
+//            val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
+//            location = Klaxon ()
+//                .parse<Location>(result)
+//            println(location)
+//        }
+//    }
 }

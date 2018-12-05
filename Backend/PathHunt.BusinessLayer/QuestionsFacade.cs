@@ -21,11 +21,29 @@ namespace PathHunt.BusinessLayer
             return context.Questions.ToList();
         }
 
-        public Question GetQuestion(int id)
+        public Question GetQuestionById(int id)
         {
             return context.Questions
                 .Include(d => d.Location)
                 .SingleOrDefault(d => d.Id == id);
+        }
+
+        public List<Question> GetLocationQuestions(string locationName)
+        {
+            IQueryable<Question> query = context.Questions;
+
+            if (!string.IsNullOrWhiteSpace(locationName))
+            {
+                query = query.Where(d => d.Location.Name == locationName);
+            }
+
+            return query.ToList();
+        }
+
+        public void AddQuestion(Question newQuestion)
+        {
+            context.Questions.Add(newQuestion);
+            context.SaveChanges();
         }
     }
 }

@@ -24,7 +24,7 @@ class Leaderboard : AppCompatActivity() {
 
         val listView = findViewById<ListView>(R.id.score_list_view)
 
-        GetTeam(Api().url, listView)
+        GetTeam(Api().urlTeams, listView)
 
     }
 

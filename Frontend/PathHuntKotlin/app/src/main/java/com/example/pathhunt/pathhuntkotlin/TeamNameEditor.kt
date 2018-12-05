@@ -15,7 +15,7 @@ class TeamNameEditor : AppCompatActivity() {
         btnContinue.setOnClickListener {
             val team = Team(null, etxtTeamname.text.toString(), 0)
 
-            CreateTeam(Api().url, team)
+            CreateTeam(Api().urlTeams, team)
             finish()
         }
     }
