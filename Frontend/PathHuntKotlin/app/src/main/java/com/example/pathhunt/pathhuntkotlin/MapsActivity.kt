@@ -18,6 +18,7 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
 import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
+import com.google.android.gms.location.LocationSettingsStates
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -29,13 +30,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-   // var locationId : Int = 1
-  //  var location: Location? =null
+    var locationId: Int = 1
+    var location: Location? = null
 
 
 
-
-    val URL : String = "http://localhost:50862/api/locations/1"
 
     //this companion object will ask for permission to use locationservices
     companion object {
@@ -52,17 +51,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setUpMap()
-       // getLocation(locationId)
+        getLocation(locationId)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
 
 
-        urlDirections.httpGet().responseObject(Location.Deserializer()){ request, response, result ->
-            val(locations,error) = result
-            locations!![0].routes
-        }
-      /*  urlDirections.httpGet().response{ request, response, result ->
+
+
+       // urlDirections.httpGet().responseObject(Location.Deserializer()) { request, response, result ->
+         //   val (locations, error) = result
+           // locations!![0].routes
+       // }
+        /*  urlDirections.httpGet().response{ request, response, result ->
             when (result){
                 is Result.Success ->{
                     val jsonResponse = JSONObject(response)
@@ -89,7 +90,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             requestQueue.add(directionsRequest) */
 
 
-
     }
 
 
@@ -113,42 +113,49 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         mMap.isMyLocationEnabled = true
 
-       mMap.addPolyline(PolylineOptions().add(
-           school,
-           mas
-       ).width(10F)
-           .color(Color.RED)
-       )
+
+        mMap.addPolyline(
+            PolylineOptions().add(
+                school,
+                mas
+            ).width(10F)
+                .color(Color.RED)
+        )
     }
 
     //checks for permission to search for finelocation (currentlocation)
     private fun setUpMap() {
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE
+            )
             return
         }
+
+
     }
 
-  /*  private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
+    /*  private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
     }*/
 
     val path: MutableList<List<LatLng>> = ArrayList()
-    var urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
+    var urlDirections: String =
+        "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
 
-
-
-
-  /*  private fun getLocation(id:Int){
+    private fun getLocation(id: Int) {
         doAsync {
-            val result = URL("http://192.168.1.62:45455/api/locations/$id").readText()
-            location = Klaxon ()
+            val result = URL("http://172.16.183.47:45455/api/locations/$id").readText()
+            location = Klaxon()
                 .parse<Location>(result)
             println(location)
         }
-    }*/
+    }
 }
