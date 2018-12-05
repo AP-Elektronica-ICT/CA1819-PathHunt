@@ -30,8 +30,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    var locationId: Int = 1
-    var location: Location? = null
+  /*  var locationId: Int = 1
+    var location: Location? = null*/
 
 
 
@@ -51,7 +51,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setUpMap()
-        getLocation(locationId)
+       // getLocation(locationId)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -150,12 +150,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
 
-    private fun getLocation(id: Int) {
+  /*  private fun getLocation(id: Int) {
         doAsync {
             val result = URL("http://172.16.183.47:45455/api/locations/$id").readText()
             location = Klaxon()
                 .parse<Location>(result)
             println(location)
         }
-    }
+    }*/
 }
