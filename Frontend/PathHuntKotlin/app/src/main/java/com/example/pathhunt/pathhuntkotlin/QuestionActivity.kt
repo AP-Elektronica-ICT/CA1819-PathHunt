@@ -25,12 +25,19 @@ class QuestionActivity : AppCompatActivity() {
     var answer: String? = null
     var userAnswer: String? = null
     var QuestionId: Int = 0
-    val url = "http://192.168.1.62:45455/api/questions"
+    val url = "http://192.168.137.1:45455/api/questions"
     val Question1 = Question(answer = "Test123", content = "Wat is het antwoord", id = null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-        getInfo(QuestionId)
+        try
+        {
+            getInfo(QuestionId)
+        }
+        catch(e : Exception)
+        {
+            Toast.makeText(this, "Can't connect to the server", Toast.LENGTH_LONG).show()
+        }
 
         btnCheck.setOnClickListener {
             userAnswer = etxtAnswer.text.toString()
