@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.Marker
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.support.v4.app.ActivityCompat
-import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
@@ -51,7 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setUpMap()
-       // getLocation(locationId)
+        //getLocation(locationId)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
