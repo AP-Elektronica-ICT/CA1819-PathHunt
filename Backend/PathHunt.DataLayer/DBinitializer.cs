@@ -17,14 +17,14 @@ namespace PathHunt.DataLayer
                 {
                     Name = "The A-Team",
                     Score = 0,
-                    Email = "a_team@gmail.com"
+                    //Email = "a_team@gmail.com"
                 };
                 context.Teams.Add(Team1);
                 var Team2 = new Team()
                 {
                     Name = "Test Team",
                     Score = 800,
-                    Email = "testteam@gmail.com"
+                    //Email = "testteam@gmail.com"
                 };
                 context.Teams.Add(Team2);
                 //context.SaveChanges();
@@ -32,6 +32,24 @@ namespace PathHunt.DataLayer
 
             if (!context.Locations.Any())
             {
+                var location3 = new Location()
+                {
+                    Name="MAS",
+                    Latitude = 51.2289238,
+                    Longitude = 4.4026316
+                };
+
+                var location4 = new Location()
+                {  
+                    Name="US Army Monument",
+                    Latitude = 51.2256383,
+                    Longitude = 4.3989945
+
+                };
+
+                context.Locations.Add(location3);
+                context.Locations.Add(location4);
+                //context.SaveChanges();
 
             }
 

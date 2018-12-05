@@ -17,12 +17,18 @@
       },
       "Microsoft.EntityFrameworkCore/2.0.3.0": {
         "runtime": {
-          "Microsoft.EntityFrameworkCore.dll": {}
+          "Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "2.0.3.0",
+            "fileVersion": "2.0.3.18114"
+          }
         }
       },
       "Newtonsoft.Json/10.0.0.0": {
         "runtime": {
-          "Newtonsoft.Json.dll": {}
+          "Newtonsoft.Json.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.1.20720"
+          }
         }
       }
     }
