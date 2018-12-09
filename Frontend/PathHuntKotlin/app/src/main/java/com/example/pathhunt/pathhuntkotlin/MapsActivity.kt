@@ -13,26 +13,24 @@ import com.google.android.gms.maps.model.Marker
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.support.v4.app.ActivityCompat
+import android.util.Log
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
 import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
-import com.google.android.gms.location.LocationSettingsStates
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import org.jetbrains.anko.doAsync
-import java.net.URL
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-  /*  var locationId: Int = 1
-    var location: Location? = null*/
 
-
+    val URL: String= "http://172.16.183.47:45455/api/locations"
 
 
     //this companion object will ask for permission to use locationservices
@@ -49,45 +47,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        getAllLocations(Api().urlLocations)
         setUpMap()
-        //getLocation(locationId)
+
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-
-
-
-
-       // urlDirections.httpGet().responseObject(Location.Deserializer()) { request, response, result ->
-         //   val (locations, error) = result
-           // locations!![0].routes
-       // }
-        /*  urlDirections.httpGet().response{ request, response, result ->
-            when (result){
-                is Result.Success ->{
-                    val jsonResponse = JSONObject(response)
-                    // Get routes
-                    val routes = jsonResponse.getJSONArray("routes")
-                    val legs = routes.getJSONObject(0).getJSONArray("legs")
-                    val steps = legs.getJSONObject(0).getJSONArray("steps")
-                    for (i in 0 until steps.length()) {
-                        val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                        path.add(PolyUtil.decode(points))
-                    }
-                    for (i in 0 until path.size) {
-                        this.mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED)}
-            }
-                is Result.Failure -> {
-
-                }
-        }*/
-        /*
-                }, Response.ErrorListener {
-           _ ->
-            }){}
-            val requestQueue = Volley.newRequestQueue(this)
-            requestQueue.add(directionsRequest) */
-
 
     }
 
@@ -104,19 +68,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.addMarker(MarkerOptions().position(mas).title("Marker on MAS"))
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(MAS))
 
+        val steen = LatLng(51.2227238,4.390415)
+        mMap.addMarker(MarkerOptions().position(steen).title("New Destination"))
+
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnMarkerClickListener(this)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
-
         mMap.isMyLocationEnabled = true
-
 
         mMap.addPolyline(
             PolylineOptions().add(
                 school,
-                mas
+                mas,
+                steen
             ).width(10F)
                 .color(Color.RED)
         )
@@ -135,8 +101,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             )
             return
         }
+    }
 
+     fun getAllLocations(URL: String){
 
+        URL.httpGet().responseString { request, response, result ->
+            when(result){
+                is Result.Success -> {
+                    val locations = result.get()
+                    Log.d("Locations","$locations")
+                }
+
+                is Result.Failure-> {}
+            }
+        }
     }
 
     /*  private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
@@ -148,13 +126,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     var urlDirections: String =
         "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 
-
-  /*  private fun getLocation(id: Int) {
-        doAsync {
-            val result = URL("http://172.16.183.47:45455/api/locations/$id").readText()
-            location = Klaxon()
-                .parse<Location>(result)
-            println(location)
-        }
-    }*/
 }

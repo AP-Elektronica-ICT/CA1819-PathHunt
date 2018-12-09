@@ -10,7 +10,7 @@ namespace PathHunt.DataLayer.Model
         public string Name { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-        public ICollection<Question> Questions { get; set; }
+        //public ICollection<Question> Questions { get; set; }
 
     }   
 }
