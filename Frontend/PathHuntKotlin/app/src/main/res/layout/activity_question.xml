@@ -15,14 +15,31 @@
         android:textSize="30dp"
         android:textAlignment="center"/>
 
-    <EditText
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etxtAnswer"
-        android:hint="Type your answer here"
         android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="25dp"/>
+        android:id="@+id/rdgAnswers"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdbAnswer1"
+            android:textSize="25dp"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdbAnswer2"
+            android:textSize="25dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdbAnswer3"
+            android:textSize="25dp"/>
+    </RadioGroup>
 
     <Button
         android:layout_width="wrap_content"

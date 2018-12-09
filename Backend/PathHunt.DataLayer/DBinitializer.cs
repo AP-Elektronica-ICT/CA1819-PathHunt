@@ -78,30 +78,47 @@ namespace PathHunt.DataLayer
                 {
                     Content = "In welk jaar is het dit station geopend?",
                     Answer = "1905",
+                    Options = new string[] { "1908", "1901", "1905" },
                     Location = location1
                 };
                 var Question2 = new Question()
                 {
                     Content = "Hoe heet de schilder die op dit monument is afgebeeld?",
                     Answer =  "David Teniers II",
+                    Options = new string[]
+                    {
+                        "David Teniers II", "David Teniers I", "Robert Campin"
+                    },
                     Location = location2
                 };
                 var Question3 = new Question()
                 {
                     Content = "In welke eeuw is deze schilder geboren?",
                     Answer = "17e",
+                    Options = new string[]
+                    {
+                        "18e", "17e", "16e"
+                    },
                     Location = location2
                 };
                 var Question4 = new Question()
                 {
                     Content = "In welk jaar is dit paleis gebouwd?",
                     Answer = "1745",
+                    Options = new string[]
+                    {
+                        "1690", "1710", "1745"
+                    },
                     Location = location3
                 };
                 var Question5 = new Question()
                 {
                     Content = "Welke koning liet er de Spiegelzaal aanleggen?",
                     Answer = "Leopold II",
+                    Options = new string[]
+                    {
+                        "Leopold II", "Napoleon Bonaparte", "Willem I"
+                    },
                     Location = location3
                 };
                 context.Locations.Add(location1);

@@ -6,7 +6,8 @@ import com.google.gson.Gson
 data class Question(
     val answer: String,
     val content: String,
-    val id: Int?
+    val id: Int?,
+    val options: Array<String>
     //val location: Any?
 ) {
     class Deserializer : ResponseDeserializable<Array<Question>> {

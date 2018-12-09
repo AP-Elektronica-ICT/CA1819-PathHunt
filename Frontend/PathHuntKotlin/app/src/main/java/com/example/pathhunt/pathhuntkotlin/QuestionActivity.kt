@@ -2,7 +2,9 @@ package com.example.pathhunt.pathhuntkotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
+import android.widget.RadioButton
 import android.widget.Toast
 //import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.android.core.Json
@@ -41,7 +43,15 @@ class QuestionActivity : AppCompatActivity() {
 //        }
 
         btnCheck.setOnClickListener {
-            userAnswer = etxtAnswer.text.toString()
+            if(rdgAnswers.checkedRadioButtonId== -1){
+                Toast.makeText(this, "Please select an answer", Toast.LENGTH_LONG).show()
+            }
+
+            else{
+                val userRadio: RadioButton = findViewById(rdgAnswers.checkedRadioButtonId)
+                userAnswer = userRadio.text.toString()
+            }
+            //userAnswer = etxtAnswer.text.toString()
             if (userAnswer.equals(answer)) {
                 Toast.makeText(this, "Good answer", Toast.LENGTH_LONG).show()
             } else {
@@ -55,6 +65,7 @@ class QuestionActivity : AppCompatActivity() {
             }
             //getInfo(QuestionId)
             txtQuestion.text = allquestions[QuestionId].content
+            changeAnswers()
             answer = allquestions[QuestionId].answer
         }
 
@@ -64,8 +75,18 @@ class QuestionActivity : AppCompatActivity() {
                 QuestionId++
             }
             txtQuestion.text = allquestions[QuestionId].content
+            changeAnswers()
             answer = allquestions[QuestionId].answer
         }
+    }
+
+    fun changeAnswers(){
+        if(rdgAnswers.checkedRadioButtonId != -1){
+            rdgAnswers.clearCheck()
+        }
+        rdbAnswer1.text = allquestions[QuestionId].options[0]
+        rdbAnswer2.text = allquestions[QuestionId].options[1]
+        rdbAnswer3.text = allquestions[QuestionId].options[2]
     }
 
     fun getInfo(id: Int) {
@@ -78,6 +99,7 @@ class QuestionActivity : AppCompatActivity() {
             }
             Log.d("All Questions", allquestions.toString())
             txtQuestion.text = allquestions[QuestionId].content
+            changeAnswers()
             answer = allquestions[QuestionId].answer
         }
         //httpPost voor question
