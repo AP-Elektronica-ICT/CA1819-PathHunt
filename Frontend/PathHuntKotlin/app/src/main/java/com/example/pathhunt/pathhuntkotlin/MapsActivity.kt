@@ -18,7 +18,7 @@ import android.util.Log
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
-import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
+//import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -32,7 +32,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    val URL: String= "http://172.16.183.47:45455/api/locations"
+    var locationId: Int = 1
+
 
 
     //this companion object will ask for permission to use locationservices
@@ -49,7 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        getAllLocations(Api().urlLocations)
+        getAllLocations(Api().urlLocations,locationId)
         setUpMap()
 
 
@@ -74,8 +75,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.addMarker(MarkerOptions().position(mas).title("Marker on MAS"))
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(MAS))
 
-        val steen = LatLng(51.2227238,4.390415)
-        mMap.addMarker(MarkerOptions().position(steen).title("New Destination"))
+        //val nieuwedestination = LatLng(${locations.latitude},${locations.longitude})
+        //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))
 
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         mMap.uiSettings.isZoomControlsEnabled = true
@@ -87,8 +88,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.addPolyline(
             PolylineOptions().add(
                 school,
-                mas,
-                steen
+                mas
+                //,nieuwedestination
             ).width(10F)
                 .color(Color.RED)
         )
@@ -109,7 +110,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-     fun getAllLocations(URL: String){
+     fun getAllLocations(URL: String,id:Int){
 
         URL.httpGet().responseString { request, response, result ->
             when(result){
