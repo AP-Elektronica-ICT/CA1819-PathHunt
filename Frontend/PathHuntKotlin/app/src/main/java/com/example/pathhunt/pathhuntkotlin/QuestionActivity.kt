@@ -1,5 +1,6 @@
 package com.example.pathhunt.pathhuntkotlin
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -66,7 +67,14 @@ class QuestionActivity : AppCompatActivity() {
             txtQuestion.text = allquestions[QuestionId].content
             answer = allquestions[QuestionId].answer
         }
+
+        btnMap.setOnClickListener {
+            val intent = Intent(this,MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+
 
     fun getInfo(id: Int) {
         //var data: Question? = null

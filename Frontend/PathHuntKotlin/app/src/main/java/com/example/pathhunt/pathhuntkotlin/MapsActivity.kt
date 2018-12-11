@@ -1,6 +1,7 @@
 package com.example.pathhunt.pathhuntkotlin
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import kotlinx.android.synthetic.main.activity_maps.*
 import org.jetbrains.anko.doAsync
 
 
@@ -53,6 +55,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        btnQuestion.setOnClickListener {
+            val intent = Intent(this, QuestionActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
