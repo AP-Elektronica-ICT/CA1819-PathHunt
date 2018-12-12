@@ -2,8 +2,10 @@ package com.example.pathhunt.pathhuntkotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 //import com.beust.klaxon.Klaxon
@@ -18,6 +20,8 @@ import com.github.kittinunf.result.Result
 import com.github.kittinunf.result.getAs
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_question.*
+import kotlinx.android.synthetic.main.activity_question.view.*
+import kotlinx.android.synthetic.main.row_list.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.net.URL
@@ -26,81 +30,105 @@ class QuestionActivity : AppCompatActivity() {
     var allquestions: MutableList<Question> = mutableListOf()
     var answer: String? = null
     var userAnswer: String? = null
-    var QuestionId: Int = 0
-    //val url = "http://192.168.137.1:45455/api/questions"
+    var questionId: Int = 0
+    var totalScore: Int = 0
+    var scoreToGain: Int = 60
+    var time: Int = 0
+    //Timer, mensen krijgen 60 seconden om vraag te beantwoorden
+    //om de 5 seconden gaat er 5 score van de totale score die ze kunnen verdienen af
+    var count: CountDownTimer = object : CountDownTimer(60000, 1000) {
+        override fun onFinish() {
+            Toast.makeText(this@QuestionActivity, "Time's up!", Toast.LENGTH_LONG).show()
+        }
+
+        override fun onTick(p0: Long) {
+            time = (p0 / 1000).toInt()
+            txtTimeRemaining.text = time.toString()
+            if ((time % 5) == 0) {
+                scoreToGain -= 5
+            }
+        }
+    }
+
     //val Question1 = Question(answer = "Test123", content = "Wat is het antwoord", id = null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-        getInfo(QuestionId)
-//        try
-//        {
-//            getInfo(QuestionId)
-//        }
-//        catch(e : Exception)
-//        {
-//            Toast.makeText(this, "Can't connect to the server", Toast.LENGTH_LONG).show()
-//        }
-
+        //Start countdown
+        count.start()
+        getInfo(questionId)
+        setScore(totalScore)
+        txtTimeRemaining.text = "60"
         btnCheck.setOnClickListener {
-            if(rdgAnswers.checkedRadioButtonId== -1){
+            if (rdgAnswers.checkedRadioButtonId == -1) {
                 Toast.makeText(this, "Please select an answer", Toast.LENGTH_LONG).show()
-            }
-
-            else{
+            } else {
                 val userRadio: RadioButton = findViewById(rdgAnswers.checkedRadioButtonId)
                 userAnswer = userRadio.text.toString()
             }
-            //userAnswer = etxtAnswer.text.toString()
             if (userAnswer.equals(answer)) {
-                Toast.makeText(this, "Good answer", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Good answer", Toast.LENGTH_LONG).show()
+                totalScore += scoreToGain
             }
-        }
-
-        btnPrev.setOnClickListener {
-            if (QuestionId >= 1) {
-                QuestionId--
-            }
-            //getInfo(QuestionId)
-            txtQuestion.text = allquestions[QuestionId].content
-            changeAnswers()
-            answer = allquestions[QuestionId].answer
-        }
-
-        btnNext.setOnClickListener {
-            //getInfo(QuestionId)
-            if (QuestionId < allquestions.size - 1) {
-                QuestionId++
-            }
-            txtQuestion.text = allquestions[QuestionId].content
-            changeAnswers()
-            answer = allquestions[QuestionId].answer
+            questionAnswered()
         }
     }
+    private fun nextQuestion(){
+        if (questionId < allquestions.size - 1) {
+            questionId++
+        }
+        txtQuestion.text = allquestions[questionId].content
+        changeAnswers()
+        answer = allquestions[questionId].answer
+    }
+    private fun setScore(newScore: Int) {
+        txtScoreQuestion.text = "Score: " + newScore.toString()
+    }
 
-    fun changeAnswers(){
-        if(rdgAnswers.checkedRadioButtonId != -1){
+    private fun resetScore(){
+        scoreToGain = 60
+    }
+
+    private fun questionAnswered(){
+        count.cancel()
+        setScore(totalScore)
+        resetScore()
+        nextQuestion()
+        count.start()
+    }
+
+    private fun changeAnswers() {
+        if (rdgAnswers.checkedRadioButtonId != -1) {
             rdgAnswers.clearCheck()
         }
-        rdbAnswer1.text = allquestions[QuestionId].options[0]
-        rdbAnswer2.text = allquestions[QuestionId].options[1]
-        rdbAnswer3.text = allquestions[QuestionId].options[2]
+        rdbAnswer1.text = allquestions[questionId].options[0]
+        rdbAnswer2.text = allquestions[questionId].options[1]
+        rdbAnswer3.text = allquestions[questionId].options[2]
     }
 
-    fun getInfo(id: Int) {
-        //var data: Question? = null
+    private fun getInfo(id: Int) {
         Api().urlQuestions.httpGet().responseObject(Question.Deserializer()) { request, response, result ->
-            val (questions, err) = result
-            questions?.forEach { question ->
-                Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
-                allquestions?.add(question)
+            when (result) {
+                is Result.Success -> {
+                    val (questions, err) = result
+                    questions?.forEach { question ->
+                        Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
+                        allquestions?.add(question)
+                    }
+                    Log.d("All Questions", allquestions.toString())
+                    txtQuestion.text = allquestions[questionId].content
+                    changeAnswers()
+                    answer = allquestions[questionId].answer
+                }
+
+                is Result.Failure -> {
+                    txtQuestion.text = "Couldn't find question"
+                    rdbAnswer1.visibility = View.INVISIBLE
+                    rdbAnswer2.visibility = View.INVISIBLE
+                    rdbAnswer3.visibility = View.INVISIBLE
+                    btnCheck.visibility = View.INVISIBLE
+                }
             }
-            Log.d("All Questions", allquestions.toString())
-            txtQuestion.text = allquestions[QuestionId].content
-            changeAnswers()
-            answer = allquestions[QuestionId].answer
         }
         //httpPost voor question
 //            Log.d("Question1", Gson().toJson(Question1))
@@ -109,21 +137,6 @@ class QuestionActivity : AppCompatActivity() {
 //                .response {_, _, result ->
 //                    Log.d("result", result.toString())
 //                }
-
-
-//        "http://192.168.137.1:45455/api/questions/1".httpGet().responseString(){request, response, result ->
-//            when(result){
-//                is Result.Success ->{
-//                    data = Klaxon().parse<Question>(result.get())
-//                    Log.d("LogResult", result.get())
-//                    answer = data?.answer.toString()
-//                    txtQuestion.text = data?.content.toString();
-//                }
-//
-//                is Result.Failure ->{
-//                    txtQuestion.text = "Couldn't find question"
-//                }
-//            }
 
         //       }
 //        doAsync {
