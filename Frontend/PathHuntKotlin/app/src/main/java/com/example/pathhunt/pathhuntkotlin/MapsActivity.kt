@@ -31,6 +31,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    //var alllocations: MutableList<Location> = mutableListOf()
 
     var locationId: Int = 1
 
@@ -145,7 +146,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     val path: MutableList<List<LatLng>> = ArrayList()
 
     //this url will be used to get directions
-    var urlDirections: String =
-        "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
+    fun getDirections(){
+        Api().urlDirections.httpGet().responseString { request, response, result ->
+            when (result){
+                is Result.Success ->{
+                    val directions = result.get()
+                    Log.d("Directions", "$directions")
+                }
+                is Result.Failure ->{
 
+                }
+            }
+        }
+    }
 }
