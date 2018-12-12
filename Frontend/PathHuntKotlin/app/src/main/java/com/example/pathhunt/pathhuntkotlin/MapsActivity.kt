@@ -50,7 +50,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        getAllLocations(Api().urlLocations,locationId)
+        getAllLocations(locationId)
+        getGeoCoding()
         setUpMap()
 
 
@@ -110,26 +111,40 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-     fun getAllLocations(URL: String,id:Int){
-
-        URL.httpGet().responseString { request, response, result ->
+     fun getAllLocations(id:Int){
+        Api().urlLocations.httpGet().responseObject(Location.Deserializer()) {request, response, result ->
+            val (locations,err) = result
+            locations?.forEach { location ->
+                Log.d("Location: street", "${location.street}")
+            }
+        }
+       /* Api().urlLocations/*+"${id}"*/.httpGet().responseString { request, response, result ->
             when(result){
                 is Result.Success -> {
-                    val locations = result.get()
-                    Log.d("Locations","$locations")
+                    val location = result.get()
+                    Log.d("Locations","$location")
                 }
 
                 is Result.Failure-> {}
             }
+        }*/
+    }
+    //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
+    fun getGeoCoding(){
+        Api().urlGeocoding.httpGet().responseString { request, response, result ->
+            when(result){
+                is Result.Success -> {
+                    val geocode = result.get()
+                    Log.d("Geocode", "$geocode")
+                }
+                is Result.Failure ->{}
+            }
         }
     }
 
-    /*  private fun getDirectionURL(origin:LatLng,dest:LatLng):String {
-        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
-
-    }*/
-
     val path: MutableList<List<LatLng>> = ArrayList()
+
+    //this url will be used to get directions
     var urlDirections: String =
         "https://maps.googleapis.com/maps/api/directions/json?origin=51.2297882,4.4149717&destination=51.2289238,4.4026316&key=AIzaSyAPwdADNSjGx-daM3Mx2HCpVNFfhlzf-lQ"
 

@@ -20,10 +20,16 @@ namespace PathHunt.BusinessLayer
         {
             return context.Locations.ToList();
         }
-        public Location GetLocation(int id)
+        public Location GetAllLocations(int id)
         {
             return context.Locations
                 .Find(id);
+        }
+
+        public void AddLocation(Location newLocation)
+        {
+            context.Locations.Add(newLocation);
+            context.SaveChanges();
         }
     }
 }
