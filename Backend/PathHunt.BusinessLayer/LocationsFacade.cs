@@ -25,5 +25,11 @@ namespace PathHunt.BusinessLayer
             return context.Locations
                 .Find(id);
         }
+
+        public void AddLocation(Location newLocation)
+        {
+            context.Locations.Add(newLocation);
+            context.SaveChanges();
+        }
     }
 }

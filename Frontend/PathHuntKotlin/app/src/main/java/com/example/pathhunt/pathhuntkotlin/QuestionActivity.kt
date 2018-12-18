@@ -30,6 +30,7 @@ class QuestionActivity : AppCompatActivity() {
     var allquestions: MutableList<Question> = mutableListOf()
     var answer: String? = null
     var userAnswer: String? = null
+    var questionLocation: String? = ""
     var questionId: Int = 0
     var totalScore: Int = 0
     var scoreToGain: Int = 60
@@ -54,9 +55,16 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+        if(intent.hasExtra("LocationName")){
+            questionLocation = intent.getStringExtra("LocationName")
+        }
+        questionLocation = "David Teniers II"
         //Start countdown
-        count.start()
-        getInfo(questionId)
+        rdbAnswer1.visibility = View.INVISIBLE
+        rdbAnswer2.visibility = View.INVISIBLE
+        rdbAnswer3.visibility = View.INVISIBLE
+        btnCheck.visibility = View.INVISIBLE
+        getInfo(questionLocation)
         setScore(totalScore)
         txtTimeRemaining.text = "60"
         btnCheck.setOnClickListener {
@@ -106,10 +114,17 @@ class QuestionActivity : AppCompatActivity() {
         rdbAnswer3.text = allquestions[questionId].options[2]
     }
 
-    private fun getInfo(id: Int) {
-        Api().urlQuestions.httpGet().responseObject(Question.Deserializer()) { request, response, result ->
+    private fun getInfo(name: String?) {
+         val url = Api().urlQuestions
+        Log.d("url", url)
+        Log.d("url2", url+"?location=" + name)
+        url+"?location=$name".httpGet().responseObject(Question.Deserializer()) { request, response, result ->
             when (result) {
                 is Result.Success -> {
+                    rdbAnswer1.visibility = View.VISIBLE
+                    rdbAnswer2.visibility = View.VISIBLE
+                    rdbAnswer3.visibility = View.VISIBLE
+                    btnCheck.visibility = View.VISIBLE
                     val (questions, err) = result
                     questions?.forEach { question ->
                         Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
@@ -119,14 +134,11 @@ class QuestionActivity : AppCompatActivity() {
                     txtQuestion.text = allquestions[questionId].content
                     changeAnswers()
                     answer = allquestions[questionId].answer
+                    count.start()
                 }
 
                 is Result.Failure -> {
                     txtQuestion.text = "Couldn't find question"
-                    rdbAnswer1.visibility = View.INVISIBLE
-                    rdbAnswer2.visibility = View.INVISIBLE
-                    rdbAnswer3.visibility = View.INVISIBLE
-                    btnCheck.visibility = View.INVISIBLE
                 }
             }
         }
