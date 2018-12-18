@@ -1,5 +1,6 @@
 package com.example.pathhunt.pathhuntkotlin
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -112,6 +113,11 @@ class QuestionActivity : AppCompatActivity() {
         rdbAnswer1.text = allquestions[questionId].options[0]
         rdbAnswer2.text = allquestions[questionId].options[1]
         rdbAnswer3.text = allquestions[questionId].options[2]
+
+        btnMap.setOnClickListener {
+            val intent = Intent(this,MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun getInfo(name: String?) {

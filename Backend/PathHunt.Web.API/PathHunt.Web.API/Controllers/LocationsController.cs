@@ -28,9 +28,10 @@ namespace PathHunt.Web.API.Controllers
         }
 
         [HttpGet("api/locations/{id}")]
-        public Location GetLocation(int id)
+        public Location GetLocations(int id)
         {
-            return facade.GetLocation(id);
+            return facade.GetAllLocations(id);
         }
+
     }
 }

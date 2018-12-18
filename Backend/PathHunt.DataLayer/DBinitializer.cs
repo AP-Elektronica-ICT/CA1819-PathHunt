@@ -32,25 +32,16 @@ namespace PathHunt.DataLayer
 
             if (!context.Locations.Any())
             {
-                var location3 = new Location()
+                var location4 = new Location()
                 {
                     Name="MAS",
-                    Latitude = 51.2289238F,
-                    Longitude = 4.4026316F
+                    Street ="Hanzestedenplaats 1, 2000 Antwerpen, Belgium"
                 };
 
-                var location4 = new Location()
-                {  
-                    Name="US Army Monument",
-                    Latitude = 51.2256383F,
-                    Longitude = 4.3989945F
-
-                };
-
-                context.Locations.Add(location3);
+                
                 context.Locations.Add(location4);
-                //context.SaveChanges();
-
+                context.SaveChanges();
+                
             }
 
             if (!context.Questions.Any())
@@ -58,21 +49,18 @@ namespace PathHunt.DataLayer
                 var location1 = new Location()
                 {
                     Name = "Centraal Station",
-                    Latitude = 51.21659257523276F,
-                    Longitude = 4.4211409093259135F
+                    Street = "Koningin Astridplein 27,2018 Antwerpen,Belgium"
                 };
                 var location2 = new Location()
                 {
                     Name = "David Teniers II",
-                    Latitude = 51.21815464148643F,
-                    Longitude = 4.411614649205831F
+                    Street = "Teniersplaats 4, 2000 Antwerpen, Belgium"
                 };
 
                 var location3 = new Location()
                 {
                     Name = "Paleis op de Meir",
-                    Latitude = 51.21811763366044F,
-                    Longitude = 4.408473496461511F,
+                    Street ="Meir 50, 2000 Antwerpen, Belgium"
                 };
                 var Question1 = new Question()
                 {

@@ -20,7 +20,7 @@ namespace PathHunt.BusinessLayer
         {
             return context.Locations.ToList();
         }
-        public Location GetLocation(int id)
+        public Location GetAllLocations(int id)
         {
             return context.Locations
                 .Find(id);
