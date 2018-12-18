@@ -53,6 +53,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mapFragment.getMapAsync(this)
         getAllLocations(locationId)
         getGeoCoding()
+        getDirections()
         setUpMap()
 
 
