@@ -18,7 +18,7 @@ import android.util.Log
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
-//import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
+import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
