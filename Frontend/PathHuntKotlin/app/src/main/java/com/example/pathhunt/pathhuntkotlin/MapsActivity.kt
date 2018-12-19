@@ -3,6 +3,7 @@ package com.example.pathhunt.pathhuntkotlin
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
+import android.app.IntentService
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 //import android.location.Location
@@ -22,6 +23,9 @@ import com.example.pathhunt.pathhuntkotlin.Location
 import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingEvent
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -35,12 +39,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private var locationUpdateState = false
-    //geofencingclient is used for setting up the geofences
-    //private lateinit var geofencingClient: GeofencingClient
+
     //used for google maps activity (add stuff like markers etc)
     private lateinit var mMap: GoogleMap
     //used  for locations
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var geofencingClient: GeofencingClient
     //private lateinit var lastLocation: Location
     //var alllocations: MutableList<Location> = mutableListOf()
     //this id is used as parameter for getlocations
@@ -52,6 +56,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
         private const val REQUEST_CHECK_SETTINGS = 2
+
     }
 
     override fun onMarkerClick(p0: Marker?) = false
@@ -68,17 +73,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         getGeoCoding()
         getDirections()
         createLocationRequest()
+        buildGeofence()
 
 
-        //use fusedlocationclient & geofencingclient from locationservices
+        //use fusedlocationclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        //geofencingClient = LocationServices.getGeofencingClient(this)
+        geofencingClient = LocationServices.getGeofencingClient(this)
+
 
         //soft solution to switch to questionsactivity
-        btnQuestion.setOnClickListener {
+      /*  btnQuestion.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
     }
 
@@ -91,7 +98,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
 
-        val mas = LatLng(51.2289238, 4.4026316)
+        val mas = LatLng(51.229118, 4.4049659)
         mMap.addMarker(MarkerOptions().position(mas).title("Marker on MAS"))
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(MAS))
 
@@ -115,6 +122,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         )
     }
 
+    /*override fun onHandleIntent( intent: Intent?){
+        //nothing
+    }*/
+
+    override fun onBackPressed() {
+        //disable back button to avoid people going back to previous screens
+        val intent = Intent(this,QuestionActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun buildGeofence(): Geofence? {
+        val latitude = 51.229118
+        val longitude = 4.4049659
+        val radius = 50
+
+        if (latitude != null && longitude != null && radius != null) {
+            return Geofence.Builder()
+                .setRequestId(1.toString())
+                .setCircularRegion(
+                    latitude,
+                    longitude,
+                    radius.toFloat()
+                )
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .build()
+        }
+        return null
+    }
+
+
+
     //checks for permission to search for finelocation (currentlocation)
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(
@@ -135,9 +174,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private fun createLocationRequest() {
         locationRequest = LocationRequest()
         //update interval in millis
-        locationRequest.interval = 10000
+        locationRequest.interval = 100
         //update fastest interval in millis
-        locationRequest.fastestInterval = 5000
+        locationRequest.fastestInterval = 50
+        //maximum wait time in millis
+        locationRequest.maxWaitTime = 1000
         //high accuracy needed for locationupdates for geofencing
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
