@@ -30,13 +30,15 @@ import java.util.*
 
 class QuestionActivity : AppCompatActivity() {
     var allquestions: MutableList<Question> = mutableListOf()
-    var answer: String? = null
-    var userAnswer: String? = null
+    var answer: String? = ""
+    var userAnswer: String? = ""
     var questionLocation: String? = ""
     var questionId: Int = 0
     var totalScore: Int = 0
     var scoreToGain: Int = 60
     var time: Int = 0
+    var locationId: Int = 2
+    var nextStreet: String? = ""
     //Timer, mensen krijgen 60 seconden om vraag te beantwoorden
     //om de 5 seconden gaat er 5 score van de totale score die ze kunnen verdienen af
     var count: CountDownTimer = object : CountDownTimer(60000, 1000) {
@@ -60,8 +62,10 @@ class QuestionActivity : AppCompatActivity() {
         if(intent.hasExtra("LocationName")){
             questionLocation = intent.getStringExtra("LocationName")
         }
-        questionLocation = "David Teniers II"
-        //Start countdown
+        if(intent.hasExtra("Score")){
+            totalScore = intent.getIntExtra("Score", 0)
+        }
+        questionLocation = "Centraal Station"
         rdbAnswer1.visibility = View.INVISIBLE
         rdbAnswer2.visibility = View.INVISIBLE
         rdbAnswer3.visibility = View.INVISIBLE
@@ -103,6 +107,12 @@ class QuestionActivity : AppCompatActivity() {
         count.cancel()
         setScore(totalScore)
         resetScore()
+        val intent = Intent(this, MapsActivity::class.java)
+        intent.putExtra("Score", totalScore)
+        locationId ++
+        getNextDestination(locationId)
+        intent.putExtra("NextStreet", nextStreet)
+        startActivity(intent)
         //nextQuestion()
         //count.start()
     }
@@ -114,15 +124,27 @@ class QuestionActivity : AppCompatActivity() {
         rdbAnswer1.text = allquestions[questionId].options[0]
         rdbAnswer2.text = allquestions[questionId].options[1]
         rdbAnswer3.text = allquestions[questionId].options[2]
-
-//        btnMap.setOnClickListener {
-////            val intent = Intent(this,MapsActivity::class.java)
-////            startActivity(intent)
-////        }
     }
 
 //code snippet: https://stackoverflow.com/questions/45685026/how-can-i-get-a-random-number-in-kotlin
     private fun IntRange.random() = Random().nextInt((endInclusive + 1) - start) +  start
+
+    private fun getNextDestination(id: Int){
+        var url = Api().urlLocations+"/" + id.toString()
+        url.httpGet().responseObject(Location.SingleDeserializer()){request, response, result ->
+            when (result){
+                is Result.Success ->{
+                    val (locations, err) = result
+                    nextStreet = locations?.street
+                    Log.d("nextstreet", nextStreet)
+                }
+
+                is Result.Failure -> {
+                    nextStreet = "No street found"
+                }
+            }
+        }
+    }
 
     private fun getInfo(name: String?) {
          var url = Api().urlQuestions +"?location=" + name

@@ -11,5 +11,13 @@ data class Location(
 {
     class Deserializer: ResponseDeserializable<Array<Location>>{
         override fun deserialize(content: String): Array<Location>? = Gson().fromJson(content, Array<Location>::class.java)
-        }
     }
+
+    class SingleDeserializer: ResponseDeserializable<Location>{
+        override fun deserialize(content: String): Location? = Gson().fromJson(content, Location::class.java)
+    }
+}
+
+
+
+
