@@ -31,21 +31,23 @@ import org.jetbrains.anko.doAsync
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-
+    //locationrequest, locationupdatestate & callback are used for locationupdates
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private var locationUpdateState = false
-    lateinit var geofencingClient: GeofencingClient
-
+    //geofencingclient is used for setting up the geofences
+    //private lateinit var geofencingClient: GeofencingClient
+    //used for google maps activity (add stuff like markers etc)
     private lateinit var mMap: GoogleMap
+    //used  for locations
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var lastLocation: Location
+    //private lateinit var lastLocation: Location
     //var alllocations: MutableList<Location> = mutableListOf()
-
+    //this id is used as parameter for getlocations
     var locationId: Int = 1
 
 
-    //this companion object will ask for permission to use locationservices
+    //this companion object will ask for permission to use locationservices & request settings check
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
@@ -61,15 +63,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        //call methods on this activity
         getAllLocations(locationId)
         getGeoCoding()
         getDirections()
-        //setUpMap()
         createLocationRequest()
+        //setUpMap()
 
+        //use fusedlocationclient & geofencingclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        geofencingClient = LocationServices.getGeofencingClient(this)
+        //geofencingClient = LocationServices.getGeofencingClient(this)
 
+        //soft solution to switch to questionsactivity
         btnQuestion.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
@@ -77,7 +82,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     }
 
-
+    //onmapready function (adds stuff to mapsactivity)
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -123,36 +128,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             )
             return
         }
-        fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback,null)
+        //fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback,null)
 
     }
 
     private fun createLocationRequest() {
-        // 1
         locationRequest = LocationRequest()
-        // 2
-        locationRequest.interval = 10000
-        // 3
-        locationRequest.fastestInterval = 5000
+        //update interval in millis
+        locationRequest.interval = 1
+        //update fastest interval in millis
+        locationRequest.fastestInterval = 0
+        //high accuracy needed for locationupdates for geofencing
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
+        //locationrequest
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
 
-        // 4
+        // checks settings (location enabled etc)
         val client = LocationServices.getSettingsClient(this)
         val task = client.checkLocationSettings(builder.build())
 
-        // 5
+        // if locations is enabled, then update location & run setUpMap
         task.addOnSuccessListener {
             locationUpdateState = true
             setUpMap()
         }
+        //if task fails show a dialog
         task.addOnFailureListener { e ->
             // 6
             if (e is ResolvableApiException) {
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
+                // exception
                 try {
                     // Show the dialog by calling startResolutionForResult(),
                     // and check the result in onActivityResult().
@@ -165,6 +171,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
+    //get request for all locations coming from our db
     fun getAllLocations(id: Int) {
         Api().urlLocations.httpGet().responseObject(Location.Deserializer()) { request, response, result ->
             val (locations, err) = result
@@ -200,7 +207,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     val path: MutableList<List<LatLng>> = ArrayList()
 
-    //this url will be used to get directions
+    //this url will be used to get directions from directions google maps api
     fun getDirections() {
         Api().urlDirections.httpGet().responseString { request, response, result ->
             when (result) {
