@@ -2,11 +2,11 @@ package com.example.pathhunt.pathhuntkotlin
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 //import android.location.Location
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -20,8 +20,8 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
 import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -33,10 +33,9 @@ import org.jetbrains.anko.doAsync
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var locationCallback: LocationCallback
-    // 2
     private lateinit var locationRequest: LocationRequest
     private var locationUpdateState = false
-
+    lateinit var geofencingClient: GeofencingClient
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -65,9 +64,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         getAllLocations(locationId)
         getGeoCoding()
         getDirections()
-        setUpMap()
+        //setUpMap()
+        createLocationRequest()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        geofencingClient = LocationServices.getGeofencingClient(this)
 
         btnQuestion.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
@@ -96,7 +97,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnMarkerClickListener(this)
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
 
         mMap.addPolyline(
@@ -122,8 +123,46 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             )
             return
         }
+        fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback,null)
 
+    }
 
+    private fun createLocationRequest() {
+        // 1
+        locationRequest = LocationRequest()
+        // 2
+        locationRequest.interval = 10000
+        // 3
+        locationRequest.fastestInterval = 5000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+
+        // 4
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(builder.build())
+
+        // 5
+        task.addOnSuccessListener {
+            locationUpdateState = true
+            setUpMap()
+        }
+        task.addOnFailureListener { e ->
+            // 6
+            if (e is ResolvableApiException) {
+                // Location settings are not satisfied, but this can be fixed
+                // by showing the user a dialog.
+                try {
+                    // Show the dialog by calling startResolutionForResult(),
+                    // and check the result in onActivityResult().
+                    e.startResolutionForResult(this@MapsActivity,
+                        REQUEST_CHECK_SETTINGS)
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    // Ignore the error.
+                }
+            }
+        }
     }
 
     fun getAllLocations(id: Int) {
