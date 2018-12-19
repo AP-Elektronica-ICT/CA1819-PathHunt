@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+//import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -19,6 +20,8 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Location
 import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -29,17 +32,25 @@ import org.jetbrains.anko.doAsync
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
+    private lateinit var locationCallback: LocationCallback
+    // 2
+    private lateinit var locationRequest: LocationRequest
+    private var locationUpdateState = false
+
+
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var lastLocation: Location
     //var alllocations: MutableList<Location> = mutableListOf()
 
     var locationId: Int = 1
 
 
-
     //this companion object will ask for permission to use locationservices
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+
+        private const val REQUEST_CHECK_SETTINGS = 2
     }
 
     override fun onMarkerClick(p0: Marker?) = false
@@ -56,13 +67,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         getDirections()
         setUpMap()
 
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         btnQuestion.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
         }
+
     }
 
 
@@ -85,7 +96,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnMarkerClickListener(this)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
 
         mMap.addPolyline(
@@ -111,16 +122,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             )
             return
         }
+
+
     }
 
-     fun getAllLocations(id:Int){
-        Api().urlLocations.httpGet().responseObject(Location.Deserializer()) {request, response, result ->
-            val (locations,err) = result
+    fun getAllLocations(id: Int) {
+        Api().urlLocations.httpGet().responseObject(Location.Deserializer()) { request, response, result ->
+            val (locations, err) = result
             locations?.forEach { location ->
                 Log.d("Location: street", "${location.street}")
             }
         }
-       /* Api().urlLocations/*+"${id}"*/.httpGet().responseString { request, response, result ->
+        /* Api().urlLocations/*+"${id}"*/.httpGet().responseString { request, response, result ->
             when(result){
                 is Result.Success -> {
                     val location = result.get()
@@ -131,15 +144,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         }*/
     }
+
     //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
-    fun getGeoCoding(){
+    fun getGeoCoding() {
         Api().urlGeocoding.httpGet().responseString { request, response, result ->
-            when(result){
+            when (result) {
                 is Result.Success -> {
                     val geocode = result.get()
                     Log.d("Geocode", "$geocode")
                 }
-                is Result.Failure ->{}
+                is Result.Failure -> {
+                }
             }
         }
     }
@@ -147,17 +162,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     val path: MutableList<List<LatLng>> = ArrayList()
 
     //this url will be used to get directions
-    fun getDirections(){
+    fun getDirections() {
         Api().urlDirections.httpGet().responseString { request, response, result ->
-            when (result){
-                is Result.Success ->{
+            when (result) {
+                is Result.Success -> {
                     val directions = result.get()
-                    Log.d("Directions", "$directions")
+                    //Log.d("Directions", "$directions")
                 }
-                is Result.Failure ->{
+                is Result.Failure -> {
 
                 }
             }
         }
     }
 }
+
