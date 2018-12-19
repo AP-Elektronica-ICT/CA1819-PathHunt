@@ -7,3 +7,8 @@ D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\P
 D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.AssemblyInfo.cs
 D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.dll
 D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\Microsoft.EntityFrameworkCore.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\Newtonsoft.Json.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\Microsoft.EntityFrameworkCore.xml
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\bin\Release\netcoreapp2.0\Newtonsoft.Json.xml
+D:\School\CA1819-PathHunt\Backend\PathHunt.DataLayer\obj\Release\netcoreapp2.0\PathHunt.DataLayer.csproj.CopyComplete

@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.row_list.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.net.URL
+import java.util.*
 
 class QuestionActivity : AppCompatActivity() {
     var allquestions: MutableList<Question> = mutableListOf()
@@ -82,14 +83,14 @@ class QuestionActivity : AppCompatActivity() {
             questionAnswered()
         }
     }
-    private fun nextQuestion(){
+ /*   private fun nextQuestion(){
         if (questionId < allquestions.size - 1) {
             questionId++
         }
         txtQuestion.text = allquestions[questionId].content
         changeAnswers()
         answer = allquestions[questionId].answer
-    }
+    }*/
     private fun setScore(newScore: Int) {
         txtScoreQuestion.text = "Score: " + newScore.toString()
     }
@@ -102,8 +103,8 @@ class QuestionActivity : AppCompatActivity() {
         count.cancel()
         setScore(totalScore)
         resetScore()
-        nextQuestion()
-        count.start()
+        //nextQuestion()
+        //count.start()
     }
 
     private fun changeAnswers() {
@@ -114,17 +115,19 @@ class QuestionActivity : AppCompatActivity() {
         rdbAnswer2.text = allquestions[questionId].options[1]
         rdbAnswer3.text = allquestions[questionId].options[2]
 
-        btnMap.setOnClickListener {
-            val intent = Intent(this,MapsActivity::class.java)
-            startActivity(intent)
-        }
+//        btnMap.setOnClickListener {
+////            val intent = Intent(this,MapsActivity::class.java)
+////            startActivity(intent)
+////        }
     }
 
+//code snippet: https://stackoverflow.com/questions/45685026/how-can-i-get-a-random-number-in-kotlin
+    private fun IntRange.random() = Random().nextInt((endInclusive + 1) - start) +  start
+
     private fun getInfo(name: String?) {
-         val url = Api().urlQuestions
+         var url = Api().urlQuestions +"?location=" + name
         Log.d("url", url)
-        Log.d("url2", url+"?location=" + name)
-        url+"?location=$name".httpGet().responseObject(Question.Deserializer()) { request, response, result ->
+        url.httpGet().responseObject(Question.Deserializer()) { request, response, result ->
             when (result) {
                 is Result.Success -> {
                     rdbAnswer1.visibility = View.VISIBLE
@@ -136,7 +139,8 @@ class QuestionActivity : AppCompatActivity() {
                         Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
                         allquestions?.add(question)
                     }
-                    Log.d("All Questions", allquestions.toString())
+                    //Log.d("All Questions", allquestions.toString())
+                    questionId = (0 until allquestions.size).random()
                     txtQuestion.text = allquestions[questionId].content
                     changeAnswers()
                     answer = allquestions[questionId].answer
