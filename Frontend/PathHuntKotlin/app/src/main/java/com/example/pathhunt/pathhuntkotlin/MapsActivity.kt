@@ -68,7 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         getGeoCoding()
         getDirections()
         createLocationRequest()
-        //setUpMap()
+
 
         //use fusedlocationclient & geofencingclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -135,9 +135,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private fun createLocationRequest() {
         locationRequest = LocationRequest()
         //update interval in millis
-        locationRequest.interval = 1
+        locationRequest.interval = 10000
         //update fastest interval in millis
-        locationRequest.fastestInterval = 0
+        locationRequest.fastestInterval = 5000
         //high accuracy needed for locationupdates for geofencing
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
