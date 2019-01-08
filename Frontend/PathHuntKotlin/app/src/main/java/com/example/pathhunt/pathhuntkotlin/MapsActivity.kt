@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.app.IntentService
+import android.app.PendingIntent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-//import android.location.Location
+import android.location.Location
 
 
 import com.google.android.gms.maps.GoogleMap
@@ -19,8 +20,8 @@ import android.support.v4.app.ActivityCompat
 import android.util.Log
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
-import com.example.pathhunt.pathhuntkotlin.Location
-import com.example.pathhunt.pathhuntkotlin.Location.Deserializer
+import com.example.pathhunt.pathhuntkotlin.Locatie
+import com.example.pathhunt.pathhuntkotlin.Locatie.Deserializer
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices
@@ -38,6 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //locationrequest, locationupdatestate & callback are used for locationupdates
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
+    private lateinit var lastLocation: Location
     private var locationUpdateState = false
 
     //used for google maps activity (add stuff like markers etc)
@@ -74,18 +76,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         getDirections()
         createLocationRequest()
         buildGeofence()
-
+       //buildGeofencingRequest()
 
         //use fusedlocationclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         geofencingClient = LocationServices.getGeofencingClient(this)
 
-
-        //soft solution to switch to questionsactivity
-      /*  btnQuestion.setOnClickListener {
-            val intent = Intent(this, QuestionActivity::class.java)
-            startActivity(intent)
-        }*/
 
     }
 
@@ -102,6 +98,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.addMarker(MarkerOptions().position(mas).title("Marker on MAS"))
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(MAS))
 
+        val oevel = LatLng(51.46023539999999,4.4489466)
+        mMap.addMarker(MarkerOptions().position(oevel).title("oevelen"))
         //val nieuwedestination = LatLng(${locations.latitude},${locations.longitude})
         //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))
 
@@ -111,6 +109,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.setOnMarkerClickListener(this)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null){
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+
+            }}
 
         mMap.addPolyline(
             PolylineOptions().add(
@@ -122,9 +127,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         )
     }
 
-    /*override fun onHandleIntent( intent: Intent?){
-        //nothing
-    }*/
+
 
     override fun onBackPressed() {
         //disable back button to avoid people going back to previous screens
@@ -133,8 +136,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     private fun buildGeofence(): Geofence? {
-        val latitude = 51.229118
-        val longitude = 4.4049659
+        val latitude = 51.46023539999999
+        val longitude = 4.4489466
         val radius = 50
 
         if (latitude != null && longitude != null && radius != null) {
@@ -149,9 +152,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .build()
         }
+
         return null
     }
 
+
+ /*   private fun buildGeofencingRequest(): GeofencingRequest {
+        return GeofencingRequest.Builder()
+            .setInitialTrigger(0)
+           // .addGeofence { buildGeofence() }
+            .build()
+    }*/
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val intent = Intent(this, GeofenceTransitionsIntentService::class.java)
+        PendingIntent.getService(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 
 
     //checks for permission to search for finelocation (currentlocation)
@@ -168,6 +187,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return
         }
         //fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback,null)
+       /* fusedLocationClient.lastLocation.addOnSuccessListener(this) { locatie ->
+            if (locatie != null){
+                lastLocation = locatie
+                val currentLatLng = LatLng(locatie.latitude, locatie.longitude)
+
+            }
+        }*/
 
     }
 
@@ -194,6 +220,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         task.addOnSuccessListener {
             locationUpdateState = true
             setUpMap()
+
         }
         //if task fails show a dialog
         task.addOnFailureListener { e ->
@@ -214,10 +241,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     //get request for all locations coming from our db
     fun getAllLocations(id: Int) {
-        Api().urlLocations.httpGet().responseObject(Location.Deserializer()) { request, response, result ->
+        Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
             val (locations, err) = result
-            locations?.forEach { location ->
-                Log.d("Location: street", "${location.street}")
+            locations?.forEach { locatie ->
+                Log.d("Location: street", "${locatie.street}")
             }
         }
         /* Api().urlLocations/*+"${id}"*/.httpGet().responseString { request, response, result ->

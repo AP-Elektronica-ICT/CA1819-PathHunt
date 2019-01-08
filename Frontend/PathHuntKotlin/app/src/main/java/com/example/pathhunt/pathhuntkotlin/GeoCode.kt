@@ -15,7 +15,7 @@ data class Result(
 
 data class Geometry(
     val bounds: Bounds,
-    val location: Location,
+    val location: Locatie,
     val location_type: String,
     val viewport: Viewport
 )
