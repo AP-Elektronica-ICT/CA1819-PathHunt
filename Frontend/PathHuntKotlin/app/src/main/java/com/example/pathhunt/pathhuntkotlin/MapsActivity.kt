@@ -23,6 +23,8 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Locatie
 import com.example.pathhunt.pathhuntkotlin.Locatie.Deserializer
+import com.example.pathhunt.pathhuntkotlin.Geometry
+import com.example.pathhunt.pathhuntkotlin.Geometry.Deserializer2
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices
@@ -54,6 +56,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //this id is used as parameter for getlocations
     var locationId: Int = 1
     var straatnaam: String = ""
+    var geometrie: String = ""
+
 
 
     //this companion object will ask for permission to use locationservices & request settings check
@@ -270,19 +274,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
     fun getGeoCoding() {
         var apicall = Api().urlGeocoding + straatnaam
-        apicall.httpGet().responseString { request, response, result ->
-            when (result) {
-                is Result.Success -> {
-                    val geocode = result.get()
-                    Log.d("Geocode", "$geocode")
-                    
+        Log.d("apicall:", apicall)
+        apicall.httpGet().responseObject(Geometry.Deserializer2()) { request, response, result ->
+            val (geometrics, err) = result
+                geometrics?.forEach { result ->
+                    Log.d("result:", "${geometrics[1]}")
+                    geometrie = geometrics[1].geometry.location.toString()
                 }
-                is Result.Failure -> {
 
+                    Log.d("geocodecoordinates:", geometrie)
                 }
             }
-        }
-    }
+
+
 
     val path: MutableList<List<LatLng>> = ArrayList()
 
