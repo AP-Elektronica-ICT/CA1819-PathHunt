@@ -269,11 +269,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
     fun getGeoCoding() {
-        Api().urlGeocoding.httpGet().responseString { request, response, result ->
+        var apicall = Api().urlGeocoding + straatnaam
+        apicall.httpGet().responseString { request, response, result ->
             when (result) {
                 is Result.Success -> {
                     val geocode = result.get()
                     Log.d("Geocode", "$geocode")
+                    
                 }
                 is Result.Failure -> {
 
