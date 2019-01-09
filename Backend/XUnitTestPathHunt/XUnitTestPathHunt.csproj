@@ -8,8 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
@@ -18,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PathHunt.BusinessLayer\PathHunt.BusinessLayer.csproj" />
+    <ProjectReference Include="..\PathHunt.Web.API\PathHunt.Web.API\PathHunt.Web.API.csproj" />
   </ItemGroup>
 
 </Project>
