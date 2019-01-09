@@ -62,3 +62,6 @@ D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHun
 D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.Web.API.runtimeconfig.dev.json
 D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.Web.API.dll
 D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\PathHunt.Web.API.pdb
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.Web.API\PathHunt.Web.API\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll

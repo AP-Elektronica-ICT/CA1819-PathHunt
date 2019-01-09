@@ -54,6 +54,10 @@ class QuestionActivity : AppCompatActivity() {
             }
         }
     }
+//To make sure they can't press back button
+    override fun onBackPressed() {
+
+    }
 
     //val Question1 = Question(answer = "Test123", content = "Wat is het antwoord", id = null)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +77,7 @@ class QuestionActivity : AppCompatActivity() {
         getInfo(questionLocation)
         setScore(totalScore)
         txtTimeRemaining.text = "60"
+
         btnCheck.setOnClickListener {
             if (rdgAnswers.checkedRadioButtonId == -1) {
                 Toast.makeText(this, "Please select an answer", Toast.LENGTH_LONG).show()
@@ -113,6 +118,7 @@ class QuestionActivity : AppCompatActivity() {
         getNextDestination(locationId)
         intent.putExtra("NextStreet", nextStreet)
         startActivity(intent)
+        finish()
         //nextQuestion()
         //count.start()
     }

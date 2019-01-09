@@ -66,3 +66,6 @@ D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\o
 D:\Users\sande\Documents\GitHub\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\obj\Debug\netcoreapp2.0\PathHunt.BusinessLayer.csproj.CopyComplete
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.dll
 C:\Users\mjoose\Documents\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.xml
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\School\CA1819-PathHunt\Backend\PathHunt.BusinessLayer\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
