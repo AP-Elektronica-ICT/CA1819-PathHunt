@@ -6,15 +6,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#090716"
         tools:context=".MainActivity">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Welcome"
-            android:textSize="50dp"
-            android:gravity="center"
-    />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="PathHunt"
+        android:textStyle="bold"
+        android:layout_marginTop="80dp"
+        android:textColor="#FFF"
+        android:textSize="50dp" />
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -24,32 +27,51 @@
             android:gravity="center">
 
         <Button
-                android:id="@+id/btnCreateTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create a team"
-                android:textSize="20dp"/>
+            android:id="@+id/btnCreateTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create a team"
+            android:background="@drawable/button_rounded_corners_blue"
+            android:textColor="#FFF"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="20dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnContinue"
             android:text="Next"
+            android:padding="10dp"
+            android:background="@drawable/button_rounded_corners_green"
+            android:textColor="#FFF"
             android:textSize="20dp"/>
 
     </LinearLayout>
     <Button
-            android:text="INTRODUCTION"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/btnIntroduction"/>
+        android:text="INTRODUCTION"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corners_green"
+        android:layout_margin="5dp"
+        android:textColor="#FFF"
+        android:id="@+id/btnIntroduction"/>
     <Button
-            android:text="MAPS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/btnMaps"/>
+        android:text="MAPS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corners_green"
+        android:textColor="#FFF"
+        android:layout_margin="5dp"
+        android:id="@+id/btnMaps"/>
     <Button
-            android:text="LEADERBOARD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/btnLeaderboard"/>
+        android:text="LEADERBOARD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_rounded_corners_green"
+        android:textColor="#FFF"
+        android:layout_margin="5dp"
+        android:id="@+id/btnLeaderboard"/>
 
 
 </LinearLayout>
