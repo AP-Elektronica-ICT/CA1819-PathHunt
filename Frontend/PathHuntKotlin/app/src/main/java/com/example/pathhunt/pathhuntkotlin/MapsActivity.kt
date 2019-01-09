@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.location.Location
+import android.location.Geocoder
 
 
 import com.google.android.gms.maps.GoogleMap
@@ -40,6 +41,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private lateinit var lastLocation: Location
+
     private var locationUpdateState = false
 
     //used for google maps activity (add stuff like markers etc)
@@ -51,6 +53,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //var alllocations: MutableList<Location> = mutableListOf()
     //this id is used as parameter for getlocations
     var locationId: Int = 1
+    var straatnaam: String = ""
 
 
     //this companion object will ask for permission to use locationservices & request settings check
@@ -72,7 +75,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mapFragment.getMapAsync(this)
         //call methods on this activity
         getAllLocations(locationId)
-        getGeoCoding()
+
         getDirections()
         createLocationRequest()
         buildGeofence()
@@ -245,8 +248,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             val (locations, err) = result
             locations?.forEach { locatie ->
                 Log.d("Location: street", "${locatie.street}")
+                straatnaam = locations[id].street
             }
+            Log.d("straatnaam",straatnaam)
+            getGeoCoding()
         }
+
         /* Api().urlLocations/*+"${id}"*/.httpGet().responseString { request, response, result ->
             when(result){
                 is Result.Success -> {
@@ -257,6 +264,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 is Result.Failure-> {}
             }
         }*/
+
     }
 
     //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
@@ -268,6 +276,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     Log.d("Geocode", "$geocode")
                 }
                 is Result.Failure -> {
+
                 }
             }
         }
