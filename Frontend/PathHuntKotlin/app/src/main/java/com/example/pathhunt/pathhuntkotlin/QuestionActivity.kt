@@ -39,8 +39,9 @@ class QuestionActivity : AppCompatActivity() {
     var time: Int = 0
     var locationId: Int = 2
     var nextStreet: String? = ""
+    var zeroScore : Boolean = false
     //Timer, mensen krijgen 60 seconden om vraag te beantwoorden
-    //om de 5 seconden gaat er 5 score van de totale score die ze kunnen verdienen af
+    //om de 5 seconden gaat er 5 score, van de totale score die ze kunnen verdienen, af
     var count: CountDownTimer = object : CountDownTimer(60000, 1000) {
         override fun onFinish() {
             Toast.makeText(this@QuestionActivity, "Time's up!", Toast.LENGTH_LONG).show()
@@ -49,7 +50,10 @@ class QuestionActivity : AppCompatActivity() {
         override fun onTick(p0: Long) {
             time = (p0 / 1000).toInt()
             txtTimeRemaining.text = time.toString()
-            if ((time % 5) == 0) {
+            if(scoreToGain == 0){
+                zeroScore = true
+            }
+            if ((time % 5) == 0 && zeroScore == false) {
                 scoreToGain -= 5
             }
         }
@@ -69,6 +73,7 @@ class QuestionActivity : AppCompatActivity() {
         if(intent.hasExtra("Score")){
             totalScore = intent.getIntExtra("Score", 0)
         }
+        //Test locatie hard coded
         questionLocation = "Centraal Station"
         rdbAnswer1.visibility = View.INVISIBLE
         rdbAnswer2.visibility = View.INVISIBLE
