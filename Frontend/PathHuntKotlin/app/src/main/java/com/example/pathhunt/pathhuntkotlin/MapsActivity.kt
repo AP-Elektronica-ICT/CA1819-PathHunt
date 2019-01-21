@@ -43,7 +43,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private lateinit var lastLocation: Location
-
+    private var geofenceList: MutableList<Geofence> = mutableListOf()
     private var locationUpdateState = false
 
     //used for google maps activity (add stuff like markers etc)
@@ -88,6 +88,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //use fusedlocationclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         geofencingClient = LocationServices.getGeofencingClient(this)
+        geofencingClient?.addGeofences(getGeofencingRequest(), geofencePendingIntent)?.run{
+            addOnSuccessListener {
+                Log.d("geo", "succesfull addition")
+            }
+            addOnFailureListener{
+                Log.d("geo", "failed mate")
+            }
+        }
 
 
     }
@@ -142,25 +150,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         startActivity(intent)
     }
 
-    private fun buildGeofence(): Geofence? {
-        val latitude = 51.46023539999999
-        val longitude = 4.4489466
-        val radius = 50
+    private fun buildGeofence()/*: Geofence?*/ {
+        //val latitude = 51.46023539999999
+        //val longitude = 4.4489466
+        val latitude = 51.431991
+        val longitude = 4.436960
+        val radius = 20
 
-        if (latitude != null && longitude != null && radius != null) {
-            return Geofence.Builder()
-                .setRequestId(1.toString())
-                .setCircularRegion(
-                    latitude,
-                    longitude,
-                    radius.toFloat()
-                )
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .build()
-        }
+        //if (latitude != null && longitude != null && radius != null) {
+        geofenceList.add(
+                Geofence.Builder()
+                    .setRequestId(1.toString())
+                    .setCircularRegion(
+                        latitude,
+                        longitude,
+                        radius.toFloat()
+                    )
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                    .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                    .build()
+        )
+       // }
+    }
 
-        return null
+    private fun getGeofencingRequest(): GeofencingRequest{
+        return GeofencingRequest.Builder()
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .addGeofences(geofenceList)
+            .build()
     }
 
 
