@@ -67,12 +67,14 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-        if(intent.hasExtra("LocationName")){
-            questionLocation = intent.getStringExtra("LocationName")
-        }
-        if(intent.hasExtra("Score")){
-            totalScore = intent.getIntExtra("Score", 0)
-        }
+//        if(intent.hasExtra("LocationName")){
+//            questionLocation = intent.getStringExtra("LocationName")
+//        }
+//        if(intent.hasExtra("Score")){
+//            totalScore = intent.getIntExtra("Score", 0)
+//        }
+        questionLocation = prefs.nextLocation
+        totalScore = prefs.teamScore
         //Test locatie hard coded
         questionLocation = "Centraal Station"
         rdbAnswer1.visibility = View.INVISIBLE
@@ -118,10 +120,12 @@ class QuestionActivity : AppCompatActivity() {
         setScore(totalScore)
         resetScore()
         val intent = Intent(this, MapsActivity::class.java)
-        intent.putExtra("Score", totalScore)
+        prefs.teamScore = totalScore
+        //intent.putExtra("Score", totalScore)
         locationId ++
         getNextDestination(locationId)
-        intent.putExtra("NextStreet", nextStreet)
+        prefs.nextLocation=nextStreet
+        //intent.putExtra("NextStreet", nextStreet)
         startActivity(intent)
         finish()
         //nextQuestion()

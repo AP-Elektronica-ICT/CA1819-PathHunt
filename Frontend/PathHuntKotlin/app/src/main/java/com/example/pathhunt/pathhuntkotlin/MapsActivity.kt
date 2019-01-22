@@ -58,11 +58,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        btnQuestion.setOnClickListener {
-            val intent = Intent(this, QuestionActivity::class.java)
-            startActivity(intent)
-        }
     }
 
 
