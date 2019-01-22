@@ -8,7 +8,6 @@ import android.app.PendingIntent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.location.Location
-import android.location.Geocoder
 
 
 import com.google.android.gms.maps.GoogleMap
@@ -60,6 +59,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
 
+
+
     //this companion object will ask for permission to use locationservices & request settings check
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -80,7 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //call methods on this activity
         getAllLocations(locationId)
 
-        //getDirections()
+
         createLocationRequest()
         buildGeofence()
        //buildGeofencingRequest()
@@ -96,6 +97,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 Log.d("geo", "failed mate")
             }
         }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null){
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                Log.d("currentlatlng", currentLatLng.toString());
+                getDirections()
+            }}
 
 
     }
@@ -125,12 +134,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null){
-                lastLocation = location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
 
-            }}
 
         mMap.addPolyline(
             PolylineOptions().add(
@@ -140,6 +144,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ).width(10F)
                 .color(Color.RED)
         )
+
     }
 
 
@@ -268,18 +273,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
             //Log.d("straatnaam",straatnaam)
             getGeoCoding()
+
         }
 
-        /* Api().urlLocations/*+"${id}"*/.httpGet().responseString { request, response, result ->
-            when(result){
-                is Result.Success -> {
-                    val location = result.get()
-                    Log.d("Locations","$location")
-                }
 
-                is Result.Failure-> {}
-            }
-        }*/
 
     }
 
@@ -304,7 +301,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     //this url will be used to get directions from directions google maps api
     fun getDirections() {
-        Api().urlDirections.httpGet().responseString { request, response, result ->
+        var apicall2 = Api().urlDirections + lastLocation.latitude + "," + lastLocation.longitude
+        Log.d("apicall2:", apicall2)
+        apicall2.httpGet().responseString { request, response, result ->
             when (result) {
                 is Result.Success -> {
                     val directions = result.get()
