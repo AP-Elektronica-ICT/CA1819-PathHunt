@@ -80,7 +80,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //call methods on this activity
         getAllLocations(locationId)
 
-        getDirections()
+        //getDirections()
         createLocationRequest()
         buildGeofence()
        //buildGeofencingRequest()
@@ -181,12 +181,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
 
- /*   private fun buildGeofencingRequest(): GeofencingRequest {
-        return GeofencingRequest.Builder()
-            .setInitialTrigger(0)
-           // .addGeofence { buildGeofence() }
-            .build()
-    }*/
+
     private val geofencePendingIntent: PendingIntent by lazy {
         val intent = Intent(this, GeofenceTransitionsIntentService::class.java)
         PendingIntent.getService(
@@ -268,10 +263,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
             val (locations, err) = result
             locations?.forEach { locatie ->
-                Log.d("Location: street", "${locatie.street}")
+               // Log.d("Location: street", "${locatie.street}")
                 straatnaam = locations[id].street
             }
-            Log.d("straatnaam",straatnaam)
+            //Log.d("straatnaam",straatnaam)
             getGeoCoding()
         }
 
@@ -295,8 +290,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         apicall.httpGet().responseObject(Geometry.Deserializer2()) { request, response, result ->
             val (geometrics, err) = result
                 geometrics?.forEach { result ->
-                    Log.d("result:", "${geometrics[1]}")
-                    geometrie = geometrics[1].geometry.location.toString()
+                    Log.d("result:", "${geometrics[0]}")
+                    geometrie = geometrics[0].geometry.location.toString()
                 }
 
                     Log.d("geocodecoordinates:", geometrie)
