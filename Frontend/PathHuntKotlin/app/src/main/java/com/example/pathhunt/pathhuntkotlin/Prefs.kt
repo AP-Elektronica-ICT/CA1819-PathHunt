@@ -10,6 +10,7 @@ class Prefs (context: Context){
     val TEAM_SCORE: String = "teamScore"
     val NEXT_LOCATION: String = "nextLocation"
     val NEXT_STREET : String = "nextStreet"
+    val NEXT_FAKESTREET : String = "nextFakeStreet"
     val LOCATION_ID : String = "nextLocationId"
     val prefs: SharedPreferences = context.getSharedPreferences(title, MODE_PRIVATE)
 
@@ -28,6 +29,10 @@ class Prefs (context: Context){
     var nextStreet: String?
     get() = prefs.getString(NEXT_STREET, "Rinkvenstraat 2, 2910 Essen, Belgium")
     set(value) = prefs.edit().putString(NEXT_STREET, value).apply()
+
+    var nextExtraStreet: String?
+    get() = prefs.getString(NEXT_FAKESTREET, "")
+    set(value) = prefs.edit().putString(NEXT_FAKESTREET, value).apply()
 
     var nextLocationId: Int
     get() = prefs.getInt(LOCATION_ID, 1)

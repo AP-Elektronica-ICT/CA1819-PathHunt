@@ -354,7 +354,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     //this url will be used to get directions from directions google maps api
     fun getDirections() {
-        var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng
+        var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng + "&waypoints=" + prefs.nextExtraStreet
         //var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=51.46023539999999,4.4489466"
         Log.d("apicall2:", apicall2)
         apicall2.httpGet().responseObject(Directions.Deserializer3()) { request, response, result ->
