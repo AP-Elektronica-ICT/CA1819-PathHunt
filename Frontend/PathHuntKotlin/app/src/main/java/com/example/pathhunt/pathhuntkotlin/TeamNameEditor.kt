@@ -16,9 +16,9 @@ class TeamNameEditor : AppCompatActivity() {
         btnContinue.setOnClickListener {
             val team = Team(null, etxtTeamname.text.toString(), 0)
             prefs.teamScore=0
-            prefs.nextStreet="Rinkvenstraat 2, 2910 Essen, Belgium"
+            prefs.nextStreet="Ellermanstraat 33, 2060 Antwerpen"
             prefs.nextLocationId = 1
-            prefs.nextLocation = "Van Oevelen"
+            prefs.nextLocation = "AP Hogeschool"
             prefs.numberOfQuestions = 0
             CreateTeam(Api().urlTeams, team)
             val intent = Intent(this, QuestionActivity::class.java)
