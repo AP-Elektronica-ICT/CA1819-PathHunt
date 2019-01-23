@@ -3,10 +3,12 @@ package com.example.pathhunt.pathhuntkotlin
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 
+
 data class GeoCode(
     val results: List<Result>,
     val status: String
 )
+
 
 
 data class Result(
@@ -17,6 +19,13 @@ data class Result(
     val types: List<String>
 )
 
+{
+    class Deserializer2: ResponseDeserializable<List<Result>>{
+        override fun deserialize(content: String): List<Result>? {
+            return Gson().fromJson(content, List<Result>())
+        }
+    }
+}
 data class Geometry(
     val bounds: Bounds,
     val location: Location,

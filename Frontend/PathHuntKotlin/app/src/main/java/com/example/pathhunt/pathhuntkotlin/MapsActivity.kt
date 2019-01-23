@@ -23,8 +23,8 @@ import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Locatie
 import com.example.pathhunt.pathhuntkotlin.Locatie.Deserializer
 import com.example.pathhunt.pathhuntkotlin.Geometry
-//import com.example.pathhunt.pathhuntkotlin.GeoCode.Deserializer2
-import com.github.kittinunf.fuel.android.extension.jsonDeserializer
+import com.example.pathhunt.pathhuntkotlin.Result.Deserializer2
+//import com.github.kittinunf.fuel.android.extension.jsonDeserializer
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
@@ -289,14 +289,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     fun getGeoCoding() {
         var apicall = Api().urlGeocoding + straatnaam
         Log.d("apicall:", apicall)
-        apicall.httpGet().responseString { request, response, result ->
-            val (geocodingoutput, err) = result
-            Log.d("geocodingoutput: ", geocodingoutput.toString())
-            Log.d("fuelerror: ", err.toString())
+        apicall.httpGet().responseObject(com.example.pathhunt.pathhuntkotlin.Result.Deserializer2()){ request, response, result ->
+            val (geocodeoutput, err) = result
+            Log.d("geocodeoutput", geocodeoutput.toString())
+            Log.d("err", err.toString())
+            geocodeoutput?.forEach {result ->
+                Log.d("outputgeo: ", "${}")
 
-
+            }
         }
-       
+
     }
 
 
