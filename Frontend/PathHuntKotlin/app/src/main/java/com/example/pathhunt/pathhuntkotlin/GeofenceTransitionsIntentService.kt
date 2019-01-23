@@ -6,7 +6,9 @@ import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingEvent
+import com.google.android.gms.location.GeofencingRequest
 
 class GeofenceTransitionsIntentService : IntentService("GeoTrIntentService") {
 
@@ -34,6 +36,7 @@ class GeofenceTransitionsIntentService : IntentService("GeoTrIntentService") {
             // 2
             val intent = Intent(this,QuestionActivity::class.java)
             startActivity(intent)
+
         }
     }
 
