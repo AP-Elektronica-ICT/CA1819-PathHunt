@@ -21,11 +21,11 @@ class TeamNameEditor : AppCompatActivity() {
             prefs.nextStreet="Ellermanstraat 33, 2060 Antwerpen"
             prefs.nextLocationId = 1
             prefs.nextLocation = "AP Hogeschool"
-            prefs.numberOfQuestions = 0
+            prefs.numberOfQuestions = 0 //default = 0
             prefs.currentQuestion = 0
 
             if(prefs.numberOfQuestions == 0){
-                getLocNr()
+                getQuestionsNr()
             }
 
             CreateTeam(Api().urlTeams, team)
@@ -43,11 +43,11 @@ class TeamNameEditor : AppCompatActivity() {
             }
     }
 
-    fun getLocNr() {
-        Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
-            val (locations, err) = result
-            Log.d("LocNr", locations!!.size.toString())
-            val locNr : Int = locations!!.size
+    fun getQuestionsNr() {
+        Api().urlQuestions.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
+            val (questions, err) = result
+            Log.d("LocNr", questions!!.size.toString())
+            val locNr : Int = questions!!.size
             prefs.numberOfQuestions = locNr
             //Log.d("straatnaam",straatnaam)
         }
