@@ -25,8 +25,8 @@ import android.support.v4.content.ContextCompat
 
 /** Helper to ask camera permission.  */
 object CameraPermissionHelper {
-    private val CAMERA_PERMISSION_CODE = 0
-    private val CAMERA_PERMISSION = Manifest.permission.CAMERA
+    private const val CAMERA_PERMISSION_CODE = 0
+    private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
 
     /** Check to see we have the necessary permissions for this app.  */
     fun hasCameraPermission(activity: Activity): Boolean {
@@ -36,8 +36,7 @@ object CameraPermissionHelper {
     /** Check to see we have the necessary permissions for this app, and ask for them if we don't.  */
     fun requestCameraPermission(activity: Activity) {
         ActivityCompat.requestPermissions(
-            activity, arrayOf(CAMERA_PERMISSION), CAMERA_PERMISSION_CODE
-        )
+            activity, arrayOf(CAMERA_PERMISSION), CAMERA_PERMISSION_CODE)
     }
 
     /** Check to see if we need to show the rationale for this permission.  */

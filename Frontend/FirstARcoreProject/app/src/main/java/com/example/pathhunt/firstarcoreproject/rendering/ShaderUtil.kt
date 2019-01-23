@@ -19,7 +19,6 @@ import android.opengl.GLES20
 import android.util.Log
 import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStream
 import java.io.InputStreamReader
 
 /** Shader helper functions.  */
@@ -65,12 +64,13 @@ object ShaderUtil {
     fun checkGLError(tag: String, label: String) {
         var lastError = GLES20.GL_NO_ERROR
         // Drain the queue of all errors.
-        var error: Int
-        while ((GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-            error = GLES20.glGetError()
+        var error = GLES20.GL_NO_ERROR
+
+        while (GLES20.glGetError().let { error = it; it != GLES20.GL_NO_ERROR }) {
             Log.e(tag, "$label: glError $error")
             lastError = error
         }
+
         if (lastError != GLES20.GL_NO_ERROR) {
             throw RuntimeException("$label: glError $lastError")
         }
@@ -87,11 +87,11 @@ object ShaderUtil {
         context.assets.open(filename).use { inputStream ->
             BufferedReader(InputStreamReader(inputStream)).use { reader ->
                 val sb = StringBuilder()
-                var line: String
-                while ((reader.readLine()) != null) {
-                    line = reader.readLine()
-                    sb.append(line).append("\n")
+
+                reader.lineSequence().forEach {
+                    sb.append(it).append("\n")
                 }
+
                 return sb.toString()
             }
         }

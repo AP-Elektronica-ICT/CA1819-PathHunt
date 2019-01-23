@@ -40,7 +40,6 @@ class BackgroundRenderer {
     private var quadPositionParam: Int = 0
     private var quadTexCoordParam: Int = 0
     var textureId = -1
-        private set
 
     /**
      * Allocates and initializes OpenGL resources needed by the background renderer. Must be called on
@@ -106,22 +105,13 @@ class BackgroundRenderer {
      * accurately follow static physical objects. This must be called **before** drawing virtual
      * content.
      *
-     * @param frame The last `Frame` returned by [Session.update] or null when ARCore is
-     * paused. See shared_camera_java sample details.
+     * @param frame The last `Frame` returned by [Session.update].
      */
-    fun draw(frame: Frame?) {
-        if (frame != null) {
-            // If display rotation changed (also includes view size change), we need to re-query the uv
-            // coordinates for the screen rect, as they may have changed as well.
-            if (frame.hasDisplayGeometryChanged()) {
-                frame.transformDisplayUvCoords(quadTexCoord!!, quadTexCoordTransformed!!)
-            }
-
-            if (frame.timestamp == 0L) {
-                // Suppress rendering if the camera did not produce the first frame yet. This is to avoid
-                // drawing possible leftover data from previous sessions if the texture is reused.
-                return
-            }
+    fun draw(frame: Frame) {
+        // If display rotation changed (also includes view size change), we need to re-query the uv
+        // coordinates for the screen rect, as they may have changed as well.
+        if (frame.hasDisplayGeometryChanged()) {
+            frame.transformDisplayUvCoords(quadTexCoord!!, quadTexCoordTransformed!!)
         }
 
         // No need to test or write depth, the screen quad has arbitrary depth, and is expected
@@ -135,8 +125,7 @@ class BackgroundRenderer {
 
         // Set the vertex positions.
         GLES20.glVertexAttribPointer(
-            quadPositionParam, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, quadVertices
-        )
+            quadPositionParam, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, quadVertices)
 
         // Set the texture coordinates.
         GLES20.glVertexAttribPointer(
@@ -145,8 +134,7 @@ class BackgroundRenderer {
             GLES20.GL_FLOAT,
             false,
             0,
-            quadTexCoordTransformed
-        )
+            quadTexCoordTransformed)
 
         // Enable vertex arrays
         GLES20.glEnableVertexAttribArray(quadPositionParam)
@@ -169,15 +157,15 @@ class BackgroundRenderer {
         private val TAG = BackgroundRenderer::class.java.simpleName
 
         // Shader names.
-        private val VERTEX_SHADER_NAME = "shaders/screenquad.vert"
-        private val FRAGMENT_SHADER_NAME = "shaders/screenquad.frag"
+        private const val VERTEX_SHADER_NAME = "shaders/screenquad.vert"
+        private const val FRAGMENT_SHADER_NAME = "shaders/screenquad.frag"
 
-        private val COORDS_PER_VERTEX = 3
-        private val TEXCOORDS_PER_VERTEX = 2
-        private val FLOAT_SIZE = 4
+        private const val COORDS_PER_VERTEX = 3
+        private const val TEXCOORDS_PER_VERTEX = 2
+        private const val FLOAT_SIZE = 4
 
-        private val QUAD_COORDS =
-            floatArrayOf(-1.0f, -1.0f, 0.0f, -1.0f, +1.0f, 0.0f, +1.0f, -1.0f, 0.0f, +1.0f, +1.0f, 0.0f)
+        private val QUAD_COORDS = floatArrayOf(
+            -1.0f, -1.0f, 0.0f, -1.0f, +1.0f, 0.0f, +1.0f, -1.0f, 0.0f, +1.0f, +1.0f, 0.0f)
 
         private val QUAD_TEXCOORDS = floatArrayOf(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f)
     }

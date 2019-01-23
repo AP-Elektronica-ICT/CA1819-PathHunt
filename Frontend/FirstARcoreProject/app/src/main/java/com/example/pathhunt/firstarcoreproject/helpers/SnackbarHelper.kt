@@ -18,30 +18,27 @@ import android.app.Activity
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
 import android.view.View
-import android.widget.TextView
 
 /**
  * Helper to manage the sample snackbar. Hides the Android boilerplate code, and exposes simpler
  * methods.
  */
 class SnackbarHelper {
-    private var messageSnackbar: Snackbar? = null
-    private var maxLines = 2
+    private var messageSnackbar:Snackbar? = null
 
-    val isShowing: Boolean
-        get() = messageSnackbar != null
-
+    val isShowing:Boolean
+    get() = messageSnackbar != null
     private enum class DismissBehavior {
         HIDE, SHOW, FINISH
     }
 
     /** Shows a snackbar with a given message.  */
-    fun showMessage(activity: Activity, message: String) {
+    fun showMessage(activity:Activity, message:String) {
         show(activity, message, DismissBehavior.HIDE)
     }
 
     /** Shows a snackbar with a given message, and a dismiss button.  */
-    fun showMessageWithDismiss(activity: Activity, message: String) {
+    fun showMessageWithDismiss(activity:Activity, message:String) {
         show(activity, message, DismissBehavior.SHOW)
     }
 
@@ -49,7 +46,7 @@ class SnackbarHelper {
      * Shows a snackbar with a given error message. When dismissed, will finish the activity. Useful
      * for notifying errors, where no further interaction with the activity is possible.
      */
-    fun showError(activity: Activity, errorMessage: String) {
+    fun showError(activity:Activity, errorMessage:String) {
         show(activity, errorMessage, DismissBehavior.FINISH)
     }
 
@@ -57,7 +54,7 @@ class SnackbarHelper {
      * Hides the currently showing snackbar, if there is one. Safe to call from any thread. Safe to
      * call even if snackbar is not shown.
      */
-    fun hide(activity: Activity) {
+    fun hide(activity:Activity) {
         activity.runOnUiThread {
             if (messageSnackbar != null) {
                 messageSnackbar!!.dismiss()
@@ -66,19 +63,13 @@ class SnackbarHelper {
         }
     }
 
-    fun setMaxLines(lines: Int) {
-        maxLines = lines
-    }
-
     private fun show(
-        activity: Activity, message: String, dismissBehavior: DismissBehavior
-    ) {
+        activity:Activity, message:String, dismissBehavior:DismissBehavior) {
         activity.runOnUiThread {
             messageSnackbar = Snackbar.make(
                 activity.findViewById(android.R.id.content),
                 message,
-                Snackbar.LENGTH_INDEFINITE
-            )
+                Snackbar.LENGTH_INDEFINITE)
             messageSnackbar!!.view.setBackgroundColor(BACKGROUND_COLOR)
             if (dismissBehavior != DismissBehavior.HIDE) {
                 messageSnackbar!!.setAction(
@@ -86,22 +77,20 @@ class SnackbarHelper {
                 ) { messageSnackbar!!.dismiss() }
                 if (dismissBehavior == DismissBehavior.FINISH) {
                     messageSnackbar!!.addCallback(
-                        object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        object:BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                            override fun onDismissed(transientBottomBar:Snackbar?, event:Int) {
                                 super.onDismissed(transientBottomBar, event)
                                 activity.finish()
                             }
                         })
                 }
             }
-            (messageSnackbar!!
-                .view
-                .findViewById<View>(android.support.design.R.id.snackbar_text) as TextView).maxLines = maxLines
             messageSnackbar!!.show()
         }
     }
 
     companion object {
-        private val BACKGROUND_COLOR = -0x40cdcdce
+        private const val BACKGROUND_COLOR = -0x40cdcdce
     }
 }
+

@@ -96,8 +96,7 @@ class PlaneRenderer {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
 
         GLES20.glTexParameteri(
-            GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR_MIPMAP_LINEAR
-        )
+            GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR_MIPMAP_LINEAR)
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR)
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, textureBitmap, 0)
         GLES20.glGenerateMipmap(GLES20.GL_TEXTURE_2D)
@@ -121,8 +120,7 @@ class PlaneRenderer {
 
     /** Updates the plane model transform matrix and extents.  */
     private fun updatePlaneParameters(
-        planeMatrix: FloatArray, extentX: Float, extentZ: Float, boundary: FloatBuffer?
-    ) {
+        planeMatrix: FloatArray, extentX: Float, extentZ: Float, boundary: FloatBuffer?) {
         System.arraycopy(planeMatrix, 0, modelMatrix, 0, 16)
         if (boundary == null) {
             vertexBuffer.limit(0)
@@ -208,7 +206,8 @@ class PlaneRenderer {
         // Build the ModelView and ModelViewProjection matrices
         // for calculating cube position and light.
         Matrix.multiplyMM(modelViewMatrix, 0, cameraView, 0, modelMatrix, 0)
-        Matrix.multiplyMM(modelViewProjectionMatrix, 0, cameraPerspective, 0, modelViewMatrix, 0)
+        Matrix.multiplyMM(modelViewProjectionMatrix, 0, cameraPerspective, 0,
+            modelViewMatrix, 0)
 
         // Set the position of the plane
         vertexBuffer.rewind()
@@ -218,20 +217,17 @@ class PlaneRenderer {
             GLES20.GL_FLOAT,
             false,
             BYTES_PER_FLOAT * COORDS_PER_VERTEX,
-            vertexBuffer
-        )
+            vertexBuffer)
 
         // Set the Model and ModelViewProjection matrices in the shader.
         GLES20.glUniformMatrix4fv(planeModelUniform, 1, false, modelMatrix, 0)
         GLES20.glUniform3f(planeNormalUniform, planeNormal[0], planeNormal[1], planeNormal[2])
         GLES20.glUniformMatrix4fv(
-            planeModelViewProjectionUniform, 1, false, modelViewProjectionMatrix, 0
-        )
+            planeModelViewProjectionUniform, 1, false, modelViewProjectionMatrix, 0)
 
         indexBuffer.rewind()
         GLES20.glDrawElements(
-            GLES20.GL_TRIANGLE_STRIP, indexBuffer.limit(), GLES20.GL_UNSIGNED_SHORT, indexBuffer
-        )
+            GLES20.GL_TRIANGLE_STRIP, indexBuffer.limit(), GLES20.GL_UNSIGNED_SHORT, indexBuffer)
         ShaderUtil.checkGLError(TAG, "Drawing plane")
     }
 
@@ -282,8 +278,7 @@ class PlaneRenderer {
         GLES20.glEnable(GLES20.GL_BLEND)
         GLES20.glBlendFuncSeparate(
             GLES20.GL_DST_ALPHA, GLES20.GL_ONE, // RGB (src, dest)
-            GLES20.GL_ZERO, GLES20.GL_ONE_MINUS_SRC_ALPHA
-        ) // ALPHA (src, dest)
+            GLES20.GL_ZERO, GLES20.GL_ONE_MINUS_SRC_ALPHA) // ALPHA (src, dest)
 
         // Set up the shader.
         GLES20.glUseProgram(planeProgram)
@@ -311,11 +306,10 @@ class PlaneRenderer {
             plane.centerPose.getTransformedAxis(1, 1.0f, normal, 0)
 
             updatePlaneParameters(
-                planeMatrix, plane.extentX, plane.extentZ, plane.polygon
-            )
+                planeMatrix, plane.extentX, plane.extentZ, plane.polygon)
 
             // Get plane index. Keep a map to assign same indices to same planes.
-            var planeIndex = planeIndexMap[plane]
+            var planeIndex: Int? = planeIndexMap[plane]
             if (planeIndex == null) {
                 planeIndex = planeIndexMap.size
                 planeIndexMap[plane] = planeIndex
@@ -336,7 +330,8 @@ class PlaneRenderer {
             planeAngleUvMatrix[1] = -Math.sin(angleRadians.toDouble()).toFloat() * vScale
             planeAngleUvMatrix[2] = +Math.sin(angleRadians.toDouble()).toFloat() * uScale
             planeAngleUvMatrix[3] = +Math.cos(angleRadians.toDouble()).toFloat() * vScale
-            GLES20.glUniformMatrix2fv(planeUvMatrixUniform, 1, false, planeAngleUvMatrix, 0)
+            GLES20.glUniformMatrix2fv(planeUvMatrixUniform, 1, false,
+                planeAngleUvMatrix, 0)
 
             draw(cameraView, cameraPerspective, normal)
         }
@@ -346,7 +341,6 @@ class PlaneRenderer {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
         GLES20.glDisable(GLES20.GL_BLEND)
         GLES20.glDepthMask(true)
-        GLES20.glClearColor(0.1f, 0.1f, 0.1f, 1.0f)
 
         ShaderUtil.checkGLError(TAG, "Cleaning up after drawing planes")
     }
@@ -370,10 +364,10 @@ class PlaneRenderer {
             BYTES_PER_FLOAT * COORDS_PER_VERTEX * VERTS_PER_BOUNDARY_VERT * INITIAL_BUFFER_BOUNDARY_VERTS
 
         private val INITIAL_INDEX_BUFFER_SIZE_BYTES = (
-                BYTES_PER_SHORT
-                        * INDICES_PER_BOUNDARY_VERT
-                        * INDICES_PER_BOUNDARY_VERT
-                        * INITIAL_BUFFER_BOUNDARY_VERTS)
+            BYTES_PER_SHORT
+                * INDICES_PER_BOUNDARY_VERT
+                * INDICES_PER_BOUNDARY_VERT
+                * INITIAL_BUFFER_BOUNDARY_VERTS)
 
         private val FADE_RADIUS_M = 0.25f
         private val DOTS_PER_METER = 10.0f
@@ -397,8 +391,8 @@ class PlaneRenderer {
             planePose.getTransformedAxis(1, 1.0f, normal, 0)
             // Compute dot product of plane's normal with vector from camera to plane center.
             return ((cameraX - planePose.tx()) * normal[0]
-                    + (cameraY - planePose.ty()) * normal[1]
-                    + (cameraZ - planePose.tz()) * normal[2])
+                + (cameraY - planePose.ty()) * normal[1]
+                + (cameraZ - planePose.tz()) * normal[2])
         }
 
         private fun colorRgbaToFloat(planeColor: FloatArray, colorRgba: Int) {
@@ -409,21 +403,9 @@ class PlaneRenderer {
         }
 
         private val PLANE_COLORS_RGBA = intArrayOf(
-            -0x1,
-            -0xbbcc901,
-            -0x16e19c01,
-            -0x63d84f01,
-            0x673AB7FF,
-            0x3F51B5FF,
-            0x2196F3FF,
-            0x03A9F4FF,
-            0x00BCD4FF,
-            0x009688FF,
-            0x4CAF50FF,
-            -0x743cb501,
-            -0x3223c601,
-            -0x14c401,
-            -0x3ef801,
+            -0x1, -0xbbcc901, -0x16e19c01, -0x63d84f01, 0x673AB7FF,
+            0x3F51B5FF, 0x2196F3FF, 0x03A9F4FF, 0x00BCD4FF, 0x009688FF,
+            0x4CAF50FF, -0x743cb501, -0x3223c601, -0x14c401, -0x3ef801,
             -0x67ff01
         )
     }

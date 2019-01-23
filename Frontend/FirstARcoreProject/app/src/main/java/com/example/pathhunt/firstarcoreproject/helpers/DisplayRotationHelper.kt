@@ -17,7 +17,6 @@ package com.example.pathhunt.firstarcoreproject.helpers
 import android.app.Activity
 import android.content.Context
 import android.hardware.display.DisplayManager
-import android.hardware.display.DisplayManager.DisplayListener
 import android.view.Display
 import android.view.WindowManager
 import com.google.ar.core.Session
@@ -33,21 +32,17 @@ class DisplayRotationHelper
  *
  * @param context the Android [Context].
  */
-    (private val context: Context) : DisplayListener {
+(private val context: Context) : DisplayManager.DisplayListener {
     private var viewportChanged: Boolean = false
     private var viewportWidth: Int = 0
     private var viewportHeight: Int = 0
-    private val display: Display
+    private val display: Display = context.getSystemService(WindowManager::class.java)!!.defaultDisplay
 
     /**
      * Returns the current rotation state of android display. Same as [Display.getRotation].
      */
     val rotation: Int
         get() = display.rotation
-
-    init {
-        display = context.getSystemService(WindowManager::class.java)!!.defaultDisplay
-    }
 
     /** Registers the display listener. Should be called from [Activity.onResume].  */
     fun onResume() {
@@ -60,7 +55,8 @@ class DisplayRotationHelper
     }
 
     /**
-     * Records a change in surface dimensions. This will be later used by [ ][.updateSessionIfNeeded]. Should be called from [ ].
+     * Records a change in surface dimensions. This will be later used by [ ][.updateSessionIfNeeded].
+     * Should be called from [ ].
      *
      * @param width the updated width of the surface.
      * @param height the updated height of the surface.
@@ -72,7 +68,8 @@ class DisplayRotationHelper
     }
 
     /**
-     * Updates the session display geometry if a change was posted either by [ ][.onSurfaceChanged] call or by [.onDisplayChanged] system callback. This
+     * Updates the session display geometry if a change was posted either by [ ][.onSurfaceChanged] call
+     * or by [.onDisplayChanged] system callback. This
      * function should be called explicitly before each call to [Session.update]. This
      * function will also clear the 'pending update' (viewportChanged) flag.
      *

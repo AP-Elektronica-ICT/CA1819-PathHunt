@@ -12,6 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.example.pathhunt.firstarcoreproject.rendering
 
 import android.content.Context
@@ -67,9 +68,6 @@ class ObjectRenderer {
 
     // Shader location: color correction property
     private var colorCorrectionParameterUniform: Int = 0
-
-    // Shader location: object color property (to change the primary color of the object).
-    private var colorUniform: Int = 0
 
     private var blendMode: BlendMode? = null
 
@@ -128,7 +126,6 @@ class ObjectRenderer {
         lightingParametersUniform = GLES20.glGetUniformLocation(program, "u_LightingParameters")
         materialParametersUniform = GLES20.glGetUniformLocation(program, "u_MaterialParameters")
         colorCorrectionParameterUniform = GLES20.glGetUniformLocation(program, "u_ColorCorrectionParameters")
-        colorUniform = GLES20.glGetUniformLocation(program, "u_ObjColor")
 
         ShaderUtil.checkGLError(TAG, "Program parameters")
 
@@ -140,8 +137,7 @@ class ObjectRenderer {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
 
         GLES20.glTexParameteri(
-            GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR_MIPMAP_LINEAR
-        )
+            GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR_MIPMAP_LINEAR)
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR)
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, textureBitmap, 0)
         GLES20.glGenerateMipmap(GLES20.GL_TEXTURE_2D)
@@ -195,22 +191,18 @@ class ObjectRenderer {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexBufferId)
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, totalBytes, null, GLES20.GL_STATIC_DRAW)
         GLES20.glBufferSubData(
-            GLES20.GL_ARRAY_BUFFER, verticesBaseAddress, 4 * vertices.limit(), vertices
-        )
+            GLES20.GL_ARRAY_BUFFER, verticesBaseAddress, 4 * vertices.limit(), vertices)
         GLES20.glBufferSubData(
-            GLES20.GL_ARRAY_BUFFER, texCoordsBaseAddress, 4 * texCoords.limit(), texCoords
-        )
+            GLES20.GL_ARRAY_BUFFER, texCoordsBaseAddress, 4 * texCoords.limit(), texCoords)
         GLES20.glBufferSubData(
-            GLES20.GL_ARRAY_BUFFER, normalsBaseAddress, 4 * normals.limit(), normals
-        )
+            GLES20.GL_ARRAY_BUFFER, normalsBaseAddress, 4 * normals.limit(), normals)
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
 
         // Load index buffer
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, indexBufferId)
         indexCount = indices.limit()
         GLES20.glBufferData(
-            GLES20.GL_ELEMENT_ARRAY_BUFFER, 2 * indexCount, indices, GLES20.GL_STATIC_DRAW
-        )
+            GLES20.GL_ELEMENT_ARRAY_BUFFER, 2 * indexCount, indices, GLES20.GL_STATIC_DRAW)
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
 
         ShaderUtil.checkGLError(TAG, "OBJ buffer load")
@@ -253,21 +245,26 @@ class ObjectRenderer {
      * highlight.
      */
     fun setMaterialProperties(
-        ambient: Float, diffuse: Float, specular: Float, specularPower: Float
-    ) {
+        ambient: Float, diffuse: Float, specular: Float, specularPower: Float) {
         this.ambient = ambient
         this.diffuse = diffuse
         this.specular = specular
         this.specularPower = specularPower
     }
 
-    @JvmOverloads
-    fun draw(
-        cameraView: FloatArray,
-        cameraPerspective: FloatArray,
-        colorCorrectionRgba: FloatArray,
-        objColor: FloatArray = DEFAULT_COLOR
-    ) {
+    /**
+     * Draws the model.
+     *
+     * @param cameraView A 4x4 view matrix, in column-major order.
+     * @param cameraPerspective A 4x4 projection matrix, in column-major order.
+     * @param lightIntensity Illumination intensity. Combined with diffuse and specular material
+     * properties.
+     * @see .setBlendMode
+     * @see .updateModelMatrix
+     * @see .setMaterialProperties
+     * @see android.opengl.Matrix
+     */
+    fun draw(cameraView: FloatArray, cameraPerspective: FloatArray, colorCorrectionRgba: FloatArray) {
 
         ShaderUtil.checkGLError(TAG, "Before draw")
 
@@ -286,12 +283,14 @@ class ObjectRenderer {
             viewLightDirection[0],
             viewLightDirection[1],
             viewLightDirection[2],
-            1f
-        )
-        GLES20.glUniform4fv(colorCorrectionParameterUniform, 1, colorCorrectionRgba, 0)
+            1f)
 
-        // Set the object color property.
-        GLES20.glUniform4fv(colorUniform, 1, objColor, 0)
+        GLES20.glUniform4f(
+            colorCorrectionParameterUniform,
+            colorCorrectionRgba[0],
+            colorCorrectionRgba[1],
+            colorCorrectionRgba[2],
+            colorCorrectionRgba[3])
 
         // Set the object material properties.
         GLES20.glUniform4f(materialParametersUniform, ambient, diffuse, specular, specularPower)
@@ -305,12 +304,10 @@ class ObjectRenderer {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexBufferId)
 
         GLES20.glVertexAttribPointer(
-            positionAttribute, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, verticesBaseAddress
-        )
+            positionAttribute, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, 0, verticesBaseAddress)
         GLES20.glVertexAttribPointer(normalAttribute, 3, GLES20.GL_FLOAT, false, 0, normalsBaseAddress)
         GLES20.glVertexAttribPointer(
-            texCoordAttribute, 2, GLES20.GL_FLOAT, false, 0, texCoordsBaseAddress
-        )
+            texCoordAttribute, 2, GLES20.GL_FLOAT, false, 0, texCoordsBaseAddress)
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
 
@@ -363,7 +360,6 @@ class ObjectRenderer {
         private val FRAGMENT_SHADER_NAME = "shaders/object.frag"
 
         private val COORDS_PER_VERTEX = 3
-        private val DEFAULT_COLOR = floatArrayOf(0f, 0f, 0f, 0f)
 
         // Note: the last component must be zero to avoid applying the translational part of the matrix.
         private val LIGHT_DIRECTION = floatArrayOf(0.250f, 0.866f, 0.433f, 0.0f)
@@ -376,15 +372,3 @@ class ObjectRenderer {
         }
     }
 }
-/**
- * Draws the model.
- *
- * @param cameraView A 4x4 view matrix, in column-major order.
- * @param cameraPerspective A 4x4 projection matrix, in column-major order.
- * @param lightIntensity Illumination intensity. Combined with diffuse and specular material
- * properties.
- * @see .setBlendMode
- * @see .updateModelMatrix
- * @see .setMaterialProperties
- * @see android.opengl.Matrix
- */

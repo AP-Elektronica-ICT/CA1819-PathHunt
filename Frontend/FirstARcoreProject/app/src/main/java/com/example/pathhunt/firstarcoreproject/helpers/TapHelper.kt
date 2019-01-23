@@ -32,7 +32,7 @@ class TapHelper
  *
  * @param context the application's context.
  */
-    (context: Context) : OnTouchListener {
+(context: Context) : OnTouchListener {
     private val gestureDetector: GestureDetector
     private val queuedSingleTaps = ArrayBlockingQueue<MotionEvent>(16)
 

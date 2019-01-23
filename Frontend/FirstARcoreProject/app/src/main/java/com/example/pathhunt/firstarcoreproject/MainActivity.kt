@@ -1,4 +1,3 @@
-package com.example.pathhunt.firstarcoreproject
 /*
  * Copyright 2017 Google Inc. All Rights Reserved.
  *
@@ -15,24 +14,21 @@ package com.example.pathhunt.firstarcoreproject
  * limitations under the License.
  */
 
+package com.example.pathhunt.firstarcoreproject
+
+import android.annotation.SuppressLint
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.MotionEvent
 import android.widget.Toast
 import com.google.ar.core.Anchor
 import com.google.ar.core.ArCoreApk
-import com.google.ar.core.Camera
-import com.google.ar.core.Frame
-import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.core.Point
 import com.google.ar.core.Point.OrientationMode
-import com.google.ar.core.PointCloud
 import com.google.ar.core.Session
-import com.google.ar.core.Trackable
 import com.google.ar.core.TrackingState
 import com.example.pathhunt.firstarcoreproject.helpers.CameraPermissionHelper
 import com.example.pathhunt.firstarcoreproject.helpers.DisplayRotationHelper
@@ -81,11 +77,15 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
     // Temporary matrix allocated here to reduce number of allocations for each frame.
     private val anchorMatrix = FloatArray(16)
 
-    private val anchors = ArrayList<ColoredAnchor>()
+    // Anchors created from taps used for object placing.
+    private val anchors = ArrayList<Anchor>()
 
-    // Anchors created from taps used for object placing with a given color.
-    private class ColoredAnchor(val anchor: Anchor, val color: FloatArray)
+    private var objName :String = "models/Bigmax_White_OBJ.obj"
+    private var textureName: String = "models/white.png"
 
+    private var counter: Int = 1
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -99,10 +99,10 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
         // Set up renderer.
         surfaceView!!.preserveEGLContextOnPause = true
         surfaceView!!.setEGLContextClientVersion(2)
-        surfaceView!!.setEGLConfigChooser(8, 8, 8, 8, 16, 0) // Alpha used for plane blending.
+        // Alpha used for plane blending.
+        surfaceView!!.setEGLConfigChooser(8, 8, 8, 8, 16, 0)
         surfaceView!!.setRenderer(this)
         surfaceView!!.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
-        surfaceView!!.setWillNotDraw(false)
 
         installRequested = false
     }
@@ -217,14 +217,16 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
             planeRenderer.createOnGlThread(/*context=*/this, "models/trigrid.png")
             pointCloudRenderer.createOnGlThread(/*context=*/this)
 
-            virtualObject.createOnGlThread(/*context=*/this, "models/andy.obj", "models/andy.png")
+            virtualObject.createOnGlThread(/*context=*/this, objName,
+                textureName)
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f)
 
             virtualObjectShadow.createOnGlThread(
-                /*context=*/ this, "models/andy_shadow.obj", "models/andy_shadow.png"
-            )
+                /*context=*/ this, "models/andy_shadow.obj",
+                "models/andy_shadow.png")
             virtualObjectShadow.setBlendMode(BlendMode.Shadow)
             virtualObjectShadow.setMaterialProperties(1.0f, 0.0f, 0.0f, 1.0f)
+
 
         } catch (e: IOException) {
             Log.e(TAG, "Failed to read an asset file", e)
@@ -241,13 +243,23 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
         // Clear screen to notify driver it should not load any pixels from previous frame.
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
 
-        var ses = session
-        if (ses == null) {
+        if(counter == 1){
+            objName = "models/Bigmax_White_OBJ.obj"
+            textureName = "models/white.png"
+            counter++
+        }
+        else{
+            objName = "models/Lamborghini_Aventador.obj"
+            textureName = "models/blue.png"
+            counter = 1
+        }
+
+        if (session == null) {
             return
         }
         // Notify ARCore session that the view size changed so that the perspective matrix and
         // the video background can be properly adjusted.
-        displayRotationHelper!!.updateSessionIfNeeded(ses)
+        displayRotationHelper!!.updateSessionIfNeeded(session!!)
 
         try {
             session!!.setCameraTextureName(backgroundRenderer.textureId)
@@ -258,8 +270,33 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
             val frame = session!!.update()
             val camera = frame.camera
 
-            // Handle one tap per frame.
-            handleTap(frame, camera)
+            // Handle taps. Handling only one tap per frame, as taps are usually low frequency
+            // compared to frame rate.
+            val tap = tapHelper!!.poll()
+            if (tap != null && camera.trackingState == TrackingState.TRACKING) {
+                for (hit in frame.hitTest(tap)) {
+                    // Check if any plane was hit, and if it was hit inside the plane polygon
+                    val trackable = hit.trackable
+                    // Creates an anchor if a plane or an oriented point was hit.
+                    if ((trackable is Plane
+                            && trackable.isPoseInPolygon(hit.hitPose)
+                            && PlaneRenderer.calculateDistanceToPlane(hit.hitPose, camera.pose) > 0)
+                        || trackable is Point && trackable.orientationMode == OrientationMode.ESTIMATED_SURFACE_NORMAL) {
+                        // Hits are sorted by depth. Consider only closest hit on a plane or oriented point.
+                        // Cap the number of objects created. This avoids overloading both the
+                        // rendering system and ARCore.
+                        if (anchors.size >= 20) {
+                            anchors[0].detach()
+                            anchors.removeAt(0)
+                        }
+                        // Adding an Anchor tells ARCore that it should track this position in
+                        // space. This anchor is created on the Plane to place the 3D model
+                        // in the correct position relative both to the world and to the plane.
+                        anchors.add(hit.createAnchor())
+                        break
+                    }
+                }
+            }
 
             // Draw background.
             backgroundRenderer.draw(frame)
@@ -283,7 +320,6 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
             val colorCorrectionRgba = FloatArray(4)
             frame.lightEstimate.getColorCorrection(colorCorrectionRgba, 0)
 
-
             // Visualize tracked points.
             val pointCloud = frame.acquirePointCloud()
             pointCloudRenderer.update(pointCloud)
@@ -296,7 +332,8 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
             // Check if we detected at least one plane. If so, hide the loading message.
             if (messageSnackbarHelper.isShowing) {
                 for (plane in session!!.getAllTrackables(Plane::class.java)) {
-                    if (plane.trackingState == TrackingState.TRACKING) {
+                    if (plane.type == com.google.ar.core.Plane.Type.HORIZONTAL_UPWARD_FACING
+                        && plane.trackingState == TrackingState.TRACKING) {
                         messageSnackbarHelper.hide(this)
                         break
                     }
@@ -305,24 +342,23 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
 
             // Visualize planes.
             planeRenderer.drawPlanes(
-                session!!.getAllTrackables(Plane::class.java), camera.displayOrientedPose, projmtx
-            )
+                session!!.getAllTrackables(Plane::class.java), camera.displayOrientedPose, projmtx)
 
             // Visualize anchors created by touch.
-            val scaleFactor = 1.0f
-            for (coloredAnchor in anchors) {
-                if (coloredAnchor.anchor.trackingState != TrackingState.TRACKING) {
+            val scaleFactor = 0.01f
+            for (anchor in anchors) {
+                if (anchor.trackingState != TrackingState.TRACKING) {
                     continue
                 }
                 // Get the current pose of an Anchor in world space. The Anchor pose is updated
                 // during calls to session.update() as ARCore refines its estimate of the world.
-                coloredAnchor.anchor.pose.toMatrix(anchorMatrix, 0)
+                anchor.pose.toMatrix(anchorMatrix, 0)
 
                 // Update and draw the model and its shadow.
                 virtualObject.updateModelMatrix(anchorMatrix, scaleFactor)
                 virtualObjectShadow.updateModelMatrix(anchorMatrix, scaleFactor)
-                virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color)
-                virtualObjectShadow.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color)
+                virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba)
+                virtualObjectShadow.draw(viewmtx, projmtx, colorCorrectionRgba)
             }
 
         } catch (t: Throwable) {
@@ -332,54 +368,7 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
 
     }
 
-    // Handle only one tap per frame, as taps are usually low frequency compared to frame rate.
-    private fun handleTap(frame: Frame, camera: Camera) {
-        val tap = tapHelper!!.poll()
-        if (tap != null && camera.trackingState == TrackingState.TRACKING) {
-            for (hit in frame.hitTest(tap!!)) {
-                // Check if any plane was hit, and if it was hit inside the plane polygon
-                val trackable = hit.trackable
-                // Creates an anchor if a plane or an oriented point was hit.
-                if ((trackable is Plane
-                            && trackable.isPoseInPolygon(hit.hitPose)
-                            && PlaneRenderer.calculateDistanceToPlane(
-                        hit.hitPose,
-                        camera.pose
-                    ) > 0) || trackable is Point && trackable.orientationMode == OrientationMode.ESTIMATED_SURFACE_NORMAL
-                ) {
-                    // Hits are sorted by depth. Consider only closest hit on a plane or oriented point.
-                    // Cap the number of objects created. This avoids overloading both the
-                    // rendering system and ARCore.
-                    if (anchors.size >= 20) {
-                        anchors[0].anchor.detach()
-                        anchors.removeAt(0)
-                    }
-
-                    // Assign a color to the object for rendering based on the trackable type
-                    // this anchor attached to. For AR_TRACKABLE_POINT, it's blue color, and
-                    // for AR_TRACKABLE_PLANE, it's green color.
-                    val objColor: FloatArray
-                    if (trackable is Point) {
-                        objColor = floatArrayOf(66.0f, 133.0f, 244.0f, 255.0f)
-                    } else if (trackable is Plane) {
-                        objColor = floatArrayOf(139.0f, 195.0f, 74.0f, 255.0f)
-                    } else {
-                        objColor = DEFAULT_COLOR
-                    }
-
-                    // Adding an Anchor tells ARCore that it should track this position in
-                    // space. This anchor is created on the Plane to place the 3D model
-                    // in the correct position relative both to the world and to the plane.
-                    anchors.add(ColoredAnchor(hit.createAnchor(), objColor))
-                    break
-                }
-            }
-        }
-    }
-
     companion object {
         private val TAG = MainActivity::class.java.simpleName
-        private val DEFAULT_COLOR = floatArrayOf(0f, 0f, 0f, 0f)
     }
 }
-

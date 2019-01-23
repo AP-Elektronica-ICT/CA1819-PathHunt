@@ -103,18 +103,19 @@ class PointCloudRenderer {
             GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vboSize, null, GLES20.GL_DYNAMIC_DRAW)
         }
         GLES20.glBufferSubData(
-            GLES20.GL_ARRAY_BUFFER, 0, numPoints * BYTES_PER_POINT, lastPointCloud!!.points
-        )
+            GLES20.GL_ARRAY_BUFFER, 0, numPoints * BYTES_PER_POINT, lastPointCloud!!.points)
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
 
         ShaderUtil.checkGLError(TAG, "after update")
     }
 
     /**
-     * Renders the point cloud. ARCore point cloud is given in world space.
+     * Renders the point cloud. ArCore point cloud is given in world space.
      *
-     * @param cameraView the camera view matrix for this frame, typically from [     ][com.google.ar.core.Camera.getViewMatrix].
-     * @param cameraPerspective the camera projection matrix for this frame, typically from [     ][com.google.ar.core.Camera.getProjectionMatrix].
+     * @param cameraView the camera view matrix for this frame, typically from
+     * [     ][com.google.ar.core.Camera.getViewMatrix].
+     * @param cameraPerspective the camera projection matrix for this frame, typically from
+     * [     ][com.google.ar.core.Camera.getProjectionMatrix].
      */
     fun draw(cameraView: FloatArray, cameraPerspective: FloatArray) {
         val modelViewProjection = FloatArray(16)
