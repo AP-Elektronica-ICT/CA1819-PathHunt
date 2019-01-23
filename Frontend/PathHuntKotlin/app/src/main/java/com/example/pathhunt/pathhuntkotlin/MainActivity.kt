@@ -14,7 +14,9 @@ class MainActivity : AppCompatActivity() {
         btnStart.setOnClickListener {
             val intent = Intent(this, IntroductionActivity::class.java)
             //for testing purposes, gebeurt normaal in teamNameEditor
-            //teamScore=0
+            prefs.teamScore=0
+            prefs.nextStreet="Rinkvenstraat 2, 2910 Essen, Belgium"
+            prefs.nextLocationId = 1
             //
             startActivity(intent)
         }

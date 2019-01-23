@@ -60,8 +60,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //private lateinit var lastLocation: Location
     //var alllocations: MutableList<Location> = mutableListOf()
     //this id is used as parameter for getlocations
-    var locationId: Int = 1
-    var straatnaam: String = ""
+    var locationId: Int = 0
+    var straatnaam: String? = ""
     var geometrie: String = ""
     var geocodeoutput: String=""
     var geocodelat: String= ""
@@ -89,24 +89,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         //call methods on this activity
-        getAllLocations(locationId)
-
-
+        //getAllLocations(locationId)
+        straatnaam = prefs.nextStreet
         createLocationRequest()
-        buildGeofence()
+
        //buildGeofencingRequest()
 
         //use fusedlocationclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         geofencingClient = LocationServices.getGeofencingClient(this)
-        geofencingClient?.addGeofences(getGeofencingRequest(), geofencePendingIntent)?.run{
-            addOnSuccessListener {
-                Log.d("geo", "succesfull addition")
-            }
-            addOnFailureListener{
-                Log.d("geo", "failed mate")
-            }
-        }
+
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null){
@@ -115,7 +107,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 Log.d("currentlatlng", currentLatLng.toString())
                 getGeoCoding()
 
-            }}
+            }
+        }
+
 
 
     }
@@ -159,17 +153,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
     override fun onBackPressed() {
-        //disable back button to avoid people going back to previous screens
-        val intent = Intent(this,QuestionActivity::class.java)
-        startActivity(intent)
+        //disable back button
     }
 
     private fun buildGeofence()/*: Geofence?*/ {
         //val latitude = 51.46023539999999
         //val longitude = 4.4489466
-        val latitude = 51.431991
-        val longitude = 4.436960
-        val radius = 20
+        val latitude = geocodelat.toDouble()
+        val longitude = geocodelng.toDouble()
+        val loc = LatLng(latitude,longitude)
+        this.mMap.addMarker(MarkerOptions().position(loc).title("Next location"))
+        val radius = 50
+
+        if(!geofenceList.isEmpty()){
+            geofenceList.clear()
+        }
+        //geofenceList.removeAt(0)
 
         //if (latitude != null && longitude != null && radius != null) {
         geofenceList.add(
@@ -180,16 +179,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                         longitude,
                         radius.toFloat()
                     )
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+                    .setLoiteringDelay(3000)
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
                     .build()
         )
+        addGeofences()
        // }
     }
 
     private fun getGeofencingRequest(): GeofencingRequest{
         return GeofencingRequest.Builder()
-            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL)
             .addGeofences(geofenceList)
             .build()
     }
@@ -205,6 +206,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
+    override fun onStop() {
+        removeGeofences()
+        geofenceList.clear()
+        finish()
+        super.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
 
     //checks for permission to search for finelocation (currentlocation)
     private fun setUpMap() {
@@ -289,12 +300,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     }
 
+    fun addGeofences(){
+        geofencingClient?.addGeofences(getGeofencingRequest(), geofencePendingIntent)?.run{
+            addOnSuccessListener {
+                Log.d("geo", "succesfull addition")
+            }
+            addOnFailureListener{
+                Log.d("geo", "failed mate")
+            }
+        }
+    }
+
+    fun removeGeofences(){
+        geofencingClient?.removeGeofences(geofencePendingIntent)?.run {
+            addOnSuccessListener {
+                Log.d("GeoDel", "Del Succes!")
+                Log.d("GeoDel", prefs.nextStreet)
+            }
+            addOnFailureListener {
+                Log.d("GeoDel", "Failed")
+            }
+        }
+    }
+
     //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
     fun getGeoCoding() {
         var apicall = Api().urlGeocoding + straatnaam
         Log.d("apicall:", apicall)
         apicall.httpGet().responseObject(com.example.pathhunt.pathhuntkotlin.Result.Deserializer2()){ request, response, result ->
-            request.timeout(10000)
+            //request.timeout(10000)
             val (geocodeoutput, err) = result
             //Log.d("geocodeoutput", geocodeoutput.toString())
             //Log.d("err", err.toString())
@@ -307,7 +341,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             geocodelng = result.get().results[0].geometry.location.lng.toString()
             //Log.d("geocodelat", geocodelat)
             //Log.d("geocodelng", geocodelng)
+            buildGeofence()
             getDirections()
+
         }
 
     }
@@ -326,8 +362,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             Log.d("directionoutput: ", directionoutput.toString())
             Log.d("err",err.toString())
 
-            directionsteps= result.get().routes[0].legs[0].steps[0].toString()
-            Log.d("directionsteps", directionsteps)
+//            directionsteps= result.get().routes[0].legs[0].steps[0].toString()
+ //           Log.d("directionsteps", directionsteps)
 
             val route0 = result.get().routes[0];
 

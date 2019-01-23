@@ -37,7 +37,6 @@ class QuestionActivity : AppCompatActivity() {
     var totalScore: Int = 0
     var scoreToGain: Int = 60
     var time: Int = 0
-    var locationId: Int = 2
     var zeroScore : Boolean = false
     //Timer, mensen krijgen 60 seconden om vraag te beantwoorden
     //om de 5 seconden gaat er 5 score, van de totale score die ze kunnen verdienen, af
@@ -110,10 +109,11 @@ class QuestionActivity : AppCompatActivity() {
         count.cancel()
         setScore(totalScore)
         resetScore()
-        val intent = Intent(this, MapsActivity::class.java)
         prefs.teamScore = totalScore
-        locationId ++
-        getNextDestination(locationId)
+        prefs.nextLocationId ++
+        getNextDestination(prefs.nextLocationId)
+        Log.d("Geo", prefs.nextLocationId.toString())
+        val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
         finish()
         //nextQuestion()
