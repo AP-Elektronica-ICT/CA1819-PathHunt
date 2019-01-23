@@ -24,7 +24,7 @@ import com.example.pathhunt.pathhuntkotlin.Locatie
 import com.example.pathhunt.pathhuntkotlin.Locatie.Deserializer
 import com.example.pathhunt.pathhuntkotlin.Geometry
 import com.example.pathhunt.pathhuntkotlin.Result.Deserializer2
-//import com.github.kittinunf.fuel.android.extension.jsonDeserializer
+import com.example.pathhunt.pathhuntkotlin.Directions.Deserializer3
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
@@ -64,6 +64,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     var geocodeoutput: String=""
     var geocodelat: String= ""
     var geocodelng: String=""
+    var directionsteps: String=""
 
 
 
@@ -294,17 +295,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Log.d("apicall:", apicall)
         apicall.httpGet().responseObject(com.example.pathhunt.pathhuntkotlin.Result.Deserializer2()){ request, response, result ->
             val (geocodeoutput, err) = result
-            Log.d("geocodeoutput", geocodeoutput.toString())
-            Log.d("err", err.toString())
+            //Log.d("geocodeoutput", geocodeoutput.toString())
+            //Log.d("err", err.toString())
 //            geocodeoutput?.forEach {result ->
-                Log.d("outputgeo: ", result.toString())
-                Log.d("result",result.get().results[0].geometry.location.toString())
+                //Log.d("outputgeo: ", result.toString())
+               // Log.d("result",result.get().results[0].geometry.location.toString())
 //
 //            }
             geocodelat = result.get().results[0].geometry.location.lat.toString()
             geocodelng = result.get().results[0].geometry.location.lng.toString()
-            Log.d("geocodelat", geocodelat)
-            Log.d("geocodelng", geocodelng)
+            //Log.d("geocodelat", geocodelat)
+            //Log.d("geocodelng", geocodelng)
             getDirections()
         }
 
@@ -318,17 +319,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     fun getDirections() {
         var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng
         Log.d("apicall2:", apicall2)
-        apicall2.httpGet().responseString { request, response, result ->
-            when (result) {
-                is Result.Success -> {
-                    val directions = result.get()
-                    //Log.d("Directions", "$directions")
-                }
-                is Result.Failure -> {
+        apicall2.httpGet().responseObject(Directions.Deserializer3()) { request, response, result ->
+            val (directionoutput, err) = result
+            Log.d("directionoutput: ", directionoutput.toString())
+            Log.d("err",err.toString())
 
-                }
-            }
+            directionsteps= result.get().routes[0].legs[0].steps[0].toString()
+            Log.d("directionsteps", directionsteps)
         }
+
     }
 }
 
