@@ -1,25 +1,25 @@
 package com.example.pathhunt.pathhuntkotlin
 
 data class Directions(
-    val geocoded_waypoints: List<GeocodedWaypoint>,
-    val routes: List<Route>,
+    val geocoded_waypoints: Array<GeocodedWaypoint>,
+    val routes: Array<Route>,
     val status: String
 )
 
 data class GeocodedWaypoint(
     val geocoder_status: String,
     val place_id: String,
-    val types: List<String>
+    val types: Array<String>
 )
 
 data class Route(
     val bounds: Bounds,
     val copyrights: String,
-    val legs: List<Leg>,
+    val legs: Array<Leg>,
     val overview_polyline: OverviewPolyline,
     val summary: String,
-    val warnings: List<Any>,
-    val waypoint_order: List<Any>
+    val warnings: Array<Any>,
+    val waypoint_order: Array<Any>
 )
 
 data class Bounds(
@@ -48,9 +48,9 @@ data class Leg(
     val end_location: EndLocation,
     val start_address: String,
     val start_location: StartLocation,
-    val steps: List<Step>,
-    val traffic_speed_entry: List<Any>,
-    val via_waypoint: List<Any>
+    val steps: Array<Step>,
+    val traffic_speed_entry: Array<Any>,
+    val via_waypoint: Array<Any>
 )
 
 data class Distance(

@@ -62,6 +62,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     var straatnaam: String = ""
     var geometrie: String = ""
     var geocodeoutput: String=""
+    var geocodelat: String= ""
+    var geocodelng: String=""
 
 
 
@@ -108,7 +110,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 Log.d("currentlatlng", currentLatLng.toString());
-                getDirections()
+                getGeoCoding()
+
             }}
 
 
@@ -277,7 +280,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 straatnaam = locations[id].street
             }
             //Log.d("straatnaam",straatnaam)
-            getGeoCoding()
+
 
         }
 
@@ -295,8 +298,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             Log.d("err", err.toString())
 //            geocodeoutput?.forEach {result ->
                 Log.d("outputgeo: ", result.toString())
+                Log.d("result",result.get().results[0].geometry.location.toString())
 //
 //            }
+            geocodelat = result.get().results[0].geometry.location.lat.toString()
+            geocodelng = result.get().results[0].geometry.location.lng.toString()
+            Log.d("geocodelat", geocodelat)
+            Log.d("geocodelng", geocodelng)
+            getDirections()
         }
 
     }
@@ -307,7 +316,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     //this url will be used to get directions from directions google maps api
     fun getDirections() {
-        var apicall2 = Api().urlDirections + lastLocation.latitude + "," + lastLocation.longitude
+        var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng
         Log.d("apicall2:", apicall2)
         apicall2.httpGet().responseString { request, response, result ->
             when (result) {
