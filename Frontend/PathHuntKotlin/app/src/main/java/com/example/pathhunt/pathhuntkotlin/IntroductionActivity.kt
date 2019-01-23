@@ -19,4 +19,5 @@ class IntroductionActivity : AppCompatActivity() {
             val intent = Intent(this,TeamNameEditor::class.java)
             startActivity(intent)
         }
-}}
+    }
+}

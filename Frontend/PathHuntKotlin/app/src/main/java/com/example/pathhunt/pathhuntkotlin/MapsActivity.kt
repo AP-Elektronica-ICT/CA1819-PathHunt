@@ -91,10 +91,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //getAllLocations(locationId)
         straatnaam = prefs.nextStreet
 
-        if(prefs.numberOfQuestions == 0){
-            getLocNr()
-        }
-
         createLocationRequest()
         locationCallback = object : LocationCallback(){
             override fun onLocationResult(locationResult: LocationResult?) {
