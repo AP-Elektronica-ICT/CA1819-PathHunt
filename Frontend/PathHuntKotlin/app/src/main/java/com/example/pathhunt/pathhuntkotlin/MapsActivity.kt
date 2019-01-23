@@ -190,9 +190,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private fun getGeofencingRequest(): GeofencingRequest{
         return GeofencingRequest.Builder()
-            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL)
+            .setInitialTrigger(0)
             .addGeofences(geofenceList)
             .build()
+
     }
 
 
@@ -211,10 +212,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         geofenceList.clear()
         finish()
         super.onStop()
+        geofencingClient.removeGeofences(geofencePendingIntent)
     }
 
     override fun onPause() {
         super.onPause()
+
     }
 
     //checks for permission to search for finelocation (currentlocation)
