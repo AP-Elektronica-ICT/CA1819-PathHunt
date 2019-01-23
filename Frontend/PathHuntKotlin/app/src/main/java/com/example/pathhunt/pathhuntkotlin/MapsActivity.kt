@@ -132,8 +132,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))*/
 
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.uiSettings.isZoomGesturesEnabled = true
+        //mMap.uiSettings.isZoomControlsEnabled = true
+        //mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnMarkerClickListener(this)
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
@@ -162,8 +162,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val longitude = geocodelng.toDouble()
         val loc = LatLng(latitude,longitude)
         this.mMap.addMarker(MarkerOptions().position(loc).title("Next location"))
-        this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f))
-        val radius = 70
+        val radius = 50
 
         if(!geofenceList.isEmpty()){
             geofenceList.clear()
@@ -211,7 +210,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         geofenceList.clear()
         finish()
         super.onStop()
-        geofencingClient.removeGeofences(geofencePendingIntent)
     }
 
     override fun onPause() {
