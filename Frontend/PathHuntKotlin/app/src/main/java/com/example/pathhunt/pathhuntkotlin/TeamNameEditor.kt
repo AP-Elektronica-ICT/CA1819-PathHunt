@@ -21,7 +21,7 @@ class TeamNameEditor : AppCompatActivity() {
             prefs.nextStreet="Ellermanstraat 33, 2060 Antwerpen"
             prefs.nextLocationId = 1
             prefs.nextLocation = "AP Hogeschool"
-            prefs.numberOfQuestions = 0 //default = 0
+            prefs.numberOfQuestions = 2 //default = 0
             prefs.currentQuestion = 0
 
             if(prefs.numberOfQuestions == 0){
