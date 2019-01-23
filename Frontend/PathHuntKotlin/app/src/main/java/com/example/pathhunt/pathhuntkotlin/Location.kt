@@ -6,7 +6,8 @@ import com.google.gson.Gson
 data class Locatie(
     val id: Int,
     val name: String,
-    val street: String
+    val street: String,
+    val extraStreet : String
 )
 {
     class Deserializer: ResponseDeserializable<Array<Locatie>>{
