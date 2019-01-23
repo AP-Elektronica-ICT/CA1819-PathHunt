@@ -293,10 +293,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             val (geocodeoutput, err) = result
             Log.d("geocodeoutput", geocodeoutput.toString())
             Log.d("err", err.toString())
-            geocodeoutput?.forEach {result ->
-                Log.d("outputgeo: ", "${}")
-
-            }
+//            geocodeoutput?.forEach {result ->
+                Log.d("outputgeo: ", result.toString())
+//
+//            }
         }
 
     }

@@ -5,24 +5,24 @@ import com.google.gson.Gson
 
 
 data class GeoCode(
-    val results: List<Result>,
+    val results: Array<Result>,
     val status: String
 )
 
 
 
 data class Result(
-    val address_components: List<AddressComponent>,
+    val address_components: Array<AddressComponent>,
     val formatted_address: String,
     val geometry: Geometry,
     val place_id: String,
-    val types: List<String>
+    val types: Array<String>
 )
 
 {
-    class Deserializer2: ResponseDeserializable<List<Result>>{
-        override fun deserialize(content: String): List<Result>? {
-            return Gson().fromJson(content, List<Result>())
+    class Deserializer2: ResponseDeserializable<GeoCode>{
+        override fun deserialize(content: String): GeoCode? {
+            return Gson().fromJson(content, GeoCode::class.java)
         }
     }
 }
@@ -62,5 +62,5 @@ data class Viewport(
 data class AddressComponent(
     val long_name: String,
     val short_name: String,
-    val types: List<String>
+    val types: Array<String>
 )
