@@ -27,47 +27,50 @@ namespace PathHunt.DataLayer
                     //Email = "testteam@gmail.com"
                 };
                 context.Teams.Add(Team2);
-                //context.SaveChanges();
             }
-
-            if (!context.Locations.Any())
-            {
-                var location4 = new Location()
-                {
-                    Name="MAS",
-                    Street ="Hanzestedenplaats 1, 2000 Antwerpen, Belgium"
-                };
-
-                
-                context.Locations.Add(location4);
                 context.SaveChanges();
-                
-            }
 
             if (!context.Questions.Any())
             {
+                var location = new Location()
+                {
+                    Name = "Van Oevelen",
+                    Street = "Moerkantsebaan 47, 2910 Essen, Belgium",
+                    ExtraStreet = ""
+                };
+
                 var location1 = new Location()
                 {
-                    Name = "Centraal Station",
-                    Street = "Koningin Astridplein 27,2018 Antwerpen,Belgium"
+                    Name = "Brico",
+                    Street = "Heikantstraat 129, 2910 Essen, Belgium",
+                    ExtraStreet = "Moerkantsebaan 52, 2910 Essen, Belgium"
                 };
                 var location2 = new Location()
                 {
-                    Name = "David Teniers II",
-                    Street = "Teniersplaats 4, 2000 Antwerpen, Belgium"
+                    Name = "Centraal Station",
+                    Street = "Koningin Astridplein 27,2018 Antwerpen,Belgium",
+                    ExtraStreet = ""
                 };
-
                 var location3 = new Location()
                 {
-                    Name = "Paleis op de Meir",
-                    Street ="Meir 50, 2000 Antwerpen, Belgium"
+                    Name = "David Teniers II",
+                    Street = "Teniersplaats 4, 2000 Antwerpen, Belgium",
+                    ExtraStreet = ""
                 };
+
+                var location4 = new Location()
+                {
+                    Name = "Paleis op de Meir",
+                    Street ="Meir 50, 2000 Antwerpen, Belgium",
+                    ExtraStreet = ""
+                };
+
                 var Question1 = new Question()
                 {
                     Content = "In welk jaar is het dit station geopend?",
                     Answer = "1905",
                     Options = new string[] { "1908", "1901", "1905" },
-                    Location = location1
+                    Location = location2
                 };
                 var Question2 = new Question()
                 {
@@ -77,7 +80,7 @@ namespace PathHunt.DataLayer
                     {
                         "David Teniers II", "David Teniers I", "Robert Campin"
                     },
-                    Location = location2
+                    Location = location3
                 };
                 var Question3 = new Question()
                 {
@@ -87,7 +90,7 @@ namespace PathHunt.DataLayer
                     {
                         "18e", "17e", "16e"
                     },
-                    Location = location2
+                    Location = location3
                 };
                 var Question4 = new Question()
                 {
@@ -97,7 +100,7 @@ namespace PathHunt.DataLayer
                     {
                         "1690", "1710", "1745"
                     },
-                    Location = location3
+                    Location = location4
                 };
                 var Question5 = new Question()
                 {
@@ -107,16 +110,43 @@ namespace PathHunt.DataLayer
                     {
                         "Leopold II", "Napoleon Bonaparte", "Willem I"
                     },
-                    Location = location3
+                    Location = location4
                 };
+
+                var Question6 = new Question()
+                {
+                    Content = "Zijn we bij Van Oevelen?",
+                    Answer = "Ja",
+                    Options = new string[]
+                    {
+                        "Ja", "Nee", "Misschien"
+                    },
+                    Location = location
+                };
+
+                var Question7 = new Question()
+                {
+                    Content = "Zijn we bij Brico?",
+                    Answer = "Ja",
+                    Options = new string[]
+                    {
+                        "Ja", "Nee", "Misschien"
+                    },
+                    Location = location1
+                };
+
+                context.Locations.Add(location);
                 context.Locations.Add(location1);
                 context.Locations.Add(location2);
                 context.Locations.Add(location3);
+                context.Locations.Add(location4);
                 context.Questions.Add(Question1);
                 context.Questions.Add(Question2);
                 context.Questions.Add(Question3);
                 context.Questions.Add(Question4);
                 context.Questions.Add(Question5);
+                context.Questions.Add(Question6);
+                context.Questions.Add(Question7);
                 context.SaveChanges();
             }
 

@@ -11,6 +11,8 @@ namespace PathHunt.DataLayer.Model
         
         public string Street { get; set; }
 
+        public string ExtraStreet { get; set; }
+
         //public ICollection<Question> Questions { get; set; }
 
     }   
