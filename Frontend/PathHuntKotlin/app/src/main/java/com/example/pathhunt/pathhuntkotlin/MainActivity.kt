@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
             prefs.teamScore=0
             prefs.nextStreet="Rinkvenstraat 2, 2910 Essen, Belgium"
             prefs.nextLocationId = 1
+            prefs.nextLocation = "Van Oevelen"
             //
             startActivity(intent)
         }
