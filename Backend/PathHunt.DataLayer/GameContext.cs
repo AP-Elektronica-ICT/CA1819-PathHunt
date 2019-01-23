@@ -12,8 +12,19 @@ namespace PathHunt.DataLayer
         {
         }
 
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<Team> Teams { get; set; }
+        public GameContext() {}
+
+        //https://kimsereyblog.blogspot.com/2017/12/save-array-of-string-entityframework.html
+        //String[] kan niet gemapt worden, in de database zetten als string met ; bv: a;b;c
+        //wordt [a, b, c]  indien opgehaald
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Question>()
+                    .Property<string>("OptionsCollection")
+                    .HasField("_options");
+        }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
     }
 }

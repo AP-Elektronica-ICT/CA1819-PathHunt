@@ -11,22 +11,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnCreateTeam.setOnClickListener {
-            val intent = Intent(this, TeamNameEditor::class.java)
+        btnStart.setOnClickListener {
+            val intent = Intent(this, IntroductionActivity::class.java)
             startActivity(intent)
         }
-        btnContinue.setOnClickListener {
-            val intent = Intent(this, QuestionActivity::class.java)
-            startActivity(intent)
-        }
-        btnIntroduction.setOnClickListener {
-            val intent = Intent(this,IntroductionActivity::class.java)
-            startActivity(intent)
-        }
-        btnMaps.setOnClickListener {
-            val intent = Intent(this,MapsActivity::class.java)
-            startActivity(intent)
-        }
+
         btnLeaderboard.setOnClickListener {
             val intent = Intent(this,Leaderboard::class.java)
             startActivity(intent)

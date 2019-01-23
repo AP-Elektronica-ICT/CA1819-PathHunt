@@ -1,52 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".QuestionActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Main"
+    tools:context=".QuestionActivity">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtQuestion"
-        android:text="Question is loading"
-        android:textSize="30dp"
-        android:textAlignment="center"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question is loading"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:paddingBottom="15dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtScoreQuestion"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
-    <EditText
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTimeRemaining"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rdgAnswers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etxtAnswer"
-        android:hint="Type your answer here"
         android:layout_gravity="center"
-        android:textAlignment="center"
-        android:textSize="25dp"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnCheck"
-        android:layout_gravity="center|bottom"
-        android:text="Check answer"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnPrev"
-        android:layout_gravity="bottom|left"
-        android:text="Previous"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnNext"
-        android:layout_gravity="bottom|right"
-        android:text="Next"/>
-    <Button
-            android:text="Map"
+        <RadioButton
+            android:id="@+id/rdbAnswer1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/btnMap"/>
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
 
-</FrameLayout>
+        <RadioButton
+            android:id="@+id/rdbAnswer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
+        <RadioButton
+            android:id="@+id/rdbAnswer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:background="@drawable/button_rounded_corners_green"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:text="Check answer" />
+    </FrameLayout>
