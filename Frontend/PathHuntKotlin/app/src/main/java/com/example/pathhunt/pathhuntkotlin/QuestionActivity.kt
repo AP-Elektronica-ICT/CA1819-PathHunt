@@ -146,7 +146,7 @@ class QuestionActivity : AppCompatActivity() {
 
     private fun getNextDestination(id: Int){
         var url = Api().urlLocations+"/" + id.toString()
-        url.httpGet().responseObject(Location.SingleDeserializer()){request, response, result ->
+        url.httpGet().responseObject(Locatie.SingleDeserializer()){request, response, result ->
             when (result){
                 is Result.Success ->{
                     val (locations, err) = result
