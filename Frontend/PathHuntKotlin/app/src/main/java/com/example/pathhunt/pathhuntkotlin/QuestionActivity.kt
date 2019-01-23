@@ -39,6 +39,7 @@ class QuestionActivity : AppCompatActivity() {
     var scoreToGain: Int = 60
     var time: Int = 0
     var zeroScore : Boolean = false
+    var rightAnswer : Boolean = false
     //Timer, mensen krijgen 60 seconden om vraag te beantwoorden
     //om de 5 seconden gaat er 5 score, van de totale score die ze kunnen verdienen, af
     var count: CountDownTimer = object : CountDownTimer(60000, 1000) {
@@ -85,7 +86,11 @@ class QuestionActivity : AppCompatActivity() {
                 userAnswer = userRadio.text.toString()
             }
             if (userAnswer.equals(answer)) {
+                rightAnswer = true
                 totalScore += scoreToGain
+            }
+            else{
+                rightAnswer = false
             }
             questionAnswered()
         }
@@ -110,6 +115,11 @@ class QuestionActivity : AppCompatActivity() {
         count.cancel()
         setScore(totalScore)
         resetScore()
+        prefs.numberOfQuestions++
+        if(prefs.numberOfQuestions == 2){
+            val intent1 = Intent (this, EndActivity::class.java)
+            startActivity(intent1)
+        }
         prefs.teamScore = totalScore
         prefs.nextLocationId ++
         getNextDestination(prefs.nextLocationId)
@@ -142,6 +152,13 @@ class QuestionActivity : AppCompatActivity() {
                     val (locations, err) = result
                     prefs.nextStreet = locations?.street
                     prefs.nextLocation = locations?.name
+                    if(rightAnswer == false ){
+                        prefs.nextExtraStreet = locations?.extraStreet
+                    }
+
+                    else{
+                        prefs.nextExtraStreet = ""
+                    }
                     //Log.d("nextstreet", prefs.nextStreet)
                 }
 

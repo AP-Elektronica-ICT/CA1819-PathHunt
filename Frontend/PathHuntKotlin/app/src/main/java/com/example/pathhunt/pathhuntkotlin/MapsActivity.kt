@@ -114,7 +114,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 Log.d("currentlatlng", currentLatLng.toString())
                 getGeoCoding()
-
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 20.0f))
             }
         }
 
@@ -141,8 +141,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))*/
 
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-        //mMap.uiSettings.isZoomControlsEnabled = true
-        //mMap.uiSettings.isZoomGesturesEnabled = true
+        mMap.uiSettings.isZoomControlsEnabled = false
+        mMap.uiSettings.isZoomGesturesEnabled = false
+        mMap.uiSettings.setAllGesturesEnabled(false)
         mMap.setOnMarkerClickListener(this)
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true

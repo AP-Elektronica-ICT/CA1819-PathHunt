@@ -16,7 +16,7 @@ class IntroductionActivity : AppCompatActivity() {
                 "consequences for a wrong answser. Good luck and happy hunting!"
 
         btnNext.setOnClickListener {
-            val intent = Intent(this,MapsActivity::class.java)
+            val intent = Intent(this,TeamNameEditor::class.java)
             startActivity(intent)
         }
 }}
