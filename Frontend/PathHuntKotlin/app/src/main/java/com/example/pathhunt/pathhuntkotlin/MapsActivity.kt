@@ -91,11 +91,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //getAllLocations(locationId)
         straatnaam = prefs.nextStreet
         createLocationRequest()
-
+        locationCallback = object : LocationCallback(){
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?:return
+                for(location in locationResult.locations){
+                    var update: LatLng = LatLng(location.latitude, location.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(update, 20.0f  ))
+                }
+            }
+        }
        //buildGeofencingRequest()
 
         //use fusedlocationclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
         geofencingClient = LocationServices.getGeofencingClient(this)
 
 
