@@ -20,6 +20,7 @@ class TeamNameEditor : AppCompatActivity() {
             prefs.nextLocationId = 1
             prefs.nextLocation = "Van Oevelen"
             prefs.numberOfQuestions = 0
+            prefs.currentQuestion = 0
             CreateTeam(Api().urlTeams, team)
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
