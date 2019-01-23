@@ -10,6 +10,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+
     <application
             android:allowBackup="true"
             android:name=".App"
@@ -52,6 +53,7 @@
         <activity android:name=".Leaderboard"
             android:screenOrientation="portrait">
         </activity>
+        <service android:name=".GeofenceTransitionsIntentService"/>
     </application>
 
 </manifest>
