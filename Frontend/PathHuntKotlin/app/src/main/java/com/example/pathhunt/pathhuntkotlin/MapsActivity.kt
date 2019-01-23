@@ -14,6 +14,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
+import com.google.maps.android.PolyUtil
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.support.v4.app.ActivityCompat
@@ -48,6 +49,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var locationRequest: LocationRequest
     private lateinit var lastLocation: Location
     private var geofenceList: MutableList<Geofence> = mutableListOf()
+    private var walkpath: MutableList<List<LatLng>> = mutableListOf()
     private var locationUpdateState = false
 
     //used for google maps activity (add stuff like markers etc)
@@ -110,7 +112,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             if (location != null){
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                Log.d("currentlatlng", currentLatLng.toString());
+                Log.d("currentlatlng", currentLatLng.toString())
                 getGeoCoding()
 
             }}
@@ -143,16 +145,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
 
-
-
-        mMap.addPolyline(
+        /*mMap.addPolyline(
             PolylineOptions().add(
                 school,
                 mas
                 //,nieuwedestination
             ).width(10F)
                 .color(Color.RED)
-        )
+        )*/
 
     }
 
@@ -277,7 +277,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
             val (locations, err) = result
             locations?.forEach { locatie ->
-               // Log.d("Location: street", "${locatie.street}")
+                Log.d("Location: street", "${locatie.street}")
                 straatnaam = locations[id].street
             }
             //Log.d("straatnaam",straatnaam)
@@ -294,6 +294,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         var apicall = Api().urlGeocoding + straatnaam
         Log.d("apicall:", apicall)
         apicall.httpGet().responseObject(com.example.pathhunt.pathhuntkotlin.Result.Deserializer2()){ request, response, result ->
+            request.timeout(10000)
             val (geocodeoutput, err) = result
             //Log.d("geocodeoutput", geocodeoutput.toString())
             //Log.d("err", err.toString())
@@ -318,6 +319,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //this url will be used to get directions from directions google maps api
     fun getDirections() {
         var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng
+        //var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=51.46023539999999,4.4489466"
         Log.d("apicall2:", apicall2)
         apicall2.httpGet().responseObject(Directions.Deserializer3()) { request, response, result ->
             val (directionoutput, err) = result
@@ -326,6 +328,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
             directionsteps= result.get().routes[0].legs[0].steps[0].toString()
             Log.d("directionsteps", directionsteps)
+
+            val route0 = result.get().routes[0];
+
+            for(leg in route0.legs){
+                for (step in leg.steps){
+                    var poly = PolyUtil.decode(step.polyline.points)
+                    walkpath.add(poly)
+                    Log.d("Poly", poly.toString())
+                }
+            }
+
+            var pathnr: Int = 0
+            for (path in walkpath){
+                Log.d("Path", "Loop")
+                mMap!!.addPolyline(PolylineOptions().addAll(walkpath[pathnr]).color(Color.RED))
+                //mMap!!.addMarker(MarkerOptions().position(walkpath[0][pathnr]).title("Path" + pathnr))
+                pathnr++
+            }
         }
 
     }
