@@ -118,7 +118,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap = googleMap
 
 
-        val school = LatLng(51.2297882, 4.4149717)
+        /*val school = LatLng(51.2297882, 4.4149717)
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
 
@@ -129,13 +129,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val oevel = LatLng(51.46023539999999,4.4489466)
         mMap.addMarker(MarkerOptions().position(oevel).title("oevelen"))
         //val nieuwedestination = LatLng(${locations.latitude},${locations.longitude})
-        //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))
+        //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))*/
 
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         //mMap.uiSettings.isZoomControlsEnabled = true
         //mMap.uiSettings.isZoomGesturesEnabled = true
         mMap.setOnMarkerClickListener(this)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
 
         /*mMap.addPolyline(
