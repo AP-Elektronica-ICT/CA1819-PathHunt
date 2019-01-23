@@ -13,6 +13,9 @@ class MainActivity : AppCompatActivity() {
 
         btnStart.setOnClickListener {
             val intent = Intent(this, IntroductionActivity::class.java)
+            //for testing purposes, gebeurt normaal in teamNameEditor
+            //teamScore=0
+            //
             startActivity(intent)
         }
 

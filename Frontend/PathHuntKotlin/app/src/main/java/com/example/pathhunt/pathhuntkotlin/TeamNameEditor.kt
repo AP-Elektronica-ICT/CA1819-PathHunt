@@ -18,7 +18,7 @@ class TeamNameEditor : AppCompatActivity() {
             prefs.teamName = etxtTeamname.text.toString()
             prefs.teamScore = 0
             CreateTeam(Api().urlTeams, team)
-            val intent = Intent(this, MapsActivity::class.java)
+            val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
             finish()
         }
