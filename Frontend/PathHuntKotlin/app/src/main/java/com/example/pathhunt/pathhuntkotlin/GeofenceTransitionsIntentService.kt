@@ -32,7 +32,7 @@ class GeofenceTransitionsIntentService : IntentService("GeoTrIntentService") {
 
     private fun handleEvent(event: GeofencingEvent) {
         // 1
-        if (event.geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
+        if (event.geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
             // 2
             val intent = Intent(this,QuestionActivity::class.java)
             startActivity(intent)

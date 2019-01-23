@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_question.view.*
 import kotlinx.android.synthetic.main.row_list.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.lang.Thread.sleep
 import java.net.URL
 import java.util.*
 
@@ -113,6 +114,7 @@ class QuestionActivity : AppCompatActivity() {
         prefs.nextLocationId ++
         getNextDestination(prefs.nextLocationId)
         Log.d("Geo", prefs.nextLocationId.toString())
+        sleep(1000)
         val intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
         finish()
@@ -139,11 +141,13 @@ class QuestionActivity : AppCompatActivity() {
                 is Result.Success ->{
                     val (locations, err) = result
                     prefs.nextStreet = locations?.street
+                    prefs.nextLocation = locations?.name
                     //Log.d("nextstreet", prefs.nextStreet)
                 }
 
                 is Result.Failure -> {
                     prefs.nextStreet = "No street found"
+                    prefs.nextLocation = "No next location"
                 }
             }
         }

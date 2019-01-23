@@ -60,7 +60,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //private lateinit var lastLocation: Location
     //var alllocations: MutableList<Location> = mutableListOf()
     //this id is used as parameter for getlocations
-    var locationId: Int = 0
     var straatnaam: String? = ""
     var geometrie: String = ""
     var geocodeoutput: String=""
@@ -180,8 +179,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                         longitude,
                         radius.toFloat()
                     )
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-                    .setLoiteringDelay(3000)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
                     .build()
         )
@@ -191,7 +189,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private fun getGeofencingRequest(): GeofencingRequest{
         return GeofencingRequest.Builder()
-            .setInitialTrigger(0)
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
             .addGeofences(geofenceList)
             .build()
 
