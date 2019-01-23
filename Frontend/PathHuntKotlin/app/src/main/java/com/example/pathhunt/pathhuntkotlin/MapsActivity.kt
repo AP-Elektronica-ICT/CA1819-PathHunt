@@ -163,7 +163,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val loc = LatLng(latitude,longitude)
         this.mMap.addMarker(MarkerOptions().position(loc).title("Next location"))
         this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f))
-        val radius = 100
+        val radius = 70
 
         if(!geofenceList.isEmpty()){
             geofenceList.clear()
