@@ -91,7 +91,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //getAllLocations(locationId)
         straatnaam = prefs.nextStreet
 
-        getLocNr()
+        if(prefs.numberOfQuestions == 0){
+            getLocNr()
+        }
 
         createLocationRequest()
         locationCallback = object : LocationCallback(){
@@ -175,7 +177,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val longitude = geocodelng.toDouble()
         val loc = LatLng(latitude,longitude)
         this.mMap.addMarker(MarkerOptions().position(loc).title("Next location"))
-        val radius = 50
+        val radius = 70
 
         if(!geofenceList.isEmpty()){
             geofenceList.clear()
@@ -294,20 +296,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 }
             }
         }
-    }
-
-    //get request for all locations coming from our db
-    fun getLocNr() {
-        Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
-            val (locations, err) = result
-            Log.d("LocNr", locations?.size.toString())
-            //Log.d("straatnaam",straatnaam)
-
-
-        }
-
-
-
     }
 
     fun addGeofences(){

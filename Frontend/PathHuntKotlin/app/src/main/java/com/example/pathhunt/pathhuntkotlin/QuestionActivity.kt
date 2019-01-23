@@ -115,21 +115,24 @@ class QuestionActivity : AppCompatActivity() {
         count.cancel()
         setScore(totalScore)
         resetScore()
-        prefs.numberOfQuestions++
-        if(prefs.numberOfQuestions == 2){
+        prefs.currentQuestion++
+        if(prefs.currentQuestion == prefs.numberOfQuestions){
             val intent1 = Intent (this, EndActivity::class.java)
             startActivity(intent1)
+            finish()
         }
-        prefs.teamScore = totalScore
-        prefs.nextLocationId ++
-        getNextDestination(prefs.nextLocationId)
-        Log.d("Geo", prefs.nextLocationId.toString())
-        sleep(1000)
-        val intent = Intent(this, MapsActivity::class.java)
-        startActivity(intent)
-        finish()
-        //nextQuestion()
-        //count.start()
+        else {
+            prefs.teamScore = totalScore
+            prefs.nextLocationId++
+            getNextDestination(prefs.nextLocationId)
+            Log.d("Geo", prefs.nextLocationId.toString())
+            sleep(1000)
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
+            //nextQuestion()
+            //count.start()
+        }
     }
 
     private fun changeAnswers() {
