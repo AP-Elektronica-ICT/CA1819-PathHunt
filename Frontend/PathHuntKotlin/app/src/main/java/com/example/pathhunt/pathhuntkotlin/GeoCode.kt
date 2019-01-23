@@ -8,6 +8,7 @@ data class GeoCode(
     val status: String
 )
 
+
 data class Result(
     val address_components: List<AddressComponent>,
     val formatted_address: String,
@@ -18,16 +19,11 @@ data class Result(
 
 data class Geometry(
     val bounds: Bounds,
-    val location: Locatie,
+    val location: Location,
     val location_type: String,
     val viewport: Viewport
 )
-{
-    class Deserializer2: ResponseDeserializable<Array<Result>> {
-        override fun deserialize(content: String): Array<Result>?{
-            return Gson().fromJson(content, Array<Result>::class.java)}
-    }
-}
+
 /*data class Bounds(
     val northeast: Northeast,
     val southwest: Southwest
@@ -42,11 +38,12 @@ data class Northeast(
     val lat: Double,
     val lng: Double
 )
+*/
 
 data class Location(
     val lat: Double,
     val lng: Double
-)*/
+)
 
 data class Viewport(
     val northeast: Northeast,

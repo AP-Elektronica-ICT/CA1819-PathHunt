@@ -23,7 +23,12 @@ import com.github.kittinunf.result.Result
 import com.example.pathhunt.pathhuntkotlin.Locatie
 import com.example.pathhunt.pathhuntkotlin.Locatie.Deserializer
 import com.example.pathhunt.pathhuntkotlin.Geometry
-import com.example.pathhunt.pathhuntkotlin.Geometry.Deserializer2
+//import com.example.pathhunt.pathhuntkotlin.GeoCode.Deserializer2
+import com.github.kittinunf.fuel.android.extension.jsonDeserializer
+import com.github.kittinunf.fuel.android.extension.responseJson
+import com.github.kittinunf.fuel.core.FuelError
+import com.github.kittinunf.fuel.core.Request
+import com.github.kittinunf.fuel.core.Response
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices
@@ -56,7 +61,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     var locationId: Int = 1
     var straatnaam: String = ""
     var geometrie: String = ""
-
+    var geocodeoutput: String=""
 
 
 
@@ -284,16 +289,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     fun getGeoCoding() {
         var apicall = Api().urlGeocoding + straatnaam
         Log.d("apicall:", apicall)
-        apicall.httpGet().responseObject(Geometry.Deserializer2()) { request, response, result ->
-            val (geometrics, err) = result
-                geometrics?.forEach { result ->
-                    Log.d("result:", "${geometrics[0]}")
-                    geometrie = geometrics[0].geometry.location.toString()
-                }
+        apicall.httpGet().responseString { request, response, result ->
+            val (geocodingoutput, err) = result
+            Log.d("geocodingoutput: ", geocodingoutput.toString())
+            Log.d("fuelerror: ", err.toString())
 
-                    Log.d("geocodecoordinates:", geometrie)
-                }
-            }
+
+        }
+       
+    }
 
 
 
