@@ -90,6 +90,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         //call methods on this activity
         //getAllLocations(locationId)
         straatnaam = prefs.nextStreet
+
+        getLocNr()
+
         createLocationRequest()
         locationCallback = object : LocationCallback(){
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -293,13 +296,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     //get request for all locations coming from our db
-    fun getAllLocations(id: Int) {
+    fun getLocNr() {
         Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
             val (locations, err) = result
-            locations?.forEach { locatie ->
-                Log.d("Location: street", "${locatie.street}")
-                straatnaam = locations[id].street
-            }
+            Log.d("LocNr", locations?.size.toString())
             //Log.d("straatnaam",straatnaam)
 
 

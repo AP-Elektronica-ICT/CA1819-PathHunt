@@ -73,7 +73,9 @@ class Leaderboard : AppCompatActivity() {
         URL.httpGet().responseObject(Team.Deserializer()) { request, response, result ->
             val (teams, err) = result
             teams?.forEach { team ->
-                teamList.add(team)
+                if(team.score > 0){
+                    teamList.add(team)
+                }
             }
             //teamList.sortWith(compareBy(Team::score))
             listView.adapter = ListAdapter(this, teamList)
