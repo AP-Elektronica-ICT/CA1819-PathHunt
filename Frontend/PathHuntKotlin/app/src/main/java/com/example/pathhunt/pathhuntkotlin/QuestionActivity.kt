@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_question.view.*
 import kotlinx.android.synthetic.main.row_list.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.lang.Thread.sleep
 import java.net.URL
 import java.util.*
 
@@ -37,14 +38,14 @@ class QuestionActivity : AppCompatActivity() {
     var totalScore: Int = 0
     var scoreToGain: Int = 60
     var time: Int = 0
-    var locationId: Int = 2
-    var nextStreet: String? = ""
     var zeroScore : Boolean = false
+    var rightAnswer : Boolean = false
     //Timer, mensen krijgen 60 seconden om vraag te beantwoorden
     //om de 5 seconden gaat er 5 score, van de totale score die ze kunnen verdienen, af
     var count: CountDownTimer = object : CountDownTimer(60000, 1000) {
         override fun onFinish() {
             Toast.makeText(this@QuestionActivity, "Time's up!", Toast.LENGTH_LONG).show()
+            questionAnswered()
         }
 
         override fun onTick(p0: Long) {
@@ -67,16 +68,8 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-//        if(intent.hasExtra("LocationName")){
-//            questionLocation = intent.getStringExtra("LocationName")
-//        }
-//        if(intent.hasExtra("Score")){
-//            totalScore = intent.getIntExtra("Score", 0)
-//        }
         questionLocation = prefs.nextLocation
         totalScore = prefs.teamScore
-        //Test locatie hard coded
-        questionLocation = "Centraal Station"
         rdbAnswer1.visibility = View.INVISIBLE
         rdbAnswer2.visibility = View.INVISIBLE
         rdbAnswer3.visibility = View.INVISIBLE
@@ -93,8 +86,13 @@ class QuestionActivity : AppCompatActivity() {
                 userAnswer = userRadio.text.toString()
             }
             if (userAnswer.equals(answer)) {
-                //Toast.makeText(this, "Good answer", Toast.LENGTH_LONG).show()
-                totalScore += scoreToGain
+                rightAnswer = true
+                if (prefs.currentQuestion != 0){
+                    totalScore += scoreToGain
+                }
+            }
+            else{
+                rightAnswer = false
             }
             questionAnswered()
         }
@@ -119,17 +117,24 @@ class QuestionActivity : AppCompatActivity() {
         count.cancel()
         setScore(totalScore)
         resetScore()
-        val intent = Intent(this, MapsActivity::class.java)
+        prefs.currentQuestion++
         prefs.teamScore = totalScore
-        //intent.putExtra("Score", totalScore)
-        locationId ++
-        getNextDestination(locationId)
-        prefs.nextLocation=nextStreet
-        //intent.putExtra("NextStreet", nextStreet)
-        startActivity(intent)
-        finish()
-        //nextQuestion()
-        //count.start()
+        if(prefs.currentQuestion == prefs.numberOfQuestions){
+            val intent1 = Intent (this, EndActivity::class.java)
+            startActivity(intent1)
+            finish()
+        }
+        else {
+            prefs.nextLocationId++
+            getNextDestination(prefs.nextLocationId)
+            Log.d("Geo", prefs.nextLocationId.toString())
+            sleep(1000)
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
+            //nextQuestion()
+            //count.start()
+        }
     }
 
     private fun changeAnswers() {
@@ -150,12 +155,21 @@ class QuestionActivity : AppCompatActivity() {
             when (result){
                 is Result.Success ->{
                     val (locations, err) = result
-                    nextStreet = locations?.street
-                    Log.d("nextstreet", nextStreet)
+                    prefs.nextStreet = locations?.street
+                    prefs.nextLocation = locations?.name
+                    if(rightAnswer == false ){
+                        prefs.nextExtraStreet = locations?.extraStreet
+                    }
+
+                    else{
+                        prefs.nextExtraStreet = ""
+                    }
+                    //Log.d("nextstreet", prefs.nextStreet)
                 }
 
                 is Result.Failure -> {
-                    nextStreet = "No street found"
+                    prefs.nextStreet = "No street found"
+                    prefs.nextLocation = "No next location"
                 }
             }
         }
@@ -173,7 +187,7 @@ class QuestionActivity : AppCompatActivity() {
                     btnCheck.visibility = View.VISIBLE
                     val (questions, err) = result
                     questions?.forEach { question ->
-                        Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
+                        //Log.d("Questions", "Content ${question.content}, antwoord is ${question.answer}")
                         allquestions?.add(question)
                     }
                     //Log.d("All Questions", allquestions.toString())

@@ -7,5 +7,5 @@ class Api{
     val urlLocations: String = "http://pathhuntwebapi.azurewebsites.net/api/locations"
     val urlQuestions: String = "http://pathhuntwebapi.azurewebsites.net/api/questions"
     val urlGeocoding: String = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyB4HgIDhaV6sv3ddo_Xol9r4fDLj7RpOaU&address="
-    val urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyB4HgIDhaV6sv3ddo_Xol9r4fDLj7RpOaU&"
+    val urlDirections: String = "https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyB4HgIDhaV6sv3ddo_Xol9r4fDLj7RpOaU&mode=walking&"
 }

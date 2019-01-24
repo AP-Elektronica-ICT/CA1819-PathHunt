@@ -60,8 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     //private lateinit var lastLocation: Location
     //var alllocations: MutableList<Location> = mutableListOf()
     //this id is used as parameter for getlocations
-    var locationId: Int = 1
-    var straatnaam: String = ""
+    var straatnaam: String? = ""
     var geometrie: String = ""
     var geocodeoutput: String=""
     var geocodelat: String= ""
@@ -89,24 +88,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         //call methods on this activity
-        getAllLocations(locationId)
-
+        //getAllLocations(locationId)
+        straatnaam = prefs.nextStreet
 
         createLocationRequest()
-        buildGeofence()
+        locationCallback = object : LocationCallback(){
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?:return
+                for(location in locationResult.locations){
+                    var update: LatLng = LatLng(location.latitude, location.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(update, 20.0f  ))
+                }
+            }
+        }
        //buildGeofencingRequest()
 
         //use fusedlocationclient from locationservices
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
         geofencingClient = LocationServices.getGeofencingClient(this)
-        geofencingClient?.addGeofences(getGeofencingRequest(), geofencePendingIntent)?.run{
-            addOnSuccessListener {
-                Log.d("geo", "succesfull addition")
-            }
-            addOnFailureListener{
-                Log.d("geo", "failed mate")
-            }
-        }
+
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null){
@@ -114,8 +115,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 val currentLatLng = LatLng(location.latitude, location.longitude)
                 Log.d("currentlatlng", currentLatLng.toString())
                 getGeoCoding()
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 20.0f))
+            }
+        }
 
-            }}
 
 
     }
@@ -125,7 +128,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap = googleMap
 
 
-        val school = LatLng(51.2297882, 4.4149717)
+        /*val school = LatLng(51.2297882, 4.4149717)
         mMap.addMarker(MarkerOptions().position(school).title("Marker on the school"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(school))
 
@@ -136,13 +139,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val oevel = LatLng(51.46023539999999,4.4489466)
         mMap.addMarker(MarkerOptions().position(oevel).title("oevelen"))
         //val nieuwedestination = LatLng(${locations.latitude},${locations.longitude})
-        //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))
+        //mMap.addMarker(MarkerOptions().position(nieuwedestination).title("New Destination"))*/
 
         mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.uiSettings.isZoomGesturesEnabled = true
+        mMap.uiSettings.isZoomControlsEnabled = false
+        mMap.uiSettings.isZoomGesturesEnabled = false
+        mMap.uiSettings.setAllGesturesEnabled(false)
         mMap.setOnMarkerClickListener(this)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(school, 14.0f))
         mMap.isMyLocationEnabled = true
 
         /*mMap.addPolyline(
@@ -159,17 +163,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
 
     override fun onBackPressed() {
-        //disable back button to avoid people going back to previous screens
-        val intent = Intent(this,QuestionActivity::class.java)
-        startActivity(intent)
+        //disable back button
     }
 
     private fun buildGeofence()/*: Geofence?*/ {
         //val latitude = 51.46023539999999
         //val longitude = 4.4489466
-        val latitude = 51.431991
-        val longitude = 4.436960
-        val radius = 20
+        val latitude = geocodelat.toDouble()
+        val longitude = geocodelng.toDouble()
+        val loc = LatLng(latitude,longitude)
+        this.mMap.addMarker(MarkerOptions().position(loc).title("Next location"))
+        val radius = 30
+
+        if(!geofenceList.isEmpty()){
+            geofenceList.clear()
+        }
+        //geofenceList.removeAt(0)
 
         //if (latitude != null && longitude != null && radius != null) {
         geofenceList.add(
@@ -184,6 +193,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
                     .build()
         )
+        addGeofences()
        // }
     }
 
@@ -192,6 +202,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
             .addGeofences(geofenceList)
             .build()
+
     }
 
 
@@ -205,6 +216,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
+    override fun onStop() {
+        removeGeofences()
+        geofenceList.clear()
+        finish()
+        super.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+    }
 
     //checks for permission to search for finelocation (currentlocation)
     private fun setUpMap() {
@@ -272,21 +294,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    //get request for all locations coming from our db
-    fun getAllLocations(id: Int) {
-        Api().urlLocations.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->
-            val (locations, err) = result
-            locations?.forEach { locatie ->
-                Log.d("Location: street", "${locatie.street}")
-                straatnaam = locations[id].street
+    fun addGeofences(){
+        geofencingClient?.addGeofences(getGeofencingRequest(), geofencePendingIntent)?.run{
+            addOnSuccessListener {
+                Log.d("geo", "succesfull addition")
             }
-            //Log.d("straatnaam",straatnaam)
-
-
+            addOnFailureListener{
+                Log.d("geo", "failed mate")
+            }
         }
+    }
 
-
-
+    fun removeGeofences(){
+        geofencingClient?.removeGeofences(geofencePendingIntent)?.run {
+            addOnSuccessListener {
+                Log.d("GeoDel", "Del Succes!")
+                Log.d("GeoDel", prefs.nextStreet)
+            }
+            addOnFailureListener {
+                Log.d("GeoDel", "Failed")
+            }
+        }
     }
 
     //this function will be used to get more accurate coordinates because directions api needs geocoded points, which we didn't have in the DB before
@@ -294,7 +322,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         var apicall = Api().urlGeocoding + straatnaam
         Log.d("apicall:", apicall)
         apicall.httpGet().responseObject(com.example.pathhunt.pathhuntkotlin.Result.Deserializer2()){ request, response, result ->
-            request.timeout(10000)
+            //request.timeout(10000)
             val (geocodeoutput, err) = result
             //Log.d("geocodeoutput", geocodeoutput.toString())
             //Log.d("err", err.toString())
@@ -307,7 +335,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             geocodelng = result.get().results[0].geometry.location.lng.toString()
             //Log.d("geocodelat", geocodelat)
             //Log.d("geocodelng", geocodelng)
+            buildGeofence()
             getDirections()
+
         }
 
     }
@@ -318,7 +348,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     //this url will be used to get directions from directions google maps api
     fun getDirections() {
-        var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng
+        var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=" + geocodelat + "," + geocodelng + "&waypoints=" + prefs.nextExtraStreet
         //var apicall2 = Api().urlDirections + "origin=" + lastLocation.latitude + "," + lastLocation.longitude + "&destination=51.46023539999999,4.4489466"
         Log.d("apicall2:", apicall2)
         apicall2.httpGet().responseObject(Directions.Deserializer3()) { request, response, result ->
@@ -326,8 +356,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             Log.d("directionoutput: ", directionoutput.toString())
             Log.d("err",err.toString())
 
-            directionsteps= result.get().routes[0].legs[0].steps[0].toString()
-            Log.d("directionsteps", directionsteps)
+//            directionsteps= result.get().routes[0].legs[0].steps[0].toString()
+ //           Log.d("directionsteps", directionsteps)
 
             val route0 = result.get().routes[0];
 
