@@ -28,7 +28,7 @@ class TeamNameEditor : AppCompatActivity() {
                 prefs.numberOfQuestions = 3 //default = 0
                 prefs.currentQuestion = 0
                 prefs.teamName = etxtTeamname.text.toString()
-                val intent = Intent(this, QuestionActivity::class.java)
+                val intent = Intent(this, MapsActivity::class.java)
                 startActivity(intent)
                 finish()
             }
