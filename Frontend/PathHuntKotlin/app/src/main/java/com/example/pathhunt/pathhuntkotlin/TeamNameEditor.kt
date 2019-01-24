@@ -23,25 +23,26 @@ class TeamNameEditor : AppCompatActivity() {
             prefs.nextLocation = "AP Hogeschool"
             prefs.numberOfQuestions = 2 //default = 0
             prefs.currentQuestion = 0
+            prefs.teamName = etxtTeamname.text.toString()
 
             if(prefs.numberOfQuestions == 0){
                 getQuestionsNr()
             }
 
-            CreateTeam(Api().urlTeams, team)
+            //CreateTeam(Api().urlTeams, team)
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
 
-    private fun CreateTeam(URL: String ,team: Team) {
+    /*private fun CreateTeam(URL: String ,team: Team) {
         URL.httpPost()
             .jsonBody(Gson().toJson(team))
             .response {_,_, result ->
                 println("result: " + result.toString())
             }
-    }
+    }*/
 
     fun getQuestionsNr() {
         Api().urlQuestions.httpGet().responseObject(Locatie.Deserializer()) { request, response, result ->

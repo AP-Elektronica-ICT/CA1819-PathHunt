@@ -14,15 +14,24 @@ class EndActivity : AppCompatActivity() {
         setContentView(R.layout.activity_end)
         txtEndScore.text = "Your score is: ${prefs.teamScore.toString()}!"
         val team = Team(null, prefs.teamName, prefs.teamScore)
-        Api().urlTeams.httpPost()
+        CreateTeam(Api().urlTeams, team)
+        /*Api().urlTeams.httpPost()
             .jsonBody(Gson().toJson(team))
             .response {_,_, result ->
                 println("result: " + result.toString())
-            }
+            }*/
         btnEnd.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun CreateTeam(URL: String ,team: Team) {
+        URL.httpPost()
+            .jsonBody(Gson().toJson(team))
+            .response {_,_, result ->
+                println("result: " + result.toString())
+            }
     }
 
 

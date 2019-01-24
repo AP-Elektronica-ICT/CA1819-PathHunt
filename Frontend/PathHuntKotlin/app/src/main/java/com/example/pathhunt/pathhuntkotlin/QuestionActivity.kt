@@ -87,7 +87,9 @@ class QuestionActivity : AppCompatActivity() {
             }
             if (userAnswer.equals(answer)) {
                 rightAnswer = true
-                totalScore += scoreToGain
+                if (prefs.currentQuestion != 0){
+                    totalScore += scoreToGain
+                }
             }
             else{
                 rightAnswer = false
@@ -116,13 +118,13 @@ class QuestionActivity : AppCompatActivity() {
         setScore(totalScore)
         resetScore()
         prefs.currentQuestion++
+        prefs.teamScore = totalScore
         if(prefs.currentQuestion == prefs.numberOfQuestions){
             val intent1 = Intent (this, EndActivity::class.java)
             startActivity(intent1)
             finish()
         }
         else {
-            prefs.teamScore = totalScore
             prefs.nextLocationId++
             getNextDestination(prefs.nextLocationId)
             Log.d("Geo", prefs.nextLocationId.toString())
