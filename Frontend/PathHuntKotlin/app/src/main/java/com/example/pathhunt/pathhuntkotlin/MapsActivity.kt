@@ -173,7 +173,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val longitude = geocodelng.toDouble()
         val loc = LatLng(latitude,longitude)
         this.mMap.addMarker(MarkerOptions().position(loc).title("Next location"))
-        val radius = 70
+        val radius = 30
 
         if(!geofenceList.isEmpty()){
             geofenceList.clear()

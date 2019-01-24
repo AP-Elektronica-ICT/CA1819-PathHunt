@@ -16,23 +16,29 @@ class TeamNameEditor : AppCompatActivity() {
         setContentView(R.layout.activity_team_name_editor)
 
         btnContinue.setOnClickListener {
-            val team = Team(null, etxtTeamname.text.toString(), 0)
-            prefs.teamScore=0
-            prefs.nextStreet="Ellermanstraat 33, 2060 Antwerpen"
-            prefs.nextLocationId = 1
-            prefs.nextLocation = "AP Hogeschool"
-            prefs.numberOfQuestions = 3 //default = 0
-            prefs.currentQuestion = 0
-            prefs.teamName = etxtTeamname.text.toString()
+            if(etxtTeamname.text.isEmpty()){
+                etxtTeamname.setError("Fill in a teamname")
+            }
+            else{
+                val team = Team(null, etxtTeamname.text.toString(), 0)
+                prefs.teamScore=0
+                prefs.nextStreet="Ellermanstraat 33, 2060 Antwerpen"
+                prefs.nextLocationId = 1
+                prefs.nextLocation = "AP Hogeschool"
+                prefs.numberOfQuestions = 3 //default = 0
+                prefs.currentQuestion = 0
+                prefs.teamName = etxtTeamname.text.toString()
+                val intent = Intent(this, QuestionActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 
             if(prefs.numberOfQuestions == 0){
                 getQuestionsNr()
             }
 
             //CreateTeam(Api().urlTeams, team)
-            val intent = Intent(this, QuestionActivity::class.java)
-            startActivity(intent)
-            finish()
+
         }
     }
 
